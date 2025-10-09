@@ -44,7 +44,7 @@ export default function Home() {
           </div>
 
           <p className="text-sm text-black leading-relaxed">
-            I'm a 23 y/o software engineer based in Paris, building products that matter. I specialize in the JavaScript/TypeScript ecosystem, AI-driven development workflows, and turning ideas into scalable solutions. I have a community of 3,000+ followers on social media where I share about tech, building in public, and startups.
+            I'm a 23 y/o software engineer based in Paris, building products that matter. I have a community of 3,000+ followers on social media where I share about tech, building in public, and startups.
           </p>
 
           {/* Experience */}
