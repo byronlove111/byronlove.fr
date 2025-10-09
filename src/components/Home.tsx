@@ -44,44 +44,58 @@ export default function Home() {
           <div>
             <h2 className="mb-4 text-base font-normal">Timeline</h2>
             <div>
-              <ul className="flex flex-col gap-2">
-                <li className="flex flex-col sm:flex-row sm:items-center justify-between my-2">
+              <ul className="flex flex-col gap-3">
+                <li className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center">
-                    <div className="text-surface-8">2024 – 2025</div>
+                    <div className="text-surface-8 text-sm sm:text-base">2025 – Present</div>
                   </div>
-                  <div className="flex flex-1 items-center sm:ml-auto">
-                    <div className="ml-auto flex items-baseline gap-2 text-surface-10">
-                      Founding Engineer at châtaigne
+                  <div className="flex items-start sm:items-center">
+                    <div className="text-surface-10 text-sm sm:text-base leading-relaxed">
+                      Founder & Engineering Lead at{" "}
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-surface-11 underline underline-offset-6 decoration-surface-11 hover:decoration-primary-11 hover:text-primary-11 decoration-dotted"
+                        href="https://opensource-together.com"
+                      >
+                        OpenSource Together
+                      </a>
                     </div>
                   </div>
                 </li>
-                <li className="flex flex-col sm:flex-row sm:items-center justify-between my-2">
+                <li className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center">
-                    <div className="text-surface-8">2025 – Present</div>
+                    <div className="text-surface-8 text-sm sm:text-base">2024 – 2025</div>
                   </div>
-                  <div className="flex flex-1 items-center sm:ml-auto">
-                    <div className="ml-auto flex items-baseline gap-2 text-surface-10">
-                      Founder & Engineering Lead at OpenSource Together
+                  <div className="flex items-start sm:items-center">
+                    <div className="text-surface-10 text-sm sm:text-base leading-relaxed">
+                      Founding Engineer at{" "}
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-surface-11 underline underline-offset-6 decoration-surface-11 hover:decoration-primary-11 hover:text-primary-11 decoration-dotted"
+                        href="https://chataigne.ai"
+                      >
+                        châtaigne
+                      </a>
                     </div>
                   </div>
                 </li>
-                <li className="flex flex-col sm:flex-row sm:items-center justify-between my-2">
+                <li className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center">
-                    <div className="text-surface-8">2025 – Present</div>
+                    <div className="text-surface-8 text-sm sm:text-base">2024 – Present</div>
                   </div>
-                  <div className="flex flex-1 items-center sm:ml-auto">
-                    <div className="ml-auto flex items-baseline gap-2 text-surface-10">
-                      Cursor Ambassador (France)
-                    </div>
-                  </div>
-                </li>
-                <li className="flex flex-col sm:flex-row sm:items-center justify-between my-2">
-                  <div className="flex items-center">
-                    <div className="text-surface-8">2024 – Present</div>
-                  </div>
-                  <div className="flex flex-1 items-center sm:ml-auto">
-                    <div className="ml-auto flex items-baseline gap-2 text-surface-10">
-                      Computer Science at École 42
+                  <div className="flex items-start sm:items-center">
+                    <div className="text-surface-10 text-sm sm:text-base leading-relaxed">
+                      Computer Science at{" "}
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-surface-11 underline underline-offset-6 decoration-surface-11 hover:decoration-primary-11 hover:text-primary-11 decoration-dotted"
+                        href="https://42.fr"
+                      >
+                        École 42
+                      </a>
                     </div>
                   </div>
                 </li>
