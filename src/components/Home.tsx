@@ -82,7 +82,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="underline hover:no-underline transition-all"
               >
-                châtaigne
+                Châtaigne
               </a>{" "}
               (2024–2025) – Architected and rebuilt entire frontend systems serving thousands of users, while pioneering AI development workflows that boosted team productivity as founding engineer.
             </p>
