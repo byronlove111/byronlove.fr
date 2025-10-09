@@ -8,7 +8,7 @@ export default function Home() {
             <h1 className="text-2xl font-normal text-black">Byron Love</h1>
             <p className="text-sm text-black">
               <a
-                href="mailto:malik.chan94420@gmail.com"
+                href="mailto:111byronlove@gmail.com"
                 className="underline hover:no-underline transition-all"
               >
                 mail
