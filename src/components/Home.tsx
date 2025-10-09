@@ -5,22 +5,13 @@ export default function Home() {
         <div className="space-y-6">
           {/* Header */}
           <div className="space-y-2">
-            <h1 className="text-2xl font-normal text-black">Malik Bourassi</h1>
+            <h1 className="text-2xl font-normal text-black">Byron Love</h1>
             <p className="text-sm text-black">
               <a
                 href="mailto:malik.chan94420@gmail.com"
                 className="underline hover:no-underline transition-all"
               >
                 mail
-              </a>{" "}
-              |{" "}
-              <a
-                href="https://www.linkedin.com/in/abd-al-malik-bourassi-2b4423301/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:no-underline transition-all"
-              >
-                linkedin
               </a>{" "}
               |{" "}
               <a
