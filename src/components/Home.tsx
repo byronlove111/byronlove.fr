@@ -94,7 +94,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="underline hover:no-underline transition-all"
               >
-                École 42
+                Ecole 42
               </a>{" "}
               <span className="text-gray-600">Student (2024–Present)</span> – Computer Science through peer-to-peer learning. Top of entrance competition, member of 42entrepreneurs association
             </p>
