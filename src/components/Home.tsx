@@ -60,7 +60,7 @@ export default function Home() {
               >
                 OpenSource Together
               </a>{" "}
-              <span className="text-gray-600">Co-Founder (2025–Present)</span> – Led a multidisciplinary team of 10 people to build a platform that unites developers, designers and creatives to shape the future of open-source. <strong>500 sign up at launch</strong>
+              <span className="text-gray-600">Co-Founder (2025–Present)</span> – Led a team of 10 people to build a platform connecting developers, designers and creatives. <strong>500 sign up at launch</strong>
             </p>
 
             <p className="text-sm text-black leading-relaxed">
@@ -72,7 +72,7 @@ export default function Home() {
               >
                 Cursor
               </a>{" "}
-              <span className="text-gray-600">Ambassador (2025–Present)</span> – <strong>First French ambassador</strong> for Cursor. Organized multiple events with 100+ people present at Amo, Hexa and other venues, explaining my AI-driven development workflows to help developers code faster
+              <span className="text-gray-600">Ambassador (2025–Present)</span> – <strong>First French ambassador</strong> for Cursor. Organized events with 100+ people at Amo, Hexa and other venues, teaching AI-driven development workflows
             </p>
 
             <p className="text-sm text-black leading-relaxed">
@@ -84,7 +84,7 @@ export default function Home() {
               >
                 Châtaigne.ai
               </a>{" "}
-              <span className="text-gray-600">Founding Engineer (2024–2025)</span> – First founding engineer of the company. <strong>0-to-1 journey with €1.5M raised</strong>, completely rebuilt and optimized the frontend with scalable architecture and comprehensive testing, implemented full-stack end-to-end features. Worked closely with users with strong product vision, developed marketing solutions that reached <strong>10,000+ users</strong>
+              <span className="text-gray-600">Founding Engineer (2024–2025)</span> – First founding engineer. <strong>0-to-1 journey with €1.5M raised</strong>, rebuilt frontend with scalable architecture and testing, implemented full-stack features. Developed marketing solutions reaching <strong>10,000+ users</strong>
             </p>
 
             <p className="text-sm text-black leading-relaxed">
@@ -96,7 +96,7 @@ export default function Home() {
               >
                 École 42
               </a>{" "}
-              <span className="text-gray-600">Student (2024–Present)</span> – Computer Science and Software Engineering through peer-to-peer learning. Finished among the top of my entrance competition, member of 42entrepreneurs association, organized tech events with them
+              <span className="text-gray-600">Student (2024–Present)</span> – Computer Science through peer-to-peer learning. Top of entrance competition, member of 42entrepreneurs association
             </p>
           </div>
         </div>
