@@ -75,17 +75,29 @@ export default function Home() {
               (2024–2025) – Architected and rebuilt entire frontend systems serving thousands of users, while pioneering AI development workflows that boosted team productivity as founding engineer.
             </p>
 
-            <p className="text-sm text-black leading-relaxed">
-              <a
-                href="https://42.fr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:no-underline transition-all"
-              >
-                École 42
-              </a>{" "}
-              (2024–Present) – Computer Science and Software Engineering through peer-to-peer learning methodology and project-based curriculum.
-            </p>
+                   <p className="text-sm text-black leading-relaxed">
+                     <a
+                       href="https://42.fr"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       className="underline hover:no-underline transition-all"
+                     >
+                       École 42
+                     </a>{" "}
+                     (2024–Present) – Computer Science and Software Engineering through peer-to-peer learning methodology and project-based curriculum.
+                   </p>
+
+                   <p className="text-sm text-black leading-relaxed">
+                     <a
+                       href="https://cursor.sh"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       className="underline hover:no-underline transition-all"
+                     >
+                       Cursor Ambassador
+                     </a>{" "}
+                     (2025–Present) – Organize tech events (300+ people), demonstrating AI-driven development workflows and processes to educate the community.
+                   </p>
           </div>
         </div>
       </div>
