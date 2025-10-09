@@ -60,7 +60,7 @@ export default function Home() {
               >
                 OpenSource Together
               </a>{" "}
-              <span className="text-gray-600">Co-Founder (2025–Present)</span> – Platform that connects developers, designers and creatives through open-source projects. 500+ people signed up, led a team of 10 people including designers, ML engineers, backend and frontend developers
+              <span className="text-gray-600">Co-Founder (2025–Present)</span> – Platform that connects developers, designers and creatives through open-source projects. 500 sign up at launch, led a team of 10 people including designers, ML engineers, backend and frontend developers
             </p>
 
             <p className="text-sm text-black leading-relaxed">
