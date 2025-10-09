@@ -60,7 +60,7 @@ export default function Home() {
               >
                 OpenSource Together
               </a>{" "}
-              <span className="text-gray-600">Co-Founder (2025–Present)</span> – Led a multidisciplinary team of 10 people to build a platform that unites all builders to shape the future of open-source. 500 sign up at launch, team included designers, ML engineers, backend and frontend developers
+              <span className="text-gray-600">Co-Founder (2025–Present)</span> – Led a multidisciplinary team of 10 people to build a platform that unites developers, designers and creatives to shape the future of open-source. 500 sign up at launch, team included designers, ML engineers, backend and frontend developers
             </p>
 
             <p className="text-sm text-black leading-relaxed">
