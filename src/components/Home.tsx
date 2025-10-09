@@ -60,7 +60,7 @@ export default function Home() {
               >
                 OpenSource Together
               </a>{" "}
-              <span className="text-gray-600">Co-Founder (2025–Present)</span> – Led a team of 10 people to build a platform connecting developers, designers and creatives. <strong>500 sign up at launch</strong>
+              <span className="text-gray-600">Co-Founder (2025–Present)</span> – Led a team of 10 people to build a platform connecting developers, designers and creatives. <span className="font-semibold">500 sign up at launch</span>
             </p>
 
             <p className="text-sm text-black leading-relaxed">
@@ -72,7 +72,7 @@ export default function Home() {
               >
                 Cursor
               </a>{" "}
-              <span className="text-gray-600">Ambassador (2025–Present)</span> – <strong>First French ambassador</strong> for Cursor. Organized events with 100+ people at Amo, Hexa and other venues, teaching AI-driven development workflows
+              <span className="text-gray-600">Ambassador (2025–Present)</span> – <span className="font-semibold">First French ambassador</span> for Cursor. Organized events with 100+ people at Amo, Hexa and other venues, teaching AI-driven development workflows
             </p>
 
             <p className="text-sm text-black leading-relaxed">
@@ -84,7 +84,7 @@ export default function Home() {
               >
                 Châtaigne.ai
               </a>{" "}
-              <span className="text-gray-600">Founding Engineer (2024–2025)</span> – First founding engineer. <strong>0-to-1 journey with €1.5M raised</strong>, rebuilt frontend with scalable architecture and testing, implemented full-stack features. Developed marketing solutions reaching <strong>10,000+ users</strong>
+              <span className="text-gray-600">Founding Engineer (2024–2025)</span> – First founding engineer. <span className="font-semibold">0-to-1 journey with €1.5M raised</span>, rebuilt frontend with scalable architecture and testing, implemented full-stack features. Developed marketing solutions reaching <span className="font-semibold">10,000+ users</span>
             </p>
 
             <p className="text-sm text-black leading-relaxed">
