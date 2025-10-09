@@ -44,7 +44,7 @@ export default function Home() {
           </div>
 
           <p className="text-sm text-black leading-relaxed">
-            I'm a 23 y/o software engineer based in Paris, passionate about building products that matter. I specialize in the JavaScript/TypeScript ecosystem, AI-driven development workflows, and turning ideas into scalable solutions that users love.
+            I'm a 23 y/o software engineer based in Paris, building products that matter. I specialize in the JavaScript/TypeScript ecosystem, AI-driven development workflows, and turning ideas into scalable solutions. I have a community of 3,000+ followers on social media where I share about tech, building in public, and startups.
           </p>
 
           {/* Experience */}
@@ -72,7 +72,7 @@ export default function Home() {
               >
                 Cursor
               </a>{" "}
-              <span className="text-gray-600">Ambassador (2025–Present)</span> – First French ambassador for Cursor. Organized multiple events with 100+ people present, explaining my AI-driven development workflows to help developers code faster
+              <span className="text-gray-600">Ambassador (2025–Present)</span> – First French ambassador for Cursor. Organized multiple events with 100+ people present at Amo, Hexa and other venues, explaining my AI-driven development workflows to help developers code faster
             </p>
 
             <p className="text-sm text-black leading-relaxed">
