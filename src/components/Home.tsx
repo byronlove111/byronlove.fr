@@ -39,7 +39,7 @@ export default function Home() {
           </p>
 
           {/* Experience */}
-          <div className="space-y-4 pt-4">
+          <div className="space-y-5 pt-4">
             <h2 className="text-base font-normal text-black">Experience</h2>
 
             <p className="text-sm text-black leading-relaxed">
