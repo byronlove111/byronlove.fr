@@ -75,7 +75,7 @@ export default function Home() {
               >
                 Châtaigne.ai
               </a>{" "}
-              <span className="text-gray-600">Founding Engineer (2024–2025)</span> – First founding engineer. <span className="font-medium">0-to-1 journey with €1.5M raised</span>, designed and rebuilt entire frontend with scalable architecture and testing, implemented full-stack features. Developed marketing solutions reaching <span className="font-medium">5,000+ users</span>
+              <span className="text-gray-600">Founding Engineer (2024–2025)</span> – First founding engineer. <span className="font-medium">0-to-1 journey</span>, designed and rebuilt entire frontend with scalable architecture and testing, implemented full-stack features. Developed marketing solutions reaching <span className="font-medium">5,000+ users</span>
             </p>
 
             <p className="text-sm text-black leading-relaxed">
