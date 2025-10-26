@@ -1,4 +1,21 @@
 export default function Home() {
+  // Calcul automatique de l'âge à partir de la date de naissance
+  const calculateAge = () => {
+    const birthDate = new Date(2002, 6, 7); // 7 juillet 2002 (mois en JavaScript: 0=janvier, 6=juillet)
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    // Ajustement si l'anniversaire n'est pas encore passé cette année
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    
+    return age;
+  };
+
+  const age = calculateAge();
+
   return (
     <div className="min-h-screen bg-white">
       <div className="container max-w-2xl mx-auto px-4 py-16">
@@ -35,7 +52,11 @@ export default function Home() {
           </div>
 
           <p className="text-sm text-black leading-relaxed">
-            I'm a 23 y/o software engineer based in Paris, building products that matter. I built a community of 3,000+ followers on social media where I share about tech, building in public, and startups.
+            I'm a {age} y/o software engineer based in Paris, building products that matter. I built a community of 3,000+ followers on social media where I share about tech, building in public, and startups.
+          </p>
+
+          <p className="text-sm text-black leading-relaxed">
+            Interests: <a href="/synthesizers" className="underline hover:no-underline transition-all">synthesizers</a>, <a href="/music" className="underline hover:no-underline transition-all">music</a>, <a href="/cinema" className="underline hover:no-underline transition-all">cinema</a>, <a href="/games" className="underline hover:no-underline transition-all">games</a>, my wife
           </p>
 
           {/* Experience */}
