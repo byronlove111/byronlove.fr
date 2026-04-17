@@ -47,6 +47,13 @@ export default function Home() {
                 className="underline hover:no-underline transition-all"
               >
                 x
+              </a>{" "}
+              |{" "}
+              <a
+                href="/blog"
+                className="underline hover:no-underline transition-all"
+              >
+                blog
               </a>
             </p>
           </div>
