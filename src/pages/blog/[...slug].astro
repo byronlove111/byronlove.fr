@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import CodeBlock from "../../components/blog/CodeBlock";
 import Screenshot from "../../components/blog/Screenshot";
 import Callout from "../../components/blog/Callout";
@@ -11,9 +11,7 @@ import "../../styles/global.css";
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts.map((post) => ({
-    params: {
-      slug: `${post.data.slug_base}-${post.data.lang}`,
-    },
+    params: { slug: `${post.data.slug_base}-${post.data.lang}` },
     props: { post },
   }));
 }
@@ -23,7 +21,6 @@ const { Content } = await post.render();
 
 const { title, date, description, lang, slug_base } = post.data;
 
-// Check if the other language version exists
 const otherLang = lang === "en" ? "fr" : "en";
 const allPosts = await getCollection("blog");
 const otherPost = allPosts.find(
@@ -38,14 +35,7 @@ function formatDate(date: Date) {
   });
 }
 
-const blogComponents = {
-  CodeBlock,
-  Screenshot,
-  Callout,
-  AnimatedSection,
-  Demo,
-  Video,
-};
+const blogComponents = { CodeBlock, Screenshot, Callout, AnimatedSection, Demo, Video };
 ---
 
 <html lang={lang}>
@@ -64,31 +54,24 @@ const blogComponents = {
     <div class="min-h-screen bg-white">
       <div class="container max-w-2xl mx-auto px-4 py-16">
         <div class="space-y-6">
-          <!-- Header -->
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <a
-                href="/blog"
-                class="text-sm text-black underline hover:no-underline transition-all"
-              >
+              <a href="/blog" class="text-sm text-black underline hover:no-underline transition-all">
                 ← blog
               </a>
-              {
-                otherPost && (
-                  <a
-                    href={`/blog/${slug_base}-${otherLang}`}
-                    class="text-xs text-gray-400 hover:text-black transition-colors underline hover:no-underline"
-                  >
-                    {otherLang === "fr" ? "Lire en français" : "Read in english"}
-                  </a>
-                )
-              }
+              {otherPost && (
+                <a
+                  href={`/blog/${slug_base}-${otherLang}`}
+                  class="text-xs text-gray-400 hover:text-black transition-colors underline hover:no-underline"
+                >
+                  {otherLang === "fr" ? "Lire en français" : "Read in english"}
+                </a>
+              )}
             </div>
             <h1 class="text-2xl font-normal text-black pt-4">{title}</h1>
             <p class="text-xs text-gray-400">{formatDate(date)}</p>
           </div>
 
-          <!-- Article content -->
           <article class="prose-blog pt-2">
             <Content components={blogComponents} />
           </article>
