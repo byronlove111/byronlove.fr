@@ -1,0 +1,75 @@
+---
+title: "Le blog qui s'écrit tout seul"
+date: 2026-05-12
+description: "Comment j'ai construit un skill Cursor qui transforme une session de build en article bilingue — automatiquement."
+lang: fr
+slug_base: blog-that-writes-itself
+tags: ["cursor", "workflow", "mdx", "automatisation"]
+word_count: 640
+---
+
+import WorkflowSteps from "../../components/blog/demos/blog-that-writes-itself-workflow.tsx";
+
+Je déteste écrire. Ou plus précisément, j'aime écrire *pendant* que je build. Le contexte est frais, les insights sont là — mais les mettre en mots après coup, c'est courir un deuxième marathon après le premier.
+
+Alors j'ai pas écrit. J'ai construit un système pour le faire à ma place.
+
+## Le problème du "j'écrirai dessus plus tard"
+
+Tous les builders que je connais ont un cimetière de trucs qu'ils voulaient documenter. Pas parce qu'ils sont paresseux — parce que l'énergie pour shipper et l'énergie pour écrire sont fondamentalement différentes. L'une c'est le flow state. L'autre c'est la distance éditoriale.
+
+L'insight que j'ai eu : et si l'article était généré *pendant* la session de build, pendant que le contexte est encore chargé ?
+
+<Callout type="tip">
+  Le meilleur moment pour écrire sur ce qu'on vient de builder, c'est juste après. Le deuxième meilleur moment, c'est jamais.
+</Callout>
+
+## Comment ça marche
+
+Tout ça c'est un skill Cursor — un fichier markdown qui dit à l'IA exactement comment se comporter quand il est déclenché. Tu écris `write-article` dans n'importe quel chat, il lit l'historique de la conversation pour comprendre ce que tu as build, te pose cinq questions, puis écrit deux fichiers MDX : un en anglais, un en français.
+
+<Demo label="Le workflow">
+  <WorkflowSteps client:load />
+</Demo>
+
+Le skill sait quand injecter les bons composants — `<CodeBlock>` pour les snippets, `<Callout>` pour les insights, `<Demo>` pour les parties interactives — en fonction de ce que tu lui dis pendant le Q&A.
+
+## La stack MDX
+
+Chaque article est un fichier `.mdx` dans `src/content/blog/`. Les content collections d'Astro gèrent le schema, le routing et la type safety. La page article charge les composants globalement — pas besoin d'imports dans l'article lui-même, sauf pour les composants de démo custom qui ont besoin de `client:load` pour s'hydrater côté client.
+
+<CodeBlock filename="src/content/blog/mon-article.fr.mdx" lang="mdx">
+```mdx
+---
+title: "Ce que j'ai buildé cette semaine"
+date: 2026-05-12
+lang: fr
+slug_base: ce-que-jai-build
+word_count: 540
+---
+
+import MaDemo from "../../components/blog/demos/ma-demo.tsx";
+
+Contenu de l'article...
+
+<Demo label="Voir en live">
+  <MaDemo client:load />
+</Demo>
+```
+</CodeBlock>
+
+Le bilingue c'était non-négociable. Je travaille et je pense dans les deux langues, et si je vais écrire, je veux que les deux audiences aient le truc complet — pas une traduction automatique en afterthought.
+
+## Ce que j'ai vraiment obtenu
+
+Le premier vrai article que j'ai publié avec ce système m'a pris douze minutes — depuis le déclenchement du skill jusqu'à ce que ce soit live sur mon domaine. Ça inclut répondre aux questions, relire l'output, et push sur GitHub.
+
+<Callout type="info">
+  Le skill lit l'historique de la conversation, pas git. Il fonctionne même si tu n'as pas encore committé.
+</Callout>
+
+La qualité m'a surpris. Il écrit dans ma voix — phrases courtes, pas de filler, honnête sur les trade-offs — parce qu'il se calibre sur le contenu existant du site avant de générer quoi que ce soit.
+
+## La seule chose qui reste à faire
+
+Builder des trucs qui valent la peine d'être écrits.

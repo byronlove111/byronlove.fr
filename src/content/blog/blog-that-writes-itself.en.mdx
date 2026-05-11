@@ -1,0 +1,75 @@
+---
+title: "The blog that writes itself"
+date: 2026-05-12
+description: "How I built a Cursor skill that turns a build session into a bilingual article — automatically."
+lang: en
+slug_base: blog-that-writes-itself
+tags: ["cursor", "workflow", "mdx", "automation"]
+word_count: 620
+---
+
+import WorkflowSteps from "../../components/blog/demos/blog-that-writes-itself-workflow.tsx";
+
+I hate writing. Or more precisely, I hate writing *after* building. The context is still fresh, the insights are right there, but putting them into words feels like running a second marathon after the first one.
+
+So I didn't. I built a system to do it for me.
+
+## The problem with "I'll write about it later"
+
+Every builder I know has a graveyard of things they meant to write about. Not because they're lazy — because the energy required to ship and the energy required to write are fundamentally different. One is flow state. The other is editorial distance.
+
+The insight I had: what if the article was generated *during* the build session, while the context is still loaded?
+
+<Callout type="tip">
+  The best time to write about what you built is right after you built it. The second best time is never.
+</Callout>
+
+## How it works
+
+The whole thing is a Cursor skill — a markdown file that tells the AI exactly how to behave when triggered. You type `write-article` in any chat, it reads the conversation history to understand what you built, asks you five questions, then writes two MDX files: one in English, one in French.
+
+<Demo label="The workflow">
+  <WorkflowSteps client:load />
+</Demo>
+
+The skill knows to inject the right components — `<CodeBlock>` for snippets, `<Callout>` for insights, `<Demo>` for interactive bits — based on what you tell it during the Q&A.
+
+## The MDX stack
+
+Each article is an `.mdx` file in `src/content/blog/`. Astro's content collections handle the schema, routing, and type safety. The rendered article page loads components globally so no imports are needed inside the article itself — except for custom demo components, which need `client:load` to hydrate on the client.
+
+<CodeBlock filename="src/content/blog/my-article.en.mdx" lang="mdx">
+```mdx
+---
+title: "What I built this week"
+date: 2026-05-12
+lang: en
+slug_base: what-i-built
+word_count: 540
+---
+
+import MyDemo from "../../components/blog/demos/my-demo.tsx";
+
+Article content here...
+
+<Demo label="See it live">
+  <MyDemo client:load />
+</Demo>
+```
+</CodeBlock>
+
+The bilingual part was non-negotiable. I work and think in both languages, and if I'm going to write, I want both audiences to get the full thing — not a machine-translated afterthought.
+
+## What I actually got
+
+The first real article I published with this took me twelve minutes from triggering the skill to having it live on my domain. That included answering the questions, reviewing the output, and pushing to GitHub.
+
+<Callout type="info">
+  The skill reads the conversation history, not git. So it works even if you haven't committed yet.
+</Callout>
+
+The quality surprised me. It writes in my voice — short sentences, no filler, honest about trade-offs — because it calibrates against the existing content on the site before generating anything.
+
+## The only thing left to do
+
+Write more things worth writing about.
