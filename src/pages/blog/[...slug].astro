@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-const { title, date, description, lang, slug_base } = post.data;
+const { title, date, description, lang, slug_base, word_count } = post.data;
 
 const otherLang = lang === "en" ? "fr" : "en";
 const allPosts = await getCollection("blog");
@@ -44,111 +44,217 @@ const blogComponents = { CodeBlock, Screenshot, Callout, AnimatedSection, Demo, 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} - Byron Love</title>
+    <title>{title} — Byron Love</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="article" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
   </head>
-  <body>
-    <div class="min-h-screen bg-white">
-      <div class="container max-w-2xl mx-auto px-4 py-16">
-        <div class="space-y-6">
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <a href="/blog" class="text-sm text-black underline hover:no-underline transition-all">
-                ← blog
-              </a>
-              {otherPost && (
-                <a
-                  href={`/blog/${slug_base}-${otherLang}`}
-                  class="text-xs text-gray-400 hover:text-black transition-colors underline hover:no-underline"
-                >
-                  {otherLang === "fr" ? "Lire en français" : "Read in english"}
-                </a>
-              )}
-            </div>
-            <h1 class="text-2xl font-normal text-black pt-4">{title}</h1>
-            <p class="text-xs text-gray-400">{formatDate(date)}</p>
-          </div>
+  <body class="article-body">
+    <nav class="article-nav">
+      <a href="/blog" class="nav-back">← blog</a>
+      {otherPost && (
+        <a href={`/blog/${slug_base}-${otherLang}`} class="nav-lang">
+          {otherLang === "fr" ? "Lire en français" : "Read in english"}
+        </a>
+      )}
+    </nav>
 
-          <article class="prose-blog pt-2">
-            <Content components={blogComponents} />
-          </article>
+    <main class="article-main">
+      <header class="article-header">
+        <div class="article-meta">
+          {word_count && <span>{word_count.toLocaleString()} words</span>}
+          {word_count && <span class="meta-sep">·</span>}
+          <span>{formatDate(date)}</span>
         </div>
-      </div>
-    </div>
+        <h1 class="article-title">{title}</h1>
+        {description && <p class="article-description">{description}</p>}
+        <div class="article-divider">╌╌╌╌</div>
+      </header>
+
+      <article class="prose-blog">
+        <Content components={blogComponents} />
+      </article>
+    </main>
   </body>
 </html>
 
 <style is:global>
+  .article-body {
+    background-color: #F7F6F1;
+    min-height: 100vh;
+    color: #1a1a1a;
+  }
+
+  .article-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 0;
+  }
+
+  .nav-back {
+    font-family: ui-monospace, 'SF Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #888;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .nav-back:hover { color: #1a1a1a; }
+
+  .nav-lang {
+    font-family: ui-monospace, 'SF Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #888;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .nav-lang:hover { color: #1a1a1a; }
+
+  .article-main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 6rem;
+  }
+
+  .article-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .article-meta {
+    font-family: ui-monospace, 'SF Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .meta-sep { color: #ccc; }
+
+  .article-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: #1a1a1a;
+    margin: 0 0 1.25rem;
+    letter-spacing: -0.01em;
+  }
+
+  .article-description {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: #666;
+    font-style: italic;
+    margin: 0 auto 2rem;
+    max-width: 560px;
+  }
+
+  .article-divider {
+    font-family: ui-monospace, 'SF Mono', monospace;
+    color: #bbb;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  /* ── Prose ── */
   .prose-blog {
-    color: #000;
-    font-size: 0.875rem;
-    line-height: 1.75;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    color: #1a1a1a;
   }
 
   .prose-blog p {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+    text-align: justify;
+    hyphens: auto;
   }
 
   .prose-blog h2 {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-top: 2rem;
-    margin-bottom: 0.75rem;
-    color: #000;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.1875rem;
+    font-weight: 600;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+    letter-spacing: -0.01em;
   }
 
   .prose-blog h3 {
-    font-size: 0.875rem;
-    font-weight: 500;
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: #000;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: #1a1a1a;
   }
 
   .prose-blog a {
+    color: #1a1a1a;
     text-decoration: underline;
-    color: #000;
-    transition: text-decoration 0.15s;
+    text-underline-offset: 2px;
+    transition: opacity 0.15s;
   }
 
-  .prose-blog a:hover {
-    text-decoration: none;
-  }
+  .prose-blog a:hover { opacity: 0.6; }
+
+  .prose-blog strong { font-weight: 600; }
+
+  .prose-blog em { font-style: italic; }
 
   .prose-blog ul {
     list-style-type: disc;
-    padding-left: 1.25rem;
-    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .prose-blog ol {
     list-style-type: decimal;
-    padding-left: 1.25rem;
-    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .prose-blog li {
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.375rem;
+    text-align: left;
   }
 
   .prose-blog code {
-    font-family: ui-monospace, monospace;
-    font-size: 0.8125rem;
-    background: #f5f5f5;
-    padding: 0.125rem 0.375rem;
-    border-radius: 0.25rem;
-    color: #000;
+    font-family: ui-monospace, 'SF Mono', monospace;
+    font-size: 0.875em;
+    background: #EEEDEA;
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    color: #1a1a1a;
   }
 
   .prose-blog pre {
-    background: #f5f5f5;
-    padding: 1rem;
-    border-radius: 0.5rem;
+    background: #EEEDEA;
+    padding: 1.25rem;
+    border-radius: 6px;
     overflow-x: auto;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
   }
 
   .prose-blog pre code {
@@ -157,19 +263,48 @@ const blogComponents = { CodeBlock, Screenshot, Callout, AnimatedSection, Demo, 
   }
 
   .prose-blog blockquote {
-    border-left: 2px solid #e5e5e5;
-    padding-left: 1rem;
+    border-left: 2px solid #ccc;
+    padding-left: 1.25rem;
     color: #666;
-    margin-bottom: 1.25rem;
+    font-style: italic;
+    margin: 1.5rem 0;
   }
 
   .prose-blog hr {
     border: none;
-    border-top: 1px solid #f0f0f0;
-    margin: 2rem 0;
+    text-align: center;
+    color: #bbb;
+    font-family: ui-monospace, monospace;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    margin: 3rem 0;
   }
 
-  .prose-blog strong {
-    font-weight: 500;
+  .prose-blog hr::after {
+    content: '╌╌╌╌';
+  }
+
+  .prose-blog table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+    margin-bottom: 1.5rem;
+    font-family: ui-monospace, 'SF Mono', monospace;
+  }
+
+  .prose-blog th {
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid #ccc;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .prose-blog td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #e8e7e2;
+    font-size: 0.875rem;
   }
 </style>

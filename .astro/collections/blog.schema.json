@@ -46,6 +46,9 @@
         "cover": {
           "type": "string"
         },
+        "word_count": {
+          "type": "number"
+        },
         "$schema": {
           "type": "string"
         }
