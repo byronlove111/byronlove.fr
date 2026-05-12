@@ -55,9 +55,39 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
 
         {/* Header */}
         <header style={{ marginBottom: "3rem" }}>
-          <h1 style={{ fontFamily: SERIF, fontSize: "1.875rem", fontWeight: 400, color: TEXT, margin: "0 0 0.75rem", letterSpacing: "-0.01em" }}>
+          <h1 style={{ fontFamily: SERIF, fontSize: "1.625rem", fontWeight: 400, color: TEXT, margin: "0 0 2rem", letterSpacing: "-0.01em" }}>
             Byron Love
           </h1>
+
+          {/* Bio */}
+          <div style={{ display: "flex", flexDirection: "column" as const, gap: "1.25rem", marginBottom: "1.75rem" }}>
+            <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: "#666", margin: 0 }}>
+              I'm a {age} y/o software engineer based in Paris, building products that matter.
+              I built a community of 3,000+ followers on social media where I share about tech,
+              building in public, and startups.
+            </p>
+            <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: "#666", margin: 0 }}>
+              Interests:{" "}
+              {[
+                { label: "synthesizers", href: "/synthesizers" },
+                { label: "music", href: "/music" },
+                { label: "cinema", href: "/cinema" },
+                { label: "games", href: "/games" },
+              ].map((item, i, arr) => (
+                <span key={item.label}>
+                  <a href={item.href} style={{ ...linkStyle, color: "#666" }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.5")}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                  >
+                    {item.label}
+                  </a>
+                  {i < arr.length - 1 ? ", " : ""}
+                </span>
+              ))}, my wife
+            </p>
+          </div>
+
+          {/* Nav links */}
           <nav style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
             {[
               { label: "mail", href: "mailto:111byronlove@gmail.com" },
@@ -82,36 +112,8 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
           </nav>
         </header>
 
-        {/* Bio */}
-        <div style={{ display: "flex", flexDirection: "column" as const, gap: "1.25rem", marginBottom: "3.5rem" }}>
-          <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: "#666", margin: 0 }}>
-            I'm a {age} y/o software engineer based in Paris, building products that matter.
-            I built a community of 3,000+ followers on social media where I share about tech,
-            building in public, and startups.
-          </p>
-          <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: "#666", margin: 0 }}>
-            Interests:{" "}
-            {[
-              { label: "synthesizers", href: "/synthesizers" },
-              { label: "music", href: "/music" },
-              { label: "cinema", href: "/cinema" },
-              { label: "games", href: "/games" },
-            ].map((item, i, arr) => (
-              <span key={item.label}>
-                <a href={item.href} style={{ ...linkStyle, color: "#666" }}
-                  onMouseEnter={e => (e.currentTarget.style.opacity = "0.5")}
-                  onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                >
-                  {item.label}
-                </a>
-                {i < arr.length - 1 ? ", " : ""}
-              </span>
-            ))}, my wife
-          </p>
-        </div>
-
         {/* Experience */}
-        <section>
+        <section style={{ marginTop: "4rem" }}>
           <div style={{ fontFamily: MONO, fontSize: "0.6875rem", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: FAINT, marginBottom: "1.75rem" }}>
             Experience
           </div>
@@ -178,7 +180,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
 
         {/* Writing */}
         {posts.length > 0 && (
-          <section style={{ marginTop: "3.5rem" }}>
+          <section style={{ marginTop: "5rem" }}>
             <div style={{ fontFamily: MONO, fontSize: "0.6875rem", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: FAINT, marginBottom: "1.75rem" }}>
               Writing
             </div>
