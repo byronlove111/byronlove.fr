@@ -7,6 +7,7 @@ slug_base: component-showcase
 tags: ["mdx", "design", "composants"]
 ---
 
+import CodeBlock from "../../components/blog/CodeBlock.tsx";
 import TypographyExplorer from "../../components/blog/demos/components-showcase-typo.tsx";
 
 Chaque article sur ce blog est un fichier MDX. Ça veut dire que je peux embarquer des composants React directement dans la prose — pas en option, mais comme une partie intégrante de l'écriture. Voici un tour complet de tout ce qui est disponible.
@@ -15,9 +16,9 @@ Chaque article sur ce blog est un fichier MDX. Ça veut dire que je peux embarqu
 
 ## CodeBlock
 
-Pour les extraits de code. Fond noir, header avec le nom de fichier, bouton copier avec animation checkmark.
+Pour les extraits de code. Header chaud, **fade** entre « copy » et « copiad », trait du check dessiné, et halo vert discret sur le bouton au succès.
 
-<CodeBlock filename="src/pages/blog/[...slug].astro" lang="astro">
+<CodeBlock client:load filename="src/pages/blog/[...slug].astro" lang="astro">
 ```astro
 ---
 const { slug } = Astro.params;
@@ -34,7 +35,7 @@ const { Content } = await post.render();
 
 La prop `filename` est optionnelle — on peut l'omettre pour les snippets éphémères. La prop `lang` affiche un label dans le header quand il n'y a pas de nom de fichier.
 
-<CodeBlock lang="bash">
+<CodeBlock client:load lang="bash">
 ```bash
 npm run build
 git push origin main

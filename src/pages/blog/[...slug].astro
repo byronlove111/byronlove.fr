@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-import CodeBlock from "../../components/blog/CodeBlock";
 import Screenshot from "../../components/blog/Screenshot";
 import AnimatedSection from "../../components/blog/AnimatedSection";
 import Demo from "../../components/blog/Demo";
@@ -34,7 +33,7 @@ function formatDate(date: Date) {
   });
 }
 
-const blogComponents = { CodeBlock, Screenshot, AnimatedSection, Demo, Video };
+const blogComponents = { Screenshot, AnimatedSection, Demo, Video };
 ---
 
 <html lang={lang}>

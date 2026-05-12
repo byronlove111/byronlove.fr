@@ -7,6 +7,7 @@ slug_base: component-showcase
 tags: ["mdx", "design", "components"]
 ---
 
+import CodeBlock from "../../components/blog/CodeBlock.tsx";
 import TypographyExplorer from "../../components/blog/demos/components-showcase-typo.tsx";
 
 Every article on this blog is an MDX file. That means I can embed React components directly in the prose — not as an afterthought, but as a first-class part of the writing. Here's a tour of everything available.
@@ -15,9 +16,9 @@ Every article on this blog is an MDX file. That means I can embed React componen
 
 ## CodeBlock
 
-For code snippets. Dark background, filename header, copy button with a checkmark animation.
+For code snippets. Warm header, fuzzy **fade-in / fade-out** between "copy" and "copied", a quick checkmark stroke, and a tight emerald ring pulse on the button.
 
-<CodeBlock filename="src/pages/blog/[...slug].astro" lang="astro">
+<CodeBlock client:load filename="src/pages/blog/[...slug].astro" lang="astro">
 ```astro
 ---
 const { slug } = Astro.params;
@@ -34,7 +35,7 @@ const { Content } = await post.render();
 
 The filename prop is optional — leave it out for ephemeral snippets. The `lang` prop sets the label in the header when there's no filename.
 
-<CodeBlock lang="bash">
+<CodeBlock client:load lang="bash">
 ```bash
 npm run build
 git push origin main

@@ -7,6 +7,7 @@ slug_base: blog-that-writes-itself
 tags: ["cursor", "workflow", "mdx", "automatisation"]
 ---
 
+import CodeBlock from "../../components/blog/CodeBlock.tsx";
 import WorkflowSteps from "../../components/blog/demos/blog-that-writes-itself-workflow.tsx";
 
 Je déteste écrire. Ou plus précisément, j'aime écrire *pendant* que je build. Le contexte est frais, les insights sont là — mais les mettre en mots après coup, c'est courir un deuxième marathon après le premier.
@@ -35,7 +36,7 @@ Le skill sait quand injecter les bons composants — `<CodeBlock>` pour les snip
 
 Chaque article est un fichier `.mdx` dans `src/content/blog/`. Les content collections d'Astro gèrent le schema, le routing et la type safety. La page article charge les composants globalement — pas besoin d'imports dans l'article lui-même, sauf pour les composants de démo custom qui ont besoin de `client:load` pour s'hydrater côté client.
 
-<CodeBlock filename="src/content/blog/mon-article.fr.mdx" lang="mdx">
+<CodeBlock client:load filename="src/content/blog/mon-article.fr.mdx" lang="mdx">
 ```mdx
 ---
 title: "Ce que j'ai buildé cette semaine"
