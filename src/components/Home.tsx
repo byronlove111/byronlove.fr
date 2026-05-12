@@ -1,6 +1,6 @@
 const MONO = "ui-monospace, 'SF Mono', monospace";
 const SERIF = "'Lora', Georgia, serif";
-const BG = "#F7F6F1";
+const BG = "#F5F5F5";
 const TEXT = "#1a1a1a";
 const MUTED = "#888";
 const FAINT = "#999";

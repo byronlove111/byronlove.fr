@@ -27,7 +27,7 @@ export default function WorkflowSteps() {
               textTransform: "uppercase" as const,
               border: `1px solid ${i === active ? "#1a1a1a" : "#D0CEC8"}`,
               background: i === active ? "#1a1a1a" : "transparent",
-              color: i === active ? "#F7F6F1" : "#999",
+              color: i === active ? "#F5F5F5" : "#999",
               cursor: "pointer",
               transition: "all 0.15s",
             }}
@@ -36,7 +36,7 @@ export default function WorkflowSteps() {
           </button>
         ))}
       </div>
-      <div style={{ padding: "1.25rem", background: "#F0EFE9", borderRadius: "4px", border: "1px solid #E0DED8" }}>
+      <div style={{ padding: "1.25rem", background: "#F5F5F5", borderRadius: "4px", border: "1px solid #E0DED8" }}>
         <div style={{ fontSize: "0.6875rem", letterSpacing: "0.06em", textTransform: "uppercase" as const, color: "#999", marginBottom: "0.5rem" }}>
           Step {step.id} — {step.actor}
         </div>

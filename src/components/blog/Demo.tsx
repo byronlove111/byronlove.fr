@@ -20,7 +20,7 @@ export default function Demo({ children }: DemoProps) {
       borderRadius: "8px",
       border: "1px solid #E0DED8",
       overflow: "hidden",
-      background: "#F5F4F0",
+      background: "#F5F5F5",
     }}>
       <div style={{
         display: "flex",
@@ -36,7 +36,7 @@ export default function Demo({ children }: DemoProps) {
       <div style={{
         padding: "1.25rem 1.25rem 1.5rem",
         minHeight: "160px",
-        background: "#F5F4F0",
+        background: "#F5F5F5",
       }}>
         {children}
       </div>

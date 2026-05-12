@@ -38,7 +38,7 @@ const frameShellStyle: React.CSSProperties = {
   borderRadius: "8px",
   border: "1px solid #E0DED8",
   overflow: "hidden",
-  background: "#F5F4F0",
+  background: "#F5F5F5",
 };
 
 const captionParagraphStyle: React.CSSProperties = {
@@ -170,7 +170,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
               flexDirection: "column",
               alignItems: "stretch",
               justifyContent: "center",
-              background: "rgba(252, 251, 248, 0.68)",
+              background: "rgba(245, 245, 245, 0.68)",
               backdropFilter: "blur(78px) saturate(1.04)",
               WebkitBackdropFilter: "blur(78px) saturate(1.04)",
               cursor: "default",

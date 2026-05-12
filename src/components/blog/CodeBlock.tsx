@@ -74,7 +74,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
       borderRadius: "8px",
       border: "1px solid #E0DED8",
       overflow: "hidden",
-      background: "#F5F4F0",
+      background: "#F5F5F5",
     }}>
       <div style={{
         display: "flex",
@@ -163,7 +163,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
           fontSize: "0.8125rem",
           lineHeight: "1.7",
           fontFamily: "ui-monospace, 'SF Mono', 'Cascadia Code', monospace",
-          background: "#F5F4F0",
+          background: "#F5F5F5",
         }}
       >
         {children}

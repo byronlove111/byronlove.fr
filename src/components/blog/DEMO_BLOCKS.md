@@ -8,7 +8,7 @@ Interactive examples live in **`src/components/blog/demos/`** and are rendered i
 |------|--------|
 | Border | `#E0DED8` |
 | Chrome bar (title area) | `#EEEDEA` |
-| Main surface (canvas behind controls) | `#F5F4F0` |
+| Main surface (canvas behind controls) | `#F5F5F5` |
 | Inset panel (preview / “paper”) | `#fff` or same cream as needed |
 | Primary text | `#1a1a1a` |
 | Meta / labels | `#777`, monospace `ui-monospace, 'SF Mono', 'Cascadia Code', monospace`, `font-size: 0.6875rem`, `letter-spacing: 0.02em` |
