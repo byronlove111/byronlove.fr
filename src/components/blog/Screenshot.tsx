@@ -54,8 +54,8 @@ const captionParagraphStyle: React.CSSProperties = {
 };
 
 /** Stagger letters in sync with the image reveal (starts at t=0). */
-const CAPTION_STAGGER_SEC = 0.028;
-const CAPTION_LETTER_DURATION_SEC = 0.26;
+const CAPTION_STAGGER_SEC = 0.014;
+const CAPTION_LETTER_DURATION_SEC = 0.16;
 const captionLetterEase = [0.22, 1, 0.36, 1] as const;
 
 export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) {
