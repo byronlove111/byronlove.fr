@@ -83,38 +83,16 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
       (function () {
         const nav = document.getElementById("article-nav");
         const spacer = document.getElementById("article-nav-spacer");
-        const headerEl = document.querySelector(".article-header");
-        const proseEl = document.querySelector(".prose-blog");
         if (!nav || !spacer) return;
 
         function setSpacer() {
           spacer.style.height = nav.offsetHeight + "px";
         }
 
-        function scrollMaxY() {
-          const el = document.documentElement;
-          return Math.max(0, el.scrollHeight - window.innerHeight);
-        }
-
         function updateNavState() {
-          var navH = nav.offsetHeight;
-          var margin = 8;
           var y = window.scrollY || document.documentElement.scrollTop || 0;
-          var maxY = scrollMaxY();
-          /* Short pages never bring the masthead bottom under the nav; still show glass at scroll end */
-          var atBottom = maxY > 40 && y >= maxY - 4;
-
-          var lineTop;
-          if (proseEl) {
-            lineTop = proseEl.getBoundingClientRect().top;
-          } else if (headerEl) {
-            lineTop = headerEl.getBoundingClientRect().bottom;
-          } else {
-            lineTop = Infinity;
-          }
-
-          var crossedIntoBody = lineTop <= navH + margin;
-          nav.classList.toggle("article-nav--scrolled", crossedIntoBody || atBottom);
+          /* Glass dès que le défilement commence (2px = filtre jitter / sous-pixels) */
+          nav.classList.toggle("article-nav--scrolled", y >= 2);
         }
 
         function sync() {
