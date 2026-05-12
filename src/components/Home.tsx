@@ -112,7 +112,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
 
         {/* Experience */}
         <section style={{ marginTop: "4rem" }}>
-          <div style={{ fontFamily: MONO, fontSize: "0.6875rem", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: FAINT, marginBottom: "1.75rem" }}>
+          <div style={{ fontFamily: SERIF, fontSize: "0.875rem", color: FAINT, marginBottom: "1.75rem" }}>
             Experience
           </div>
 
@@ -163,7 +163,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   >
                     {job.name}
                   </a>
-                  <span style={{ fontFamily: MONO, fontSize: "0.625rem", letterSpacing: "0.06em", textTransform: "uppercase" as const, color: "#aaa" }}>
+                  <span style={{ fontFamily: SERIF, fontSize: "0.875rem", color: "#aaa" }}>
                     {job.role} · {job.period}
                   </span>
                 </div>
@@ -179,7 +179,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
         {/* Writing */}
         {posts.length > 0 && (
           <section style={{ marginTop: "5rem" }}>
-            <div style={{ fontFamily: MONO, fontSize: "0.6875rem", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: FAINT, marginBottom: "1.75rem" }}>
+            <div style={{ fontFamily: SERIF, fontSize: "0.875rem", color: FAINT, marginBottom: "1.75rem" }}>
               Writing
             </div>
             <div>
@@ -195,7 +195,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                     <span style={{ fontFamily: SERIF, fontSize: "1rem", fontWeight: 500, color: TEXT, lineHeight: 1.3 }}>
                       {post.title}
                     </span>
-                    <span style={{ fontFamily: MONO, fontSize: "0.625rem", letterSpacing: "0.06em", textTransform: "uppercase" as const, color: "#aaa", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
+                    <span style={{ fontFamily: SERIF, fontSize: "0.875rem", color: "#aaa", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                       {formatDate(post.date)}
                     </span>
                   </div>
