@@ -1,19 +1,32 @@
 <div class="bottom-fade" aria-hidden="true"></div>
 
 <script>
-  import { defineSound, ensureReady } from "@web-kits/audio";
+  let _ctx: AudioContext | null = null;
 
-  const keyPress = defineSound({
-    source: { type: "sine", frequency: 1100 },
-    envelope: { attack: 0, decay: 0.01, sustain: 0, release: 0.003 },
-    gain: 0.06,
-  });
+  function getCtx(): AudioContext {
+    if (!_ctx) _ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    return _ctx;
+  }
+
+  function playKeyPress() {
+    const ctx = getCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(1100, ctx.currentTime);
+    gain.gain.setValueAtTime(0.06, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.013);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.015);
+  }
 
   document.addEventListener("click", async (e) => {
-    const target = e.target as HTMLElement;
-    const link = target.closest("a[href]");
+    const link = (e.target as HTMLElement).closest("a[href]");
     if (!link) return;
-    await ensureReady();
-    keyPress();
+    const ctx = getCtx();
+    if (ctx.state === "suspended") await ctx.resume();
+    playKeyPress();
   });
 </script>
