@@ -56,8 +56,11 @@ const captionParagraphStyle: React.CSSProperties = {
 /** Stagger letters in sync with the image reveal (starts at t=0). */
 const CAPTION_STAGGER_SEC = 0.028;
 const CAPTION_LETTER_DURATION_SEC = 0.26;
-const CAPTION_LINE_UNBLUR_SEC = 0.48;
+const CAPTION_LINE_SOFTEN_DURATION_SEC = 0.48;
 const captionLetterEase = [0.22, 1, 0.36, 1] as const;
+/** Readable “soft caption” via shadow (avoid parent filter — breaks opacity on child letters in some GPUs). */
+const captionWhileRevealingShadow =
+  "0 0 14px rgba(48,46,43,0.55), 0 0 30px rgba(48,46,43,0.35)";
 
 export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) {
   const [open, setOpen] = useState(false);
@@ -89,7 +92,8 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
   const reducedMotion = useReducedMotion();
   const [captionLineSharp, setCaptionLineSharp] = useState(false);
 
-  /** Keep the whole caption blurred until every letter has finished its stagger. */
+  /** Soft line until stagger ends; sharpening uses `textShadow` (parent `filter` breaks letter opacity). */
+
   useEffect(() => {
     if (!open || !caption) {
       setCaptionLineSharp(false);
@@ -285,14 +289,16 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                   <motion.p
                     id={`caption-${reactId}`}
                     aria-label={caption}
-                    initial={{ opacity: 1, filter: "blur(14px)" }}
+                    initial={{ opacity: 1, textShadow: captionWhileRevealingShadow }}
                     animate={{
                       opacity: 1,
-                      filter: captionLineSharp ? "blur(0px)" : "blur(14px)",
+                      textShadow: captionLineSharp
+                        ? "none"
+                        : captionWhileRevealingShadow,
                     }}
                     transition={{
-                      filter: {
-                        duration: CAPTION_LINE_UNBLUR_SEC,
+                      textShadow: {
+                        duration: CAPTION_LINE_SOFTEN_DURATION_SEC,
                         ease: captionLetterEase,
                       },
                       opacity: { duration: 0.12 },
