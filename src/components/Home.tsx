@@ -32,10 +32,8 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
   };
 
   const monoLinkStyle = {
-    fontFamily: MONO,
-    fontSize: "0.6875rem",
-    letterSpacing: "0.08em",
-    textTransform: "uppercase" as const,
+    fontFamily: SERIF,
+    fontSize: "1rem",
     color: MUTED,
     textDecoration: "none",
     transition: "color 0.15s",
@@ -105,7 +103,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   {item.label}
                 </a>
                 {i < arr.length - 1 && (
-                  <span style={{ fontFamily: MONO, fontSize: "0.625rem", color: "#ccc" }}>·</span>
+                  <span style={{ fontFamily: SERIF, fontSize: "1rem", color: "#ccc" }}>·</span>
                 )}
               </span>
             ))}
