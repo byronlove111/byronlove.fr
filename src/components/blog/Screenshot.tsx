@@ -46,7 +46,6 @@ const captionParagraphStyle: React.CSSProperties = {
   maxWidth: "min(42rem, 90vw)",
   textAlign: "center",
   fontFamily: SERIF,
-  fontStyle: "italic",
   fontSize: "0.9375rem",
   lineHeight: 1.55,
   color: "#444",
