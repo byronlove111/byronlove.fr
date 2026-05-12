@@ -65,6 +65,8 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
   };
 
   const displayLabel = filename ?? lang;
+  const shift = "0.28rem";
+  const labelMotion = "opacity 0.2s ease-out, transform 0.2s ease-out";
 
   return (
     <div style={{
@@ -115,7 +117,36 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             userSelect: "none" as const,
           }}
         >
-          {copied ? "copied" : "copy"}
+          <span
+            aria-hidden
+            style={{
+              display: "inline-grid",
+              whiteSpace: "nowrap" as const,
+            }}
+          >
+            <span
+              style={{
+                gridRow: 1,
+                gridColumn: 1,
+                transition: labelMotion,
+                opacity: copied ? 0 : 1,
+                transform: copied ? `translateY(-${shift})` : "translateY(0)",
+              }}
+            >
+              copy
+            </span>
+            <span
+              style={{
+                gridRow: 1,
+                gridColumn: 1,
+                transition: labelMotion,
+                opacity: copied ? 1 : 0,
+                transform: copied ? "translateY(0)" : `translateY(${shift})`,
+              }}
+            >
+              copied
+            </span>
+          </span>
         </button>
       </div>
 
