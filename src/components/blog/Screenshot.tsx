@@ -41,14 +41,10 @@ const frameShellStyle: React.CSSProperties = {
   background: "#F5F4F0",
 };
 
-const layoutSpring = { type: "spring" as const, stiffness: 360, damping: 34 };
-
 export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) {
   const [open, setOpen] = useState(false);
   const openerRef = useRef<HTMLButtonElement>(null);
   const reactId = useId().replace(/:/g, "");
-  const reducedMotion = useReducedMotion();
-  const layoutSyncId = reducedMotion ? undefined : `screenshot-${reactId}`;
   const wasOpenRef = useRef(false);
 
   useEffect(() => {
@@ -72,11 +68,21 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
     wasOpenRef.current = open;
   }, [open]);
 
-  const thumbTransitions = reducedMotion
-    ? { opacity: { duration: 0.01 }, layout: { duration: 0.2 } as const }
+  const reducedMotion = useReducedMotion();
+
+  /** Lightbox content: fades in while scaling slightly up from viewport center */
+  const lightboxReveal = reducedMotion
+    ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
     : {
-        opacity: { duration: 0.16, ease: "easeOut" as const },
-        layout: layoutSpring,
+        initial: { opacity: 0, scale: 0.91 },
+        animate: { opacity: 1, scale: 1 },
+        exit: { opacity: 0, scale: 0.95 },
+      };
+  const lightboxRevealTransit = reducedMotion
+    ? { opacity: { duration: 0.18, ease: "easeOut" as const } }
+    : {
+        opacity: { duration: 0.28, ease: [0.16, 1, 0.3, 1] as const },
+        scale: { duration: 0.32, ease: [0.16, 1, 0.3, 1] as const },
       };
 
   const lightboxImgMaxH = caption ? "min(62vh, 820px)" : "min(72vh, 860px)";
@@ -102,12 +108,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
             textAlign: "left" as const,
           }}
         >
-          <motion.div
-            layoutId={layoutSyncId}
-            animate={{ opacity: open ? 0 : 1 }}
-            transition={thumbTransitions}
-            style={frameShellStyle}
-          >
+          <div style={frameShellStyle}>
             <WindowChromeBar />
             <div style={{ background: "#fff", lineHeight: 0 }}>
               <img
@@ -122,7 +123,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                 }}
               />
             </div>
-          </motion.div>
+          </div>
         </button>
 
         {caption && (
@@ -215,16 +216,17 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
               }}
             >
               <motion.div
-                layoutId={layoutSyncId}
-                transition={{
-                  layout: reducedMotion ? { duration: 0.2 } : layoutSpring,
-                }}
+                initial={lightboxReveal.initial}
+                animate={lightboxReveal.animate}
+                exit={lightboxReveal.exit}
+                transition={lightboxRevealTransit}
                 style={{
                   ...frameShellStyle,
                   maxWidth: "min(92vw, 1040px)",
                   width: "100%",
                   boxShadow: "0 28px 80px rgba(0,0,0,0.1)",
                   cursor: "default",
+                  transformOrigin: "center center",
                 }}
               >
                 <WindowChromeBar />
