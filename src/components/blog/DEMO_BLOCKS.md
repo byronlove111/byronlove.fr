@@ -16,7 +16,7 @@ Interactive examples live in **`src/components/blog/demos/`** and are rendered i
 ## Layout
 
 - **Outer shell:** `border-radius: 8px`, `border: 1px solid #E0DED8`, `overflow: hidden`, `margin: 1.75rem 0` (consistent with `CodeBlock`).
-- **Chrome row:** `height: 38px`, `padding: 0 1rem`, bottom border `#E0DED8`, **`border-bottom-left/right-radius: 6px`** so it matches the code block header seam.
+- **Chrome row:** `height: 38px`, `padding: 0 1rem`, bottom border `#E0DED8`.
 - **Content padding:** similar to the code body — about `1.125rem 1.25rem` to `1.5rem` horizontal.
 
 ## Avoid

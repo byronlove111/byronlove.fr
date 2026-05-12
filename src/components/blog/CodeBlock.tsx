@@ -84,8 +84,6 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
         height: "38px",
         background: "#EEEDEA",
         borderBottom: "1px solid #E0DED8",
-        borderBottomLeftRadius: "6px",
-        borderBottomRightRadius: "6px",
       }}>
         <span style={{
           fontFamily: "ui-monospace, 'SF Mono', 'Cascadia Code', monospace",

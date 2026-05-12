@@ -29,8 +29,6 @@ export default function Demo({ children }: DemoProps) {
         height: "38px",
         background: "#EEEDEA",
         borderBottom: "1px solid #E0DED8",
-        borderBottomLeftRadius: "6px",
-        borderBottomRightRadius: "6px",
       }}>
         <TrafficLights />
       </div>
