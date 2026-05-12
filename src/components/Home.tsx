@@ -152,7 +152,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
               },
             ].map((job) => (
               <div key={job.name}>
-                <div style={{ marginBottom: "0.375rem" }}>
+                <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "1rem", marginBottom: "0.375rem" }}>
                   <a
                     href={job.href}
                     target="_blank"
