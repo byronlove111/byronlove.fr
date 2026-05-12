@@ -162,7 +162,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
               background: "rgba(252, 251, 247, 0.88)",
               backdropFilter: "blur(14px)",
               WebkitBackdropFilter: "blur(14px)",
-              cursor: "zoom-out",
+              cursor: "default",
               paddingTop: "3.25rem",
               paddingBottom: "2rem",
               paddingLeft: "max(1.25rem, env(safe-area-inset-left))",
@@ -211,6 +211,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                 minHeight: 0,
                 gap: caption ? "1.25rem" : 0,
                 width: "100%",
+                cursor: "default",
               }}
             >
               <motion.div
@@ -223,6 +224,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                   maxWidth: "min(92vw, 1040px)",
                   width: "100%",
                   boxShadow: "0 28px 80px rgba(0,0,0,0.1)",
+                  cursor: "default",
                 }}
               >
                 <WindowChromeBar />
