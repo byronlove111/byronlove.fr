@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
 
 interface CodeBlockProps {
   filename?: string;
@@ -54,8 +53,6 @@ const CopyIcon = () => (
 );
 
 const shift = "0.28rem";
-
-const layoutSpring = { type: "spring" as const, stiffness: 420, damping: 34, mass: 0.75 };
 
 export default function CodeBlock({ filename, lang, children }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
@@ -128,22 +125,49 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             letterSpacing: "0.06em",
           }}
         >
-          <motion.span
-            layout="position"
-            transition={layoutSpring}
+          <span
             style={{
+              position: "relative",
+              width: 12,
+              height: 12,
+              flexShrink: 0,
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              flexShrink: 0,
-              lineHeight: 0,
             }}
           >
-            <CopyIcon />
-          </motion.span>
-          <motion.span
-            layout="size"
-            transition={layoutSpring}
+            <span
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: labelTransition,
+                opacity: copied ? 0 : 1,
+                transform: copied ? `translateY(-${shift})` : "translateY(0)",
+              }}
+              aria-hidden
+            >
+              <CopyIcon />
+            </span>
+            <span
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: labelTransition,
+                opacity: copied ? 1 : 0,
+                transform: copied ? "translateY(0)" : `translateY(${shift})`,
+              }}
+              aria-hidden
+            >
+              <CopyIcon />
+            </span>
+          </span>
+          <span
             style={{
               position: "relative",
               overflow: "hidden",
@@ -192,7 +216,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             >
               copied
             </span>
-          </motion.span>
+          </span>
         </button>
       </div>
 
