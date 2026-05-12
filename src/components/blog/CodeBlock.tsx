@@ -40,7 +40,9 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
   };
 
   const displayLabel = filename ?? lang;
-  const transition = "opacity 0.2s ease-out, transform 0.2s ease-out";
+  const labelTransition = "opacity 0.2s ease-out, transform 0.2s ease-out";
+  const chromeEase = "cubic-bezier(0.22, 1, 0.36, 1)";
+  const chromeDur = "0.24s";
 
   return (
     <div style={{
@@ -78,7 +80,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 0,
+            gap: copied ? "0.48rem" : 0,
             padding: "0.3rem 0.35rem",
             borderRadius: "5px",
             background: "none",
@@ -88,8 +90,8 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             fontFamily: "ui-monospace, 'SF Mono', monospace",
             fontSize: "0.625rem",
             letterSpacing: "0.06em",
-            transform: copied ? "translateX(-5px)" : "translateX(0)",
-            transition: "transform 0.22s cubic-bezier(0.22, 1, 0.36, 1)",
+            transform: copied ? "translateX(-14px)" : "translateX(0)",
+            transition: `transform ${chromeDur} ${chromeEase}, gap ${chromeDur} ${chromeEase}`,
           }}
         >
           <CopyIcon />
@@ -101,7 +103,8 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
               minWidth: "3.25rem",
               lineHeight: 1.45,
               verticalAlign: "middle",
-              marginLeft: "-0.3125rem",
+              marginLeft: copied ? 0 : "-0.3125rem",
+              transition: `margin-left ${chromeDur} ${chromeEase}`,
             }}
           >
             <span
@@ -123,7 +126,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
                 right: 0,
                 lineHeight: "inherit",
                 whiteSpace: "nowrap" as const,
-                transition,
+                transition: labelTransition,
                 opacity: copied ? 0 : 1,
                 transform: copied ? `translateY(-${shift})` : "translateY(0)",
               }}
@@ -138,7 +141,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
                 right: 0,
                 lineHeight: "inherit",
                 whiteSpace: "nowrap" as const,
-                transition,
+                transition: labelTransition,
                 opacity: copied ? 1 : 0,
                 transform: copied ? "translateY(0)" : `translateY(${shift})`,
               }}
