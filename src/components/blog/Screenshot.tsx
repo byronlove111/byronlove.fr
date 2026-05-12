@@ -85,8 +85,9 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
         scale: { duration: 0.32, ease: [0.16, 1, 0.3, 1] as const },
       };
 
-  const lightboxImgMaxH = caption ? "min(62vh, 820px)" : "min(72vh, 860px)";
-  const lightboxImgMaxW = "min(92vw, 1040px)";
+  /** Lightbox: allow a clearly larger preview than in-article thumbs */
+  const lightboxImgMaxH = caption ? "min(74vh, 960px)" : "min(86vh, 1000px)";
+  const lightboxImgMaxW = "min(96vw, 1440px)";
 
   return (
     <>
@@ -170,8 +171,8 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
               cursor: "default",
               paddingTop: "3.25rem",
               paddingBottom: "2rem",
-              paddingLeft: "max(1.25rem, env(safe-area-inset-left))",
-              paddingRight: "max(1.25rem, env(safe-area-inset-right))",
+              paddingLeft: "max(0.75rem, env(safe-area-inset-left))",
+              paddingRight: "max(0.75rem, env(safe-area-inset-right))",
             }}
           >
             <motion.button
