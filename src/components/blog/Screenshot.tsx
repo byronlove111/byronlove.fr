@@ -41,6 +41,23 @@ const frameShellStyle: React.CSSProperties = {
   background: "#F5F4F0",
 };
 
+const captionParagraphStyle: React.CSSProperties = {
+  margin: 0,
+  maxWidth: "min(42rem, 90vw)",
+  textAlign: "center",
+  fontFamily: SERIF,
+  fontStyle: "italic",
+  fontSize: "0.9375rem",
+  lineHeight: 1.55,
+  color: "#444",
+  paddingInline: "0.5rem",
+};
+
+/** Stagger letters in sync with the image reveal (starts at t=0). */
+const CAPTION_STAGGER_SEC = 0.032;
+const CAPTION_LETTER_DURATION_SEC = 0.34;
+const captionLetterEase = [0.22, 1, 0.36, 1] as const;
+
 export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) {
   const [open, setOpen] = useState(false);
   const openerRef = useRef<HTMLButtonElement>(null);
@@ -90,24 +107,6 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
   const lightboxImgMaxW = "min(96vw, 1440px)";
 
   const thumbLabel = [alt, caption].filter(Boolean).join(" — ") || "Open enlarged screenshot";
-
-  const captionReveal = reducedMotion
-    ? {
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        exit: { opacity: 0 },
-        transition: { duration: 0.22, delay: 0.1, ease: "easeOut" as const },
-      }
-    : {
-        initial: { opacity: 0, x: "-1.75rem", filter: "blur(12px)" },
-        animate: { opacity: 1, x: 0, filter: "blur(0px)" },
-        exit: { opacity: 0, x: "-0.75rem", filter: "blur(8px)" },
-        transition: {
-          delay: 0.16,
-          duration: 0.5,
-          ease: [0.22, 1, 0.36, 1] as const,
-        },
-      };
 
   return (
     <>
@@ -254,28 +253,40 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                   />
                 </div>
               </motion.div>
-              {caption && (
-                <motion.p
-                  id={`caption-${reactId}`}
-                  initial={captionReveal.initial}
-                  animate={captionReveal.animate}
-                  exit={captionReveal.exit}
-                  transition={captionReveal.transition}
-                  style={{
-                    margin: 0,
-                    maxWidth: "min(42rem, 90vw)",
-                    textAlign: "center",
-                    fontFamily: SERIF,
-                    fontStyle: "italic" as const,
-                    fontSize: "0.9375rem",
-                    lineHeight: 1.55,
-                    color: "#444",
-                    paddingInline: "0.5rem",
-                  }}
-                >
-                  {caption}
-                </motion.p>
-              )}
+              {caption &&
+                (reducedMotion ? (
+                  <p id={`caption-${reactId}`} style={captionParagraphStyle}>
+                    {caption}
+                  </p>
+                ) : (
+                  <motion.p
+                    id={`caption-${reactId}`}
+                    aria-label={caption}
+                    initial={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.12 }}
+                    style={captionParagraphStyle}
+                  >
+                    {Array.from(caption).map((ch, i) => {
+                      const glyph = ch === " " ? "\u00A0" : ch;
+                      return (
+                        <motion.span
+                          key={`${reactId}-${i}-${glyph}`}
+                          style={{ display: "inline-block" }}
+                          initial={{ opacity: 0, x: "-0.12em", filter: "blur(7px)" }}
+                          animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                          transition={{
+                            delay: i * CAPTION_STAGGER_SEC,
+                            duration: CAPTION_LETTER_DURATION_SEC,
+                            ease: captionLetterEase,
+                          }}
+                        >
+                          {glyph}
+                        </motion.span>
+                      );
+                    })}
+                  </motion.p>
+                ))}
             </div>
           </motion.div>
         )}
