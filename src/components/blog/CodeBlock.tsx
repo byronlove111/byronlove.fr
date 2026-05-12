@@ -114,6 +114,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
           style={{
             display: "flex",
             alignItems: "center",
+            flexShrink: 0,
             gap: copied ? "0.22rem" : 0,
             padding: "0.3rem 0 0.3rem 0.35rem",
             borderRadius: "5px",
@@ -134,31 +135,20 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
               position: "relative",
               overflow: "hidden",
               display: "inline-block",
-              minWidth: "3.25rem",
-              lineHeight: 1.45,
+              /* Phantom width was locked to longest label ("copied") while idle — huge gap after "copy" */
+              width: copied ? "8.95ch" : "5ch",
+              height: "1.45em",
               verticalAlign: "middle",
               marginLeft: copied ? 0 : "-0.3125rem",
-              transition: `margin-left ${chromeDur} ${chromeEase}`,
+              transition: `margin-left ${chromeDur} ${chromeEase}, width ${chromeDur} ${chromeEase}`,
             }}
           >
-            <span
-              aria-hidden
-              style={{
-                visibility: "hidden",
-                display: "block",
-                whiteSpace: "nowrap" as const,
-                lineHeight: "inherit",
-              }}
-            >
-              copied
-            </span>
             <span
               style={{
                 position: "absolute",
                 left: 0,
                 top: 0,
-                right: 0,
-                lineHeight: "inherit",
+                lineHeight: 1.45,
                 whiteSpace: "nowrap" as const,
                 transition: labelTransition,
                 opacity: copied ? 0 : 1,
@@ -172,8 +162,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
                 position: "absolute",
                 left: 0,
                 top: 0,
-                right: 0,
-                lineHeight: "inherit",
+                lineHeight: 1.45,
                 whiteSpace: "nowrap" as const,
                 transition: labelTransition,
                 opacity: copied ? 1 : 0,
