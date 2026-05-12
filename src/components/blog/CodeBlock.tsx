@@ -80,7 +80,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 0,
+            gap: copied ? "0.22rem" : 0,
             padding: "0.3rem 0.35rem",
             borderRadius: "5px",
             background: "none",
@@ -91,7 +91,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             fontSize: "0.625rem",
             letterSpacing: "0.06em",
             transform: copied ? "translateX(-14px)" : "translateX(0)",
-            transition: `transform ${chromeDur} ${chromeEase}`,
+            transition: `transform ${chromeDur} ${chromeEase}, gap ${chromeDur} ${chromeEase}`,
           }}
         >
           <CopyIcon />
@@ -103,7 +103,8 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
               minWidth: "3.25rem",
               lineHeight: 1.45,
               verticalAlign: "middle",
-              marginLeft: "-0.3125rem",
+              marginLeft: copied ? 0 : "-0.3125rem",
+              transition: `margin-left ${chromeDur} ${chromeEase}`,
             }}
           >
             <span
