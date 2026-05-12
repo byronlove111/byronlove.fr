@@ -1,4 +1,5 @@
 import { usePatch } from "@web-kits/audio/react";
+import { ensureReady } from "@web-kits/audio";
 
 const MONO = "ui-monospace, 'SF Mono', monospace";
 const SERIF = "'Lora', Georgia, serif";
@@ -16,6 +17,11 @@ interface Post {
 
 export default function Home({ posts = [] }: { posts?: Post[] }) {
   const patch = usePatch("/patches/minimal.json");
+
+  const play = async (sound: string) => {
+    await ensureReady();
+    if (patch.ready) patch.play(sound);
+  };
 
   const calculateAge = () => {
     const birthDate = new Date(2002, 6, 7);
@@ -80,7 +86,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   <a href={item.href} style={{ ...linkStyle, color: TEXT }}
                     onMouseEnter={e => (e.currentTarget.style.opacity = "0.5")}
                     onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                    onClick={() => { if (patch.ready) patch.play("key-press"); }}
+                    onClick={() => play("key-press")}
                   >
                     {item.label}
                   </a>
@@ -104,7 +110,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   style={monoLinkStyle}
                   onMouseEnter={e => (e.currentTarget.style.color = TEXT)}
                   onMouseLeave={e => (e.currentTarget.style.color = MUTED)}
-                  onClick={() => { if (patch.ready) patch.play("key-press"); }}
+                  onClick={() => play("key-press")}
                 >
                   {item.label}
                 </a>
@@ -166,7 +172,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                     style={{ fontFamily: SERIF, fontSize: "1rem", fontWeight: 500, color: TEXT, textDecoration: "underline", textUnderlineOffset: "2px" }}
                     onMouseEnter={e => (e.currentTarget.style.opacity = "0.6")}
                     onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                    onClick={() => { if (patch.ready) patch.play("key-press"); }}
+                    onClick={() => play("key-press")}
                   >
                     {job.name}
                   </a>
@@ -198,7 +204,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   style={{ display: "block", padding: "1.5rem 0", borderBottom: "1px solid #E8E7E2", textDecoration: "none" }}
                   onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
                   onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                  onClick={() => { if (patch.ready) patch.play("key-press"); }}
+                  onClick={() => play("key-press")}
                 >
                   <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "1rem", marginBottom: "0.375rem" }}>
                     <span style={{ fontFamily: SERIF, fontSize: "1rem", fontWeight: 500, color: TEXT, lineHeight: 1.3 }}>

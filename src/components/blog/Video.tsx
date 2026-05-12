@@ -5,6 +5,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { usePatch } from "@web-kits/audio/react";
+import { ensureReady } from "@web-kits/audio";
 
 interface VideoProps {
   src: string;
@@ -57,12 +58,14 @@ export default function Video({ src, caption, alt = "" }: VideoProps) {
   const wasOpenRef = useRef(false);
   const patch = usePatch("/patches/minimal.json");
 
-  const handleOpen = () => {
+  const handleOpen = async () => {
+    await ensureReady();
     if (patch.ready) patch.play("toggle-on");
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = async () => {
+    await ensureReady();
     if (patch.ready) patch.play("toggle-off");
     setOpen(false);
   };
