@@ -152,7 +152,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
               },
             ].map((job) => (
               <div key={job.name}>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.625rem", marginBottom: "0.375rem", flexWrap: "wrap" as const }}>
+                <div style={{ marginBottom: "0.375rem" }}>
                   <a
                     href={job.href}
                     target="_blank"
@@ -163,6 +163,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   >
                     {job.name}
                   </a>
+                  {" "}
                   <span style={{ fontFamily: SERIF, fontSize: "0.875rem", color: "#aaa" }}>
                     {job.role} · {job.period}
                   </span>
