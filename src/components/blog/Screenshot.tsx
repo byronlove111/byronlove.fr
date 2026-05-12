@@ -4,8 +4,16 @@ import {
   AnimatePresence,
   useReducedMotion,
 } from "framer-motion";
-import { usePatch } from "@web-kits/audio/react";
-import { ensureReady } from "@web-kits/audio";
+import { defineSound, ensureReady } from "@web-kits/audio";
+
+const toggleOnSound = defineSound({ layers: [
+  { source: { type: "sine" as const, frequency: 880 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, gain: 0.08 },
+  { source: { type: "sine" as const, frequency: 1320 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, delay: 0.03, gain: 0.07 },
+]});
+const toggleOffSound = defineSound({ layers: [
+  { source: { type: "sine" as const, frequency: 1320 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, gain: 0.08 },
+  { source: { type: "sine" as const, frequency: 880 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, delay: 0.03, gain: 0.07 },
+]});
 
 interface ScreenshotProps {
   src: string;
@@ -44,17 +52,16 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
   const openerRef = useRef<HTMLButtonElement>(null);
   const reactId = useId().replace(/:/g, "");
   const wasOpenRef = useRef(false);
-  const patch = usePatch("/patches/minimal.json");
 
   const handleOpen = async () => {
     await ensureReady();
-    if (patch.ready) patch.play("toggle-on");
+    toggleOnSound();
     setOpen(true);
   };
 
   const handleClose = async () => {
     await ensureReady();
-    if (patch.ready) patch.play("toggle-off");
+    toggleOffSound();
     setOpen(false);
   };
 
