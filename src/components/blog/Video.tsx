@@ -29,7 +29,7 @@ const WindowChromeBar = () => (
     padding: "0 1rem",
     height: "38px",
     borderBottom: "1px solid #E0DED8",
-    background: "#EEEDEA",
+    background: "#F5F5F5",
   }}>
     <TrafficLights />
   </div>

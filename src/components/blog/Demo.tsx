@@ -27,7 +27,7 @@ export default function Demo({ children }: DemoProps) {
         alignItems: "center",
         padding: "0 1rem",
         height: "38px",
-        background: "#EEEDEA",
+        background: "#F5F5F5",
         borderBottom: "1px solid #E0DED8",
       }}>
         <TrafficLights />

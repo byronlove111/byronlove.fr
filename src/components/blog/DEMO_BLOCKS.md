@@ -7,7 +7,7 @@ Interactive examples live in **`src/components/blog/demos/`** and are rendered i
 | Role | Value |
 |------|--------|
 | Border | `#E0DED8` |
-| Chrome bar (title area) | `#EEEDEA` |
+| Chrome bar (title area) | `#F5F5F5` |
 | Main surface (canvas behind controls) | `#F5F5F5` |
 | Inset panel (preview / “paper”) | `#fff` or same cream as needed |
 | Primary text | `#1a1a1a` |
@@ -22,7 +22,7 @@ Interactive examples live in **`src/components/blog/demos/`** and are rendered i
 ## Avoid
 
 - Loud backgrounds (e.g. strong dot grids) unless the article *is* about grids.
-- Controls that look like a different product (pure black selected pills, unrelated shadows). Prefer selected state: `#EEEDEA` + `#E0DED8` border, or a single calm accent.
+- Controls that look like a different product (pure black selected pills, unrelated shadows). Prefer selected state: `#F5F5F5` + `#E0DED8` border, or a single calm accent.
 
 ## MDX pattern
 
