@@ -1,124 +1,167 @@
+const MONO = "ui-monospace, 'SF Mono', monospace";
+const SERIF = "'Lora', Georgia, serif";
+const BG = "#F7F6F1";
+const TEXT = "#1a1a1a";
+const MUTED = "#888";
+const FAINT = "#999";
+
 export default function Home() {
-  // Calcul automatique de l'âge à partir de la date de naissance
   const calculateAge = () => {
-    const birthDate = new Date(2002, 6, 7); // 7 juillet 2002 (mois en JavaScript: 0=janvier, 6=juillet)
+    const birthDate = new Date(2002, 6, 7);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    
-    // Ajustement si l'anniversaire n'est pas encore passé cette année
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
     return age;
   };
 
   const age = calculateAge();
 
+  const linkStyle = {
+    color: TEXT,
+    textDecoration: "underline",
+    textUnderlineOffset: "2px",
+    transition: "opacity 0.15s",
+  };
+
+  const monoLinkStyle = {
+    fontFamily: MONO,
+    fontSize: "0.6875rem",
+    letterSpacing: "0.08em",
+    textTransform: "uppercase" as const,
+    color: MUTED,
+    textDecoration: "none",
+    transition: "color 0.15s",
+  };
+
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container max-w-2xl mx-auto px-4 py-16">
-        <div className="space-y-6">
-          {/* Header */}
-          <div className="space-y-2">
-            <h1 className="text-2xl font-normal text-black">Byron Love</h1>
-            <p className="text-sm text-black">
-              <a
-                href="mailto:111byronlove@gmail.com"
-                className="underline hover:no-underline transition-all"
-              >
-                mail
-              </a>{" "}
-              |{" "}
-              <a
-                href="https://github.com/byronlove111"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:no-underline transition-all"
-              >
-                github
-              </a>{" "}
-              |{" "}
-              <a
-                href="https://x.com/byronlove111"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:no-underline transition-all"
-              >
-                x
-              </a>{" "}
-              |{" "}
-              <a
-                href="/blog"
-                className="underline hover:no-underline transition-all"
-              >
-                blog
-              </a>
-            </p>
-          </div>
+    <div style={{ minHeight: "100vh", backgroundColor: BG }}>
+      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "5rem 1.5rem 6rem" }}>
 
-          <p className="text-sm text-black leading-relaxed">
-            I'm a {age} y/o software engineer based in Paris, building products that matter. I built a community of 3,000+ followers on social media where I share about tech, building in public, and startups.
+        {/* Header */}
+        <header style={{ marginBottom: "3rem" }}>
+          <h1 style={{ fontFamily: SERIF, fontSize: "1.875rem", fontWeight: 400, color: TEXT, margin: "0 0 0.75rem", letterSpacing: "-0.01em" }}>
+            Byron Love
+          </h1>
+          <nav style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+            {[
+              { label: "mail", href: "mailto:111byronlove@gmail.com" },
+              { label: "github", href: "https://github.com/byronlove111", external: true },
+              { label: "x", href: "https://x.com/byronlove111", external: true },
+              { label: "blog", href: "/blog" },
+            ].map((item, i, arr) => (
+              <span key={item.label} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                <a
+                  href={item.href}
+                  {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  style={monoLinkStyle}
+                  onMouseEnter={e => (e.currentTarget.style.color = TEXT)}
+                  onMouseLeave={e => (e.currentTarget.style.color = MUTED)}
+                >
+                  {item.label}
+                </a>
+                {i < arr.length - 1 && (
+                  <span style={{ fontFamily: MONO, fontSize: "0.625rem", color: "#ccc" }}>·</span>
+                )}
+              </span>
+            ))}
+          </nav>
+        </header>
+
+        {/* Bio */}
+        <div style={{ display: "flex", flexDirection: "column" as const, gap: "1.25rem", marginBottom: "3.5rem" }}>
+          <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: TEXT, margin: 0 }}>
+            I'm a {age} y/o software engineer based in Paris, building products that matter.
+            I built a community of 3,000+ followers on social media where I share about tech,
+            building in public, and startups.
           </p>
-
-          <p className="text-sm text-black leading-relaxed">
-            Interests: <a href="/synthesizers" className="underline hover:no-underline transition-all">synthesizers</a>, <a href="/music" className="underline hover:no-underline transition-all">music</a>, <a href="/cinema" className="underline hover:no-underline transition-all">cinema</a>, <a href="/games" className="underline hover:no-underline transition-all">games</a>, my wife
+          <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: TEXT, margin: 0 }}>
+            Interests:{" "}
+            {[
+              { label: "synthesizers", href: "/synthesizers" },
+              { label: "music", href: "/music" },
+              { label: "cinema", href: "/cinema" },
+              { label: "games", href: "/games" },
+            ].map((item, i, arr) => (
+              <span key={item.label}>
+                <a href={item.href} style={linkStyle}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = "0.5")}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                >
+                  {item.label}
+                </a>
+                {i < arr.length - 1 ? ", " : ""}
+              </span>
+            ))}, my wife
           </p>
-
-          {/* Experience */}
-          <div className="space-y-6 pt-4">
-            <h2 className="text-base font-normal text-black">Experience</h2>
-
-            <p className="text-sm text-black leading-relaxed">
-              <a
-                href="https://opensource-together.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:no-underline transition-all"
-              >
-                OpenSource Together
-              </a>{" "}
-              <span className="text-gray-600">Co-Founder (2025–Present)</span> – Led a team of 10 people to build a platform connecting developers, designers and creatives. <span className="font-medium">500 sign up at launch</span>
-            </p>
-
-            <p className="text-sm text-black leading-relaxed">
-              <a
-                href="https://cursor.sh"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:no-underline transition-all"
-              >
-                Cursor
-              </a>{" "}
-              <span className="text-gray-600">Ambassador (2025–Present)</span> – <span className="font-medium">First French ambassador</span> for Cursor. Organized events with 100+ people at Amo, Hexa and other venues, teaching AI-driven development workflows
-            </p>
-
-            <p className="text-sm text-black leading-relaxed">
-              <a
-                href="https://chataigne.ai"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:no-underline transition-all"
-              >
-                Châtaigne.ai
-              </a>{" "}
-              <span className="text-gray-600">Founding Engineer (2024–2025)</span> – First founding engineer. <span className="font-medium">0-to-1 journey</span>, designed and rebuilt entire frontend with scalable architecture and testing, implemented full-stack features. Developed marketing solutions reaching <span className="font-medium">5,000+ users</span>
-            </p>
-
-            <p className="text-sm text-black leading-relaxed">
-              <a
-                href="https://42.fr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:no-underline transition-all"
-              >
-                Ecole 42
-              </a>{" "}
-              <span className="text-gray-600">Student (2024–Present)</span> – Computer Science through peer-to-peer learning. Top of entrance competition, member of 42entrepreneurs association
-            </p>
-          </div>
         </div>
+
+        {/* Experience */}
+        <section>
+          <div style={{ fontFamily: MONO, fontSize: "0.6875rem", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: FAINT, marginBottom: "1.75rem" }}>
+            Experience
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column" as const, gap: "2rem" }}>
+            {[
+              {
+                name: "OpenSource Together",
+                href: "https://opensource-together.com",
+                role: "Co-Founder",
+                period: "2025–Present",
+                desc: "Led a team of 10 people to build a platform connecting developers, designers and creatives.",
+                highlight: "500 sign ups at launch.",
+              },
+              {
+                name: "Cursor",
+                href: "https://cursor.sh",
+                role: "Ambassador",
+                period: "2025–Present",
+                desc: "First French ambassador for Cursor. Organized events with 100+ people at Amo, Hexa and other venues, teaching AI-driven development workflows.",
+                highlight: null,
+              },
+              {
+                name: "Châtaigne.ai",
+                href: "https://chataigne.ai",
+                role: "Founding Engineer",
+                period: "2024–2025",
+                desc: "First founding engineer. Designed and rebuilt entire frontend, implemented full-stack features. Developed marketing solutions reaching",
+                highlight: "5,000+ users.",
+              },
+              {
+                name: "École 42",
+                href: "https://42.fr",
+                role: "Student",
+                period: "2024–Present",
+                desc: "Computer Science through peer-to-peer learning. Top of entrance competition, member of 42entrepreneurs association.",
+                highlight: null,
+              },
+            ].map((job) => (
+              <div key={job.name}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.625rem", marginBottom: "0.375rem", flexWrap: "wrap" as const }}>
+                  <a
+                    href={job.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontFamily: SERIF, fontSize: "1rem", fontWeight: 500, color: TEXT, textDecoration: "underline", textUnderlineOffset: "2px" }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.6")}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                  >
+                    {job.name}
+                  </a>
+                  <span style={{ fontFamily: MONO, fontSize: "0.625rem", letterSpacing: "0.06em", textTransform: "uppercase" as const, color: "#aaa" }}>
+                    {job.role} · {job.period}
+                  </span>
+                </div>
+                <p style={{ fontFamily: SERIF, fontSize: "0.9375rem", lineHeight: 1.75, color: "#444", margin: 0 }}>
+                  {job.desc}{" "}
+                  {job.highlight && <span style={{ color: TEXT, fontWeight: 500 }}>{job.highlight}</span>}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
       </div>
     </div>
   );

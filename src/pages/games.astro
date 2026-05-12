@@ -1,64 +1,52 @@
 ---
 import '../styles/global.css';
+
+const games = [
+  "Dark Souls",
+  "Bloodborne",
+  "Elden Ring",
+  "The Elder Scrolls IV: Oblivion",
+  "The Elder Scrolls V: Skyrim",
+  "Resident Evil 2",
+  "Resident Evil 5",
+  "Fable 3",
+  "The Last of Us",
+];
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Games - Byron Love</title>
-	</head>
-	<body>
-		<div class="min-h-screen bg-white">
-			<div class="container max-w-2xl mx-auto px-4 py-16">
-				<div class="space-y-6">
-					<div class="space-y-2">
-						<h1 class="text-2xl font-normal text-black">Games</h1>
-						<p class="text-sm text-black">
-							<a href="/" class="underline hover:no-underline transition-all">
-								← back
-							</a>
-						</p>
-					</div>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Games — Byron Love</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div style="max-width: 680px; margin: 0 auto; padding: 4rem 1.5rem 6rem;">
+      <nav style="margin-bottom: 3rem;">
+        <a href="/" style="font-family: ui-monospace, 'SF Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: #888; text-decoration: none;">
+          ← Byron Love
+        </a>
+      </nav>
 
-					<div class="pt-4">
-						<p class="text-sm text-black leading-relaxed mb-4">
-							Games I can replay endlessly
-						</p>
-						<ul class="space-y-2 list-disc list-inside">
-							<li class="text-sm text-black leading-relaxed">
-								Dark Souls
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								Bloodborne
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								Elden Ring
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								The Elder Scrolls IV: Oblivion
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								The Elder Scrolls V: Skyrim
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								Resident Evil 2
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								Resident Evil 5
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								Fable 3
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								The Last of Us
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</body>
+      <h1 style="font-family: 'Lora', Georgia, serif; font-size: 1.875rem; font-weight: 400; color: #1a1a1a; margin: 0 0 0.5rem; letter-spacing: -0.01em;">
+        Games
+      </h1>
+      <p style="font-family: 'Lora', Georgia, serif; font-size: 0.9375rem; color: #888; font-style: italic; margin: 0 0 2.5rem;">
+        Games I can replay endlessly
+      </p>
+
+      <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column;">
+        {games.map(game => (
+          <li style="border-top: 1px solid #E8E7E2; padding: 0.75rem 0; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a1a1a; line-height: 1.5;">
+            {game}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </body>
 </html>

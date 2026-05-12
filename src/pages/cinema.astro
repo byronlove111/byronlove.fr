@@ -1,64 +1,52 @@
 ---
 import '../styles/global.css';
+
+const films = [
+  "Phantom of the Paradise — Brian De Palma",
+  "Seven — David Fincher",
+  "The Silence of the Lambs — Jonathan Demme",
+  "Bohemian Rhapsody — Bryan Singer",
+  "Catch Me If You Can — Steven Spielberg",
+  "Get Out — Jordan Peele",
+  "Parasite — Bong Joon-ho",
+  "Drive — Nicolas Winding Refn",
+  "Home Alone — Chris Columbus",
+];
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Cinema - Byron Love</title>
-	</head>
-	<body>
-		<div class="min-h-screen bg-white">
-			<div class="container max-w-2xl mx-auto px-4 py-16">
-				<div class="space-y-6">
-					<div class="space-y-2">
-						<h1 class="text-2xl font-normal text-black">Cinema</h1>
-						<p class="text-sm text-black">
-							<a href="/" class="underline hover:no-underline transition-all">
-								← back
-							</a>
-						</p>
-					</div>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Cinema — Byron Love</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div style="max-width: 680px; margin: 0 auto; padding: 4rem 1.5rem 6rem;">
+      <nav style="margin-bottom: 3rem;">
+        <a href="/" style="font-family: ui-monospace, 'SF Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: #888; text-decoration: none;">
+          ← Byron Love
+        </a>
+      </nav>
 
-					<div class="pt-4">
-						<p class="text-sm text-black leading-relaxed mb-4">
-							Movies that made me fall in love with cinema
-						</p>
-						<ul class="space-y-2 list-disc list-inside">
-							<li class="text-sm text-black leading-relaxed">
-								Phantom of the Paradise (Brian De Palma)
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								Seven (David Fincher)
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								The Silence of the Lambs (Jonathan Demme)
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								Bohemian Rhapsody (Bryan Singer)
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								Catch Me If You Can (Steven Spielberg)
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								Get Out (Jordan Peele)
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								Parasite (Bong Joon-ho)
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								Drive (Nicolas Winding Refn)
-							</li>
-							<li class="text-sm text-black leading-relaxed">
-								Home Alone (Chris Columbus)
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</body>
+      <h1 style="font-family: 'Lora', Georgia, serif; font-size: 1.875rem; font-weight: 400; color: #1a1a1a; margin: 0 0 0.5rem; letter-spacing: -0.01em;">
+        Cinema
+      </h1>
+      <p style="font-family: 'Lora', Georgia, serif; font-size: 0.9375rem; color: #888; font-style: italic; margin: 0 0 2.5rem;">
+        Movies that made me fall in love with cinema
+      </p>
+
+      <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column;">
+        {films.map(film => (
+          <li style="border-top: 1px solid #E8E7E2; padding: 0.75rem 0; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a1a1a; line-height: 1.5;">
+            {film}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </body>
 </html>
