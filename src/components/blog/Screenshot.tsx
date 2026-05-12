@@ -273,7 +273,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                         <motion.span
                           key={`${reactId}-${i}-${glyph}`}
                           style={{ display: "inline-block" }}
-                          initial={{ opacity: 0, x: "-0.12em", filter: "blur(7px)" }}
+                          initial={{ opacity: 1, x: "-0.05em", filter: "blur(14px)" }}
                           animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                           transition={{
                             delay: i * CAPTION_STAGGER_SEC,
