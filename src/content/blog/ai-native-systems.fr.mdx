@@ -11,85 +11,148 @@ import CodeBlock from "../../components/blog/CodeBlock.tsx";
 
 <Screenshot src="/blog/ai-native-systems-cover.png" alt="Ruines recouvertes de végétation — des systèmes pas construits pour durer" caption="The best way to use AI" />
 
-Les agences tournent sur 15 outils différents. Le CRM ici. Les docs là. Le tracking dans Notion. Les factures quelque part ailleurs. Chaque système détient un fragment de la vérité. C'était acceptable quand un humain faisait la synthèse.
+Les agences tournent sur 15 outils différents. CRM ici. Docs là. Tracking dans Notion. Factures ailleurs. Chaque système détient un fragment de la vérité. C'était acceptable quand un humain faisait la synthèse.
 
 Un agent ne peut pas. Pas efficacement.
 
-Si ton agent a besoin de 8 appels API pour comprendre qui est le client, ce qu'il veut, et ce qui s'est passé jusqu'ici — ton système n'est pas prêt pour l'IA. Il est AI-tolérant. C'est pas la même chose.
+Si ton agent a besoin de 8 appels API pour comprendre qui est le client, ce qu'il veut, et ce qui s'est passé jusqu'ici — ton système n'est pas prêt pour l'IA. Il est AI-tolérant. Ce n'est pas la même chose. Et ça compte plus que le modèle que tu utilises.
 
-## Le pattern qui tue les boucles agents
+## Le diagnostic
 
-La plupart des équipes font ça : prendre un backend existant, enrouler un LLM autour, appeler ça un agent. L'agent tape 6 endpoints, assemble un tableau fragmenté depuis des schémas qui se recoupent à moitié, puis prend une décision sur un contexte qu'il a dû reconstruire lui-même.
+Le problème n'est pas l'absence d'outils. La plupart des équipes ont déjà un LLM quelque part. Le problème, c'est ce qui se passe quand ce LLM doit agir.
 
-Ça marche en démo. En production, c'est lent, cher, et cassant. Chaque appel API est une occasion de rater quelque chose. Chaque aller-retour réseau ajoute de la latence. Quand l'agent hallucine, tu sais pas quel fragment de contexte l'a causé.
+Un backend d'agence classique ressemble à ça : un CRM pour les contacts et les deals, un outil de gestion de projet pour les tâches, une plateforme docs pour les briefs clients, un outil séparé pour le tracking des campagnes, les factures dans encore autre chose. Chaque système parle aux humains. Les humains ouvrent quatre onglets, synthétisent, décident.
 
-Le problème n'est pas le modèle. C'est l'environnement dans lequel tu le mets.
+Quand tu mets un agent dans cet environnement, il hérite du même morcellement. Il tape 8 endpoints. Il assemble un tableau fragmenté depuis des schémas qui se recoupent à moitié. Il prend des décisions sur un contexte qu'il a dû reconstruire lui-même — et quand il hallucine ou fait une erreur, tu ne sais pas quel fragment a causé le problème.
 
-## Ce que ça veut dire d'être AI-native
+C'est ça, AI-tolérant : le système fonctionne techniquement avec de l'IA greffée dessus, mais il n'a jamais été conçu pour. Chaque appel API supplémentaire, c'est de la latence, du coût, et une occasion de rater quelque chose. Chaque schéma incompatible est une taxe de prompt engineering que tu paies indéfiniment.
 
-Un endpoint. Un appel. Tout ce dont l'agent a besoin pour opérer sur un client, une mission, une tâche — servi dans une seule réponse structurée.
+## Le changement de mental model
 
-Pas "voilà le contact" puis "voilà le deal" puis "voilà les stats de la dernière campagne." Une réponse : company, contacts, toutes les missions actives, les dernières tâches, les documents attachés, les outils disponibles. L'agent lit une fois et agit.
+Dès que tu décides de construire AI-native, une question remplace toutes les autres : *qu'est-ce qu'un agent a besoin pour agir ici, et comment je lui donne ça en un seul coup ?*
+
+Pas "quelles sont mes entités ?" Pas "quelles sont mes routes REST ?" Ce sont de bonnes questions pour un produit destiné aux humains. Pour un agent, c'est le mauvais point de départ.
+
+Un agent qui travaille sur une mission client a besoin de : qui est le client, quels sont ses objectifs, quelles campagnes tournent, quelles ont été les 20 dernières tâches, quels documents sont attachés, et quels outils sont disponibles. C'est un objet de contexte. Pas huit endpoints — une réponse, structurée pour la façon dont un agent pense.
 
 <CodeBlock lang="typescript" client:load>
 ```typescript
-// Ancienne façon : l'agent reconstruit le contexte depuis 8 endpoints
-const company    = await api.get('/companies/:id')
-const contacts   = await api.get('/companies/:id/contacts')
-const deals      = await api.get('/companies/:id/deals')
-const campaigns  = await api.get('/campaigns?company=:id')
-const tasks      = await api.get('/tasks?company=:id')
-const documents  = await api.get('/documents?company=:id')
-const invoices   = await api.get('/invoices?company=:id')
-const history    = await api.get('/activity?company=:id')
-// 8 appels, 8 occasions d'avoir un contexte incomplet
+// AI-tolérant : l'agent reconstruit le contexte depuis 8 endpoints
+const company   = await api.get('/companies/:id')
+const contacts  = await api.get('/companies/:id/contacts')
+const deals     = await api.get('/companies/:id/deals')
+const campaigns = await api.get('/campaigns?company=:id')
+const tasks     = await api.get('/tasks?company=:id')
+const documents = await api.get('/documents?company=:id')
+const invoices  = await api.get('/invoices?company=:id')
+const history   = await api.get('/activity?company=:id')
+// 8 appels. 8 occasions d'avoir un contexte incomplet. Pas de contrat de schéma clair.
 
 // AI-native : un endpoint de contexte taillé pour l'agent
 const context = await api.get('/agent-context/mission/:id')
 // {
-//   company: { name, icp, industry, size },
-//   contacts: [...],
-//   mission: { brief, kpis, type },
-//   tasks: [...recent + pending],
-//   documents: [...],
-//   tools_available: ['emelia', 'github', 'slack']
+//   company:         { name, icp, industry, size, health_score },
+//   contacts:        [{ name, role, last_interaction }],
+//   mission:         { brief, kpis, type, deadline },
+//   active_tasks:    [{ id, title, status, assigned_to }],
+//   completed_tasks: [...20 dernières, avec leurs outputs],
+//   documents:       [{ name, type, url }],
+//   tools_available: ['emelia', 'github', 'slack', 'brevo']
 // }
 // Un appel. Image complète. L'agent peut démarrer immédiatement.
 ```
 </CodeBlock>
 
-Ça change la façon dont tu conçois ton backend. Au lieu de "quelles sont mes entités et à quels routes REST elles correspondent ?", tu te demandes : qu'est-ce qu'un agent a besoin pour agir sur ce contexte, et comment je lui donne ça en un seul coup ?
+Ça change aussi ce que tu optimises. Avec des APIs fragmentées, tu optimises chaque endpoint indépendamment. Avec un endpoint de contexte, tu optimises la latence agent — combien de temps entre "tâche reçue" et "j'ai tout ce qu'il me faut pour agir" ?
 
 ## MCP, pas juste du REST
 
-La couche suivante, c'est comment l'agent accède à ce contexte. Le REST fonctionne, mais le MCP — Model Context Protocol — est fait pour ça. Au lieu que ton agent appelle des endpoints, tu exposes un serveur MCP. L'agent se connecte, demande ce dont il a besoin, reçoit des données structurées sémantiquement riches.
+La couche d'accès compte aussi. Le REST fonctionne, mais le MCP — Model Context Protocol — est fait pour les agents. Au lieu que ton agent appelle des endpoints, tu exposes un serveur MCP. L'agent se connecte, déclare ce dont il a besoin, ton système retourne des données structurées sémantiquement riches.
 
-N'importe quel agent — local, cloud, n'importe quel modèle — peut se brancher sans que tu doives construire une intégration sur mesure à chaque fois. Tu écris le protocole une fois. Tous les agents le parlent.
+Le gain concret : n'importe quel agent — Cursor local, agent cloud, Claude qui tourne sur le laptop de quelqu'un — peut se brancher sans intégration sur mesure à chaque fois. Tu écris le protocole une fois. Tous les modèles le parlent.
 
-Tu arrêtes aussi de te demander "est-ce que j'expose ça en REST ?" et tu commences à te demander : est-ce que j'expose ça comme un outil MCP, une ressource MCP, ou un Cloud Agent que quelqu'un peut déclencher directement ? Ce sont des choses différentes. Chacune a un coût différent, une granularité différente, un contrat différent avec le modèle.
+Mais le MCP est aussi un forcing function. Il t'oblige à penser en termes de *ressources* et d'*outils* plutôt qu'en entités et routes. Une ressource, c'est ce que l'agent lit pour comprendre le contexte. Un outil, c'est ce qu'il appelle pour agir. Cette distinction est utile : elle sépare ce que l'agent doit comprendre de ce qu'il doit faire, et tu conçois chacun différemment.
 
-> Si tu construis un nouveau backend en 2026 et que ton premier réflexe est encore du CRUD REST, pause — et demande-toi qui appelle vraiment ces endpoints.
+> Si tu construis un nouveau backend en 2026 et que ton premier réflexe est encore du CRUD REST, pause — et demande-toi qui appelle vraiment ces endpoints, et s'ils ont besoin de l'image complète ou juste d'un fragment.
 
-## S37 Portal
+La question n'est pas REST contre MCP. C'est : est-ce que je conçois pour un humain qui navigue dans une UI, ou pour un agent qui doit agir de façon autonome avec le moins d'aller-retours possible ? La réponse te dit tout sur comment structurer ton système.
 
-On construit ça chez S37. On est une agence — missions GTM, design, dev pour des clients. Le contexte de chaque client est éparpillé entre Attio, Notion, des fils d'emails, Google Drive.
+## Le sandbox et le monitoring ne sont pas optionnels
 
-On a donc tout reconstruit from scratch. Une seule source de vérité. Quand un agent démarre une tâche, il appelle un endpoint et récupère l'image complète : company, ICP, campagnes actives, 20 dernières tâches, documents attachés, historique des stats. Il ne cherche pas. Il reçoit.
+Dès que les agents agissent — pas juste génèrent du texte, mais appellent des outils, écrivent du code, envoient des messages, mettent à jour des données — le sandboxing et le monitoring deviennent de l'infrastructure portante.
 
-Ensuite il agit. Les agents GTM génèrent des séquences et analysent les stats Emelia. Les agents dev clonent les repos, écrivent la feature, lancent les tests, ouvrent une PR. Les agents design implémentent les composants, lancent l'app, prennent un screenshot du rendu avant de créer la PR. Chaque agent reçoit exactement le contexte dont il a besoin, dans le format qu'il attend.
+Chaque run doit être isolé. L'agent voit exactement ce que tu lui donnes. Il n'appelle que les outils que tu as autorisés. Son output arrive dans une file de review avant que quoi que ce soit d'irréversible se passe. Tu as un log complet : ce que l'agent a vu, ce qu'il a décidé, ce qu'il a appelé, ce qui a changé.
 
-La boucle humaine est mince : review, approbation, feedback. L'agent itère. Tout le reste tourne sans que personne soit derrière un clavier.
+Sans ça, débugger c'est de l'archéologie. Quelque chose a mal tourné en prod — quel run ? Quel contexte avait-il ? Quel outil a causé la cascade ? Si tu ne peux pas répondre à ces questions en moins d'une minute, ton monitoring n'est pas conçu pour les agents.
 
-## Ce qu'il faut changer concrètement
+L'autre raison de sandboxer : ça rend l'itération peu coûteuse. Tu peux relancer un agent sur le même contexte gelé, changer un prompt, voir ce qui change. Tu peux rejouer des cas d'échec. Tu peux tester un nouveau modèle sur des tâches historiques avant de le promouvoir en prod. Rien de tout ça n'est possible si chaque run mute de l'état en direct.
 
-**1. Façonne les endpoints autour des tâches agents, pas des entités de ta base.**
-Arrête de construire `GET /companies/:id` + `GET /deals` + `GET /contacts`. Construis `GET /agent-context/mission/:id`. La différence, c'est pour qui tu conçois.
+## S37 Portal — ce que ça veut dire concrètement de construire AI-native
+
+On construit ça from scratch chez S37. On est une agence — missions GTM, design, dev pour des clients réels. Le contexte de chaque client était éparpillé entre Attio, Notion, des fils d'emails, Google Drive, et la mémoire de qui avait participé au dernier call.
+
+Donc on a tout reconstruit autour d'un seul principe : une source de vérité unique, structurée pour les agents dès le premier jour.
+
+**L'architecture a trois couches.**
+
+La première : la source de vérité. Toutes les données de l'agence en un seul endroit. Companies, contacts, deals, missions, tâches, documents, factures. Ce qui était éparpillé dans quatre outils vit maintenant dans un seul schéma, conçu pour être lu par des agents — pas juste navigué par des humains.
+
+La deuxième : l'infrastructure d'agents. Chaque run démarre avec un appel API qui retourne le contexte complet de la mission — company, ICP, toutes les tâches actives, les tâches complétées avec leurs outputs, les documents attachés, les outils disponibles. L'agent ne cherche pas. Il reçoit. Ensuite, chaque type de mission a son environnement d'exécution adapté avec les bons outils câblés.
+
+La troisième : l'interface — un dashboard pour l'équipe, un portail client pour les clients. Mêmes données, deux vues.
+
+**Missions GTM — Alexis**
+
+Alexis crée une tâche avec un brief, choisit le modèle, clique Run. L'agent reçoit le contexte complet de la campagne : stats Emelia des 3 derniers mois, définition de l'ICP, séquences précédentes qui ont performé, background de la company. Il ne demande rien. C'était dans le contexte.
+
+Il analyse ce qui convertit, identifie les points de friction, génère une recommandation avec la séquence suivante proposée. Alexis review, ajuste si nécessaire, approuve. L'itération qui prenait une demi-journée prend vingt minutes — pas parce que l'IA est plus intelligente, mais parce qu'elle avait l'image complète dès le départ.
+
+Pour une mission complète, un agent orchestrateur prend le relais. Il lit toutes les tâches, identifie les dépendances, lance en parallèle ce qui peut l'être. Analyse ICP, génération de séquence, qualification de la base, lancement Emelia — en quelques minutes, sans que personne soit derrière son clavier.
+
+**Missions Design — Zinedine**
+
+Zinedine travaille en code. Son agent reçoit le brief, clone le repo, implémente le composant en respectant le design system, lance le projet, prend des screenshots du rendu, et ouvre une PR avec les screenshots attachés.
+
+Zinedine voit le résultat visuel sans avoir à checkout la branche. Il review directement dans Portal, approuve, ou envoie du feedback. L'agent itère. Toute la boucle se passe dans Portal — sans switcher entre GitHub, Figma, et un environnement de dev local.
+
+**Missions Dev — Byron**
+
+Même boucle pour le dev. L'agent reçoit le contexte, clone le repo du client, implémente la feature, fait tourner les tests, ouvre une PR. Byron review le diff et les résultats de tests dans Portal. Veut des modifications ? Il envoie du feedback dans Portal. L'agent re-run.
+
+Le travail humain devient : définir l'intention clairement, review l'output, décider. L'exécution est déléguée.
+
+**Le portail client**
+
+Chaque client a accès à son espace sur portal.s37.studio. Il voit ses missions actives, les tâches qu'Alexis a choisi d'exposer, ses documents, ses factures. Il peut uploader des fichiers, signer son contrat, télécharger ses rapports.
+
+Et il peut poser des questions à un agent qui a accès à ses données — cloisonnées à sa company seulement. "Où en sont mes campagnes ce mois-ci ?" L'agent interroge la base, retourne les stats, compare aux objectifs. Sans qu'Alexis ait envoyé un seul message.
+
+L'impression d'avoir un account manager dédié disponible 24/7. La réalité : un agent, un contexte scopé, aucun travail supplémentaire pour l'équipe.
+
+## Ce qui devient possible à l'échelle
+
+Une fois l'infrastructure en place, la roadmap s'ouvre.
+
+**Monitoring proactif.** Un agent tourne en fond toutes les heures, vérifie les stats Emelia de toutes les missions actives, détecte les baisses de performance, crée automatiquement une tâche "investiguer la campagne en sous-performance" et prévient Alexis. Personne n'a à se souvenir de vérifier. Le système remonte ce qui a besoin d'attention.
+
+**Mémoire cross-missions.** L'agent sait que pour Copwell, l'ICP qui convertit le mieux ce sont les DSI en Île-de-France dans des boîtes de 200-500 personnes. Il réutilise ça automatiquement pour les nouvelles bases sans qu'Alexis ait à le redire. Le contexte s'accumule entre les missions au lieu de repartir de zéro à chaque fois.
+
+**Planification de mission.** Alexis crée la company, attache le transcript du call et le brief ICP. Un agent lit tout, propose un plan de mission complet : tâches, KPIs cibles, séquences Emelia suggérées, timeline. Alexis valide et ajuste, les agents commencent à exécuter. De l'onboarding à l'exécution en une session.
+
+Rien de tout ça n'est de la science-fiction. Chaque pièce est techniquement faisable aujourd'hui. Ce qui bloque la plupart des équipes, ce n'est pas la capacité des modèles — c'est que leurs systèmes n'ont pas été conçus pour donner aux agents le contexte et les outils dont ils ont besoin pour agir.
+
+## Ce qu'il faut changer concrètement aujourd'hui
+
+Trois décisions qui se cumulent :
+
+**1. Conçois des endpoints de contexte, pas des endpoints d'entités.**
+Arrête de construire `GET /companies/:id` + `GET /deals` + `GET /contacts`. Construis `GET /agent-context/mission/:id`. La différence, c'est pour qui tu conçois — un humain qui clique dans une UI, ou un agent qui doit agir.
 
 **2. Pense MCP quand tu construis des outils que les agents vont réutiliser.**
-Surtout entre missions, entre clients. Tu l'écris une fois, tu l'exposes à chaque modèle.
+Surtout pour les intégrations : Emelia, GitHub, Slack, facturation. Tu l'écris une fois, tu l'exposes à tous les modèles. Arrête de reconstruire les intégrations cas par cas.
 
-**3. Sandbox chaque exécution.**
-Isolation totale. Tu sais exactement ce que l'agent a vu, quels outils il a appelés, ce qu'il a changé. Le monitoring n'est pas optionnel — c'est comme ça que tu catches les 10% de runs qui partent de travers avant qu'ils touchent la prod.
+**3. Sandbox chaque run dès le premier jour.**
+Isolation totale, log complet, file de review avant tout ce qui est irréversible. Ce n'est pas de l'overhead — c'est comme ça que tu déploies des agents sans appréhension, et que tu les améliores de façon systématique dans le temps.
 
 ## Ce qu'il faut retenir
 
@@ -97,4 +160,4 @@ Le bottleneck n'est plus l'intelligence du modèle. Claude et GPT peuvent exécu
 
 Les anciens systèmes étaient conçus pour des humains qui naviguent entre des onglets. Les agents ne naviguent pas entre des onglets. Ils ont besoin de l'image complète, vite, structurée, en un seul endroit.
 
-Corrige l'environnement. Les modèles feront le reste.
+Les équipes qui construisent pour ça — aujourd'hui, from scratch — auront un avantage structurel très difficile à rattraper plus tard. Pas parce que leur IA est meilleure. Parce que leur système l'est.
