@@ -188,7 +188,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 <a
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  style={{ display: "block", padding: "1.5rem 0", borderTop: "1px solid #E8E7E2", textDecoration: "none" }}
+                  style={{ display: "block", padding: "1.5rem 0", borderBottom: "1px solid #E8E7E2", textDecoration: "none" }}
                   onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
                   onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
                 >
