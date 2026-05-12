@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { usePatch } from "@web-kits/audio/react";
 
 interface CodeBlockProps {
   filename?: string;
@@ -49,6 +50,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
   const [copied, setCopied] = useState(false);
   const resetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const patch = usePatch("/patches/minimal.json");
 
   useEffect(() => () => {
     if (resetRef.current) clearTimeout(resetRef.current);
@@ -59,6 +61,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
     const ok = await writeClipboard(raw);
     if (!ok) return;
 
+    if (patch.ready) patch.play("copy");
     setCopied(true);
     if (resetRef.current) clearTimeout(resetRef.current);
     resetRef.current = setTimeout(() => setCopied(false), 900);

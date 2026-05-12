@@ -104,6 +104,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   style={monoLinkStyle}
                   onMouseEnter={e => (e.currentTarget.style.color = TEXT)}
                   onMouseLeave={e => (e.currentTarget.style.color = MUTED)}
+                  onClick={() => { if (patch.ready) patch.play("key-press"); }}
                 >
                   {item.label}
                 </a>
@@ -165,6 +166,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                     style={{ fontFamily: SERIF, fontSize: "1rem", fontWeight: 500, color: TEXT, textDecoration: "underline", textUnderlineOffset: "2px" }}
                     onMouseEnter={e => (e.currentTarget.style.opacity = "0.6")}
                     onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                    onClick={() => { if (patch.ready) patch.play("key-press"); }}
                   >
                     {job.name}
                   </a>
