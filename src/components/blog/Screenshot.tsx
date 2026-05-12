@@ -1,5 +1,4 @@
 import { useEffect, useId, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import {
   motion,
   AnimatePresence,
@@ -59,58 +58,11 @@ const CAPTION_STAGGER_SEC = 0.009;
 const CAPTION_LETTER_DURATION_SEC = 0.13;
 const captionLetterEase = [0.22, 1, 0.36, 1] as const;
 
-/** Editorial lightbox pattern: blur the article chrome beneath a transparent scrim while the enlarged image renders outside that subtree (portal). */
-
 export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) {
   const [open, setOpen] = useState(false);
   const openerRef = useRef<HTMLButtonElement>(null);
   const reactId = useId().replace(/:/g, "");
   const wasOpenRef = useRef(false);
-  const [portalReady, setPortalReady] = useState(false);
-  const reducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    setPortalReady(true);
-  }, []);
-
-  /** Blur in-page chrome (outside the portal layer) — matches “page stays underneath, softened” UX. */
-  useEffect(() => {
-    if (!portalReady || typeof document === "undefined") return undefined;
-    const roots = Array.from(
-      document.querySelectorAll(".article-nav, .article-main"),
-    ) as HTMLElement[];
-    const blurFilter = reducedMotion ? "blur(10px)" : "blur(76px)";
-    const transitionEnter = "filter 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
-    const transitionExit = "filter 0.28s cubic-bezier(0.22, 1, 0.36, 1)";
-
-    const clearAll = () => {
-      roots.forEach((el) => {
-        el.style.filter = "";
-        el.style.transition = "";
-        el.style.willChange = "";
-      });
-    };
-
-    if (open && roots.length > 0) {
-      roots.forEach((el) => {
-        el.style.transition = transitionEnter;
-        el.style.filter = blurFilter;
-        el.style.willChange = "filter";
-      });
-      return clearAll;
-    }
-
-    roots.forEach((el) => {
-      el.style.transition = transitionExit;
-      el.style.filter = "";
-      el.style.willChange = "filter";
-    });
-    const t = window.setTimeout(clearAll, 320);
-    return () => {
-      window.clearTimeout(t);
-      clearAll();
-    };
-  }, [open, portalReady, reducedMotion]);
 
   useEffect(() => {
     if (!open) return;
@@ -132,6 +84,8 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
     }
     wasOpenRef.current = open;
   }, [open]);
+
+  const reducedMotion = useReducedMotion();
 
   /** Lightbox content: fades in while scaling slightly up from viewport center */
   const lightboxReveal = reducedMotion
@@ -197,36 +151,36 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
         </button>
       </figure>
 
-      {portalReady &&
-        createPortal(
-          <AnimatePresence>
-            {open && (
-              <motion.div
-                role="dialog"
-                aria-modal="true"
-                aria-label={alt || caption || "Enlarged screenshot"}
-                aria-describedby={caption ? `caption-${reactId}` : undefined}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: reducedMotion ? 0.12 : 0.22, ease: "easeOut" }}
-                onClick={() => setOpen(false)}
-                style={{
-                  position: "fixed",
-                  inset: 0,
-                  zIndex: 9999,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "stretch",
-                  justifyContent: "center",
-                  background: "rgba(252, 251, 248, 0.14)",
-                  cursor: "default",
-                  paddingTop: "3.25rem",
-                  paddingBottom: "2rem",
-                  paddingLeft: "max(0.75rem, env(safe-area-inset-left))",
-                  paddingRight: "max(0.75rem, env(safe-area-inset-right))",
-                }}
-              >
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={alt || caption || "Enlarged screenshot"}
+            aria-describedby={caption ? `caption-${reactId}` : undefined}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reducedMotion ? 0.12 : 0.22, ease: "easeOut" }}
+            onClick={() => setOpen(false)}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 9999,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "stretch",
+              justifyContent: "center",
+              background: "rgba(252, 251, 248, 0.68)",
+              backdropFilter: "blur(78px) saturate(1.04)",
+              WebkitBackdropFilter: "blur(78px) saturate(1.04)",
+              cursor: "default",
+              paddingTop: "3.25rem",
+              paddingBottom: "2rem",
+              paddingLeft: "max(0.75rem, env(safe-area-inset-left))",
+              paddingRight: "max(0.75rem, env(safe-area-inset-right))",
+            }}
+          >
             <motion.button
               type="button"
               initial={{ opacity: 0 }}
@@ -334,11 +288,9 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                   </motion.p>
                 ))}
             </div>
-            </motion.div>
-            )}
-          </AnimatePresence>,
-          document.body,
+          </motion.div>
         )}
+      </AnimatePresence>
     </>
   );
 }
