@@ -68,7 +68,7 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
         </div>
         <h1 class="article-title">{title}</h1>
         {description && <p class="article-description">{description}</p>}
-        <div class="article-divider"></div>
+        <div class="article-divider">╌╌╌╌</div>
       </header>
 
       <article class="prose-blog">
@@ -165,8 +165,10 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
   }
 
   .article-divider {
-    height: 1px;
-    background: #E0DED8;
+    font-family: ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+    color: #bbb;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
     margin-top: 2rem;
   }
 
