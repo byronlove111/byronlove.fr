@@ -10,6 +10,16 @@ body {
   font-family: 'Lora', Georgia, serif;
 }
 
+::selection {
+  background-color: #FFE0B0;
+  color: #1a1a1a;
+}
+
+::-moz-selection {
+  background-color: #FFE0B0;
+  color: #1a1a1a;
+}
+
 /* Force Shiki-generated blocks to use transparent bg so CodeBlock styles win */
 .prose-blog pre,
 .prose-blog pre > code,
