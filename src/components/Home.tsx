@@ -61,12 +61,12 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
 
           {/* Bio */}
           <div style={{ display: "flex", flexDirection: "column" as const, gap: "1.25rem", marginBottom: "1.75rem" }}>
-            <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: "#666", margin: 0 }}>
+            <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: TEXT, margin: 0 }}>
               I'm a {age} y/o software engineer based in Paris, building products that matter.
               I built a community of 3,000+ followers on social media where I share about tech,
               building in public, and startups.
             </p>
-            <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: "#666", margin: 0 }}>
+            <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: TEXT, margin: 0 }}>
               Interests:{" "}
               {[
                 { label: "synthesizers", href: "/synthesizers" },
@@ -75,7 +75,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 { label: "games", href: "/games" },
               ].map((item, i, arr) => (
                 <span key={item.label}>
-                  <a href={item.href} style={{ ...linkStyle, color: "#666" }}
+                  <a href={item.href} style={{ ...linkStyle, color: TEXT }}
                     onMouseEnter={e => (e.currentTarget.style.opacity = "0.5")}
                     onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
                   >
