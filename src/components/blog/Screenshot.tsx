@@ -228,30 +228,30 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                 exit={lightboxReveal.exit}
                 transition={lightboxRevealTransit}
                 style={{
-                  ...frameShellStyle,
                   width: "fit-content",
                   maxWidth: lightboxImgMaxW,
+                  borderRadius: "6px",
+                  overflow: "hidden",
                   boxShadow: "0 28px 80px rgba(0,0,0,0.1)",
                   cursor: "default",
                   transformOrigin: "center center",
+                  lineHeight: 0,
+                  background: "#fff",
                 }}
               >
-                <WindowChromeBar />
-                <div style={{ background: "#fff", lineHeight: 0 }}>
-                  <img
-                    src={src}
-                    alt=""
-                    draggable={false}
-                    style={{
-                      display: "block",
-                      maxWidth: lightboxImgMaxW,
-                      maxHeight: lightboxImgMaxH,
-                      width: "auto",
-                      height: "auto",
-                      verticalAlign: "top",
-                    }}
-                  />
-                </div>
+                <img
+                  src={src}
+                  alt=""
+                  draggable={false}
+                  style={{
+                    display: "block",
+                    maxWidth: lightboxImgMaxW,
+                    maxHeight: lightboxImgMaxH,
+                    width: "auto",
+                    height: "auto",
+                    verticalAlign: "top",
+                  }}
+                />
               </motion.div>
               {caption &&
                 (reducedMotion ? (
