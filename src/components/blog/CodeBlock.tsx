@@ -74,7 +74,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
       borderRadius: "8px",
       border: "1px solid #E0DED8",
       overflow: "hidden",
-      background: "#F5F5F5",
+      background: "#ffffff",
     }}>
       <div style={{
         display: "flex",
@@ -82,7 +82,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
         justifyContent: "space-between",
         padding: "0 1rem",
         height: "38px",
-        background: "#F5F5F5",
+        background: "#ffffff",
         borderBottom: "1px solid #E0DED8",
       }}>
         <span style={{
@@ -163,7 +163,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
           fontSize: "0.8125rem",
           lineHeight: "1.7",
           fontFamily: "ui-monospace, 'SF Mono', 'Cascadia Code', monospace",
-          background: "#F5F5F5",
+          background: "#ffffff",
         }}
       >
         {children}
