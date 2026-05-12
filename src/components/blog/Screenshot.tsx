@@ -56,11 +56,7 @@ const captionParagraphStyle: React.CSSProperties = {
 /** Stagger letters in sync with the image reveal (starts at t=0). */
 const CAPTION_STAGGER_SEC = 0.028;
 const CAPTION_LETTER_DURATION_SEC = 0.26;
-const CAPTION_LINE_SOFTEN_DURATION_SEC = 0.48;
 const captionLetterEase = [0.22, 1, 0.36, 1] as const;
-/** Readable “soft caption” via shadow (avoid parent filter — breaks opacity on child letters in some GPUs). */
-const captionWhileRevealingShadow =
-  "0 0 14px rgba(48,46,43,0.55), 0 0 30px rgba(48,46,43,0.35)";
 
 export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) {
   const [open, setOpen] = useState(false);
@@ -90,29 +86,6 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
   }, [open]);
 
   const reducedMotion = useReducedMotion();
-  const [captionLineSharp, setCaptionLineSharp] = useState(false);
-
-  /** Soft line until stagger ends; sharpening uses `textShadow` (parent `filter` breaks letter opacity). */
-
-  useEffect(() => {
-    if (!open || !caption) {
-      setCaptionLineSharp(false);
-      return;
-    }
-    if (reducedMotion) {
-      setCaptionLineSharp(true);
-      return;
-    }
-    setCaptionLineSharp(false);
-    const n = Array.from(caption).length;
-    const completeSec =
-      Math.max(0, n - 1) * CAPTION_STAGGER_SEC + CAPTION_LETTER_DURATION_SEC;
-    const id = window.setTimeout(
-      () => setCaptionLineSharp(true),
-      completeSec * 1000 + 80,
-    );
-    return () => window.clearTimeout(id);
-  }, [open, caption, reducedMotion]);
 
   /** Lightbox content: fades in while scaling slightly up from viewport center */
   const lightboxReveal = reducedMotion
@@ -289,21 +262,9 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                   <motion.p
                     id={`caption-${reactId}`}
                     aria-label={caption}
-                    initial={{ opacity: 1, textShadow: captionWhileRevealingShadow }}
-                    animate={{
-                      opacity: 1,
-                      textShadow: captionLineSharp
-                        ? "none"
-                        : captionWhileRevealingShadow,
-                    }}
-                    transition={{
-                      textShadow: {
-                        duration: CAPTION_LINE_SOFTEN_DURATION_SEC,
-                        ease: captionLetterEase,
-                      },
-                      opacity: { duration: 0.12 },
-                    }}
+                    initial={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
+                    transition={{ duration: 0.12 }}
                     style={captionParagraphStyle}
                   >
                     {Array.from(caption).map((ch, i) => {
@@ -312,8 +273,16 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                         <motion.span
                           key={`${reactId}-${i}-${glyph}`}
                           style={{ display: "inline-block" }}
-                          initial={{ opacity: 0, x: "-0.08em" }}
-                          animate={{ opacity: 1, x: 0 }}
+                          initial={{
+                            opacity: 1,
+                            x: "-0.05em",
+                            filter: "blur(14px)",
+                          }}
+                          animate={{
+                            opacity: 1,
+                            x: 0,
+                            filter: "blur(0px)",
+                          }}
                           transition={{
                             delay: i * CAPTION_STAGGER_SEC,
                             duration: CAPTION_LETTER_DURATION_SEC,
