@@ -93,7 +93,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
               margin: 0,
               border: "none",
               background: "#fff",
-              cursor: "zoom-in",
+              cursor: "pointer",
               lineHeight: 0,
             }}
           >
@@ -108,6 +108,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                 width: "100%",
                 height: "auto",
                 verticalAlign: "top",
+                cursor: "pointer",
               }}
             />
           </button>

@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import Screenshot from "../../components/blog/Screenshot";
+import ScreenshotIsland from "../../components/blog/ScreenshotIsland.astro";
 import AnimatedSection from "../../components/blog/AnimatedSection";
 import Demo from "../../components/blog/Demo";
 import Video from "../../components/blog/Video";
@@ -33,7 +33,7 @@ function formatDate(date: Date) {
   });
 }
 
-const blogComponents = { Screenshot, AnimatedSection, Demo, Video };
+const blogComponents = { Screenshot: ScreenshotIsland, AnimatedSection, Demo, Video };
 ---
 
 <html lang={lang}>

@@ -1,0 +1,17 @@
+---
+/**
+ * MDX passes this wrapper from blogComponents; the inner React Screenshot must hydrate
+ * (state + lightbox) — `client:load` cannot be applied from the MDX component map alone.
+ */
+import Screenshot from "./Screenshot.tsx";
+
+interface Props {
+  src: string;
+  alt?: string;
+  caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+---
+
+<Screenshot client:load src={src} alt={alt} caption={caption} />
