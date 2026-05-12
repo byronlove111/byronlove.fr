@@ -14,32 +14,12 @@ interface VideoProps {
 
 const SERIF = "'Lora', Georgia, serif";
 
-const TrafficLights = () => (
-  <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
-    <div style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#FF5F57", border: "1px solid rgba(0,0,0,0.12)" }} />
-    <div style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#FFBD2E", border: "1px solid rgba(0,0,0,0.12)" }} />
-    <div style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#28C840", border: "1px solid rgba(0,0,0,0.12)" }} />
-  </div>
-);
-
-const WindowChromeBar = () => (
-  <div style={{
-    display: "flex",
-    alignItems: "center",
-    padding: "0 1rem",
-    height: "38px",
-    borderBottom: "1px solid #E0DED8",
-    background: "#F5F5F5",
-  }}>
-    <TrafficLights />
-  </div>
-);
-
-const frameShellStyle: React.CSSProperties = {
+const thumbShellStyle: React.CSSProperties = {
   borderRadius: "8px",
   border: "1px solid #E0DED8",
   overflow: "hidden",
-  background: "#F5F5F5",
+  background: "#fff",
+  lineHeight: 0,
 };
 
 const captionParagraphStyle: React.CSSProperties = {
@@ -155,9 +135,7 @@ export default function Video({ src, caption, alt = "" }: VideoProps) {
           }}
         >
           <div style={{ width: "fit-content", maxWidth: "100%" }}>
-            <div style={frameShellStyle}>
-              <WindowChromeBar />
-              <div style={{ background: "#fff", lineHeight: 0 }}>
+            <div style={thumbShellStyle}>
                 <video
                   ref={thumbVideoRef}
                   src={src}
@@ -174,7 +152,6 @@ export default function Video({ src, caption, alt = "" }: VideoProps) {
                     pointerEvents: "none",
                   }}
                 />
-              </div>
             </div>
           </div>
         </button>

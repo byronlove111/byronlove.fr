@@ -7,17 +7,15 @@ Interactive examples live in **`src/components/blog/demos/`** and are rendered i
 | Role | Value |
 |------|--------|
 | Border | `#E0DED8` |
-| Chrome bar (title area) | `#F5F5F5` |
-| Main surface (canvas behind controls) | `#F5F5F5` |
-| Inset panel (preview / “paper”) | `#fff` or same cream as needed |
+| Demo surface | `#F5F5F5` |
+| Inset panel (preview / paper) | `#fff` where needed |
 | Primary text | `#1a1a1a` |
 | Meta / labels | `#777`, monospace `ui-monospace, 'SF Mono', 'Cascadia Code', monospace`, `font-size: 0.6875rem`, `letter-spacing: 0.02em` |
 
 ## Layout
 
-- **Outer shell:** `border-radius: 8px`, `border: 1px solid #E0DED8`, `overflow: hidden`, `margin: 1.75rem 0` (consistent with `CodeBlock`).
-- **Chrome row:** `height: 38px`, `padding: 0 1rem`, bottom border `#E0DED8`.
-- **Content padding:** similar to the code body — about `1.125rem 1.25rem` to `1.5rem` horizontal.
+- **`<Demo>` shell:** `border-radius: 8px`, `border: 1px solid #E0DED8`, `margin: 1.75rem 0`, padded body (same rhythm as CodeBlock sans header bar).
+- **`<Screenshot>` / `<Video>` thumb:** simple bordered `#fff` card, `radius: 8px`, no chrome row.
 
 ## Avoid
 
@@ -36,4 +34,4 @@ import MyWidget from "../../components/blog/demos/my-widget.tsx";
 
 **Screenshots / vidéos :** le MDX utilise `<Screenshot>` ou `<Video>` sans import ; c’est `[...slug].astro` qui résout vers **`ScreenshotIsland.astro`** / **`VideoIsland.astro`**, wrappers avec **`client:load`** pour le lightbox.
 
-Keep demo components focused; shared chrome lives in **`Demo.tsx`**, not in every widget.
+Keep demo widgets focused on content; **`Demo.tsx`** owns only the bordered wrapper.
