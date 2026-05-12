@@ -82,7 +82,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             display: "flex",
             alignItems: "center",
             gap: "0.35rem",
-            padding: "0.25rem 0.55rem",
+            padding: "0.3rem 0.55rem",
             borderRadius: "5px",
             background: hoverCopy ? "#E0DED8" : "transparent",
             border: "1px solid",
@@ -101,10 +101,19 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
               overflow: "hidden",
               display: "inline-block",
               minWidth: "3.25rem",
-              height: "1.125em",
+              lineHeight: 1.45,
+              verticalAlign: "middle",
             }}
           >
-            <span aria-hidden style={{ visibility: "hidden", display: "block" }}>
+            <span
+              aria-hidden
+              style={{
+                visibility: "hidden",
+                display: "block",
+                whiteSpace: "nowrap" as const,
+                lineHeight: "inherit",
+              }}
+            >
               copied
             </span>
             <span
@@ -112,7 +121,9 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
                 position: "absolute",
                 left: 0,
                 top: 0,
-                width: "100%",
+                right: 0,
+                lineHeight: "inherit",
+                whiteSpace: "nowrap" as const,
                 transition,
                 opacity: copied ? 0 : 1,
                 transform: copied ? `translateY(-${shift})` : "translateY(0)",
@@ -125,7 +136,9 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
                 position: "absolute",
                 left: 0,
                 top: 0,
-                width: "100%",
+                right: 0,
+                lineHeight: "inherit",
+                whiteSpace: "nowrap" as const,
                 transition,
                 opacity: copied ? 1 : 0,
                 transform: copied ? "translateY(0)" : `translateY(${shift})`,
