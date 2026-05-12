@@ -24,45 +24,45 @@ export default function Demo({ children, label = "Interactive demo", url }: Demo
     }}>
       {/* macOS window chrome */}
       <div style={{
-        display: "flex",
+        display: "grid",
+        gridTemplateColumns: "44px 1fr 44px",
         alignItems: "center",
-        gap: "1rem",
         padding: "0 1rem",
         height: "42px",
-        background: "#F5F4F0",
+        background: "#EEEDEA",
         borderBottom: "1px solid #E0DED8",
       }}>
         <TrafficLights />
 
-        {/* Address bar */}
-        <div style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}>
+        {/* Address bar — centered in its own column */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
           <div style={{
-            padding: "0.2rem 0.75rem",
-            background: "#EEEDEA",
+            padding: "0.25rem 1rem",
+            background: "#fff",
             borderRadius: "5px",
             border: "1px solid #D8D6CF",
-            minWidth: "140px",
-            maxWidth: "280px",
+            width: "100%",
+            maxWidth: "260px",
             textAlign: "center",
+            boxShadow: "inset 0 1px 2px rgba(0,0,0,0.04)",
           }}>
             <span style={{
               fontFamily: "ui-monospace, 'SF Mono', monospace",
-              fontSize: "0.625rem",
-              letterSpacing: "0.04em",
+              fontSize: "0.5875rem",
+              letterSpacing: "0.03em",
               color: "#888",
               userSelect: "none" as const,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              display: "block",
             }}>
               {url ?? label}
             </span>
           </div>
         </div>
 
-        <div style={{ width: "56px" }} />
+        <div />
       </div>
 
       {/* Content */}

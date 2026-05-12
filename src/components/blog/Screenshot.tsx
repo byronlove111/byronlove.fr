@@ -34,33 +34,29 @@ export default function Screenshot({ src, alt = "", caption, url }: ScreenshotPr
         }}>
           {/* Title bar */}
           <div style={{
-            display: "flex",
+            display: "grid",
+            gridTemplateColumns: "44px 1fr 44px",
             alignItems: "center",
-            gap: "1rem",
             padding: "0 1rem",
             height: "40px",
             borderBottom: "1px solid #E0DED8",
           }}>
             <TrafficLights />
-            <div style={{
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
               <div style={{
-                padding: "0.175rem 0.75rem",
-                background: "#EEEDEA",
+                padding: "0.2rem 1rem",
+                background: "#fff",
                 borderRadius: "4px",
                 border: "1px solid #D8D6CF",
-                minWidth: "120px",
-                maxWidth: "260px",
+                width: "100%",
+                maxWidth: "240px",
                 textAlign: "center",
+                boxShadow: "inset 0 1px 2px rgba(0,0,0,0.04)",
               }}>
                 <span style={{
                   fontFamily: "ui-monospace, 'SF Mono', monospace",
                   fontSize: "0.5625rem",
-                  letterSpacing: "0.04em",
+                  letterSpacing: "0.03em",
                   color: "#999",
                   userSelect: "none" as const,
                   overflow: "hidden",
@@ -72,7 +68,7 @@ export default function Screenshot({ src, alt = "", caption, url }: ScreenshotPr
                 </span>
               </div>
             </div>
-            <div style={{ width: "56px" }} />
+            <div />
           </div>
 
           {/* Image */}
