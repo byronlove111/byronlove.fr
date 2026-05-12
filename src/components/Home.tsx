@@ -168,7 +168,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                     {job.role} · {job.period}
                   </span>
                 </div>
-                <p style={{ fontFamily: SERIF, fontSize: "0.9375rem", lineHeight: 1.75, color: "#666", margin: 0 }}>
+                <p style={{ fontFamily: SERIF, fontSize: "0.9375rem", lineHeight: 1.75, color: TEXT, margin: 0 }}>
                   {job.desc}{" "}
                   {job.highlight && <span style={{ color: TEXT, fontWeight: 500 }}>{job.highlight}</span>}
                 </p>
