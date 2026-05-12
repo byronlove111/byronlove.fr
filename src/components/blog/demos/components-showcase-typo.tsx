@@ -55,7 +55,7 @@ export default function TypographyExplorer() {
 
   const btnActive: React.CSSProperties = {
     ...btnBase,
-    background: "#EEEDEA",
+    background: "#F5F5F5",
     borderColor: EDGE,
     color: "#444",
   };

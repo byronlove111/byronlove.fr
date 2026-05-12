@@ -1,0 +1,55 @@
+---
+title: "Interfaces for imperfect agents"
+date: 2026-05-02
+description: "When workflows are half-human and half-automation, UX must reveal plans, rollback paths, budgets, and when to escalate before trust evaporates."
+lang: en
+slug_base: interfaces-agent-mediated-work
+tags: ["design", "ai", "ux"]
+---
+
+import CodeBlock from "../../components/blog/CodeBlock.tsx";
+
+Once an agent participates in someone's job, shipping the model weights is barely half the artifact. Operators need **shared sightlines** across partial completion, flaky tool calls, and moments when the smartest move is quitting.
+
+Treat the interface exactly like air traffic control: humans accept automation when they grasp altitude, headings, contingency fuel, whose hands are theoretically on controls.
+
+## Make the tentative plan tangible
+
+Translucent thinking beats blackout boxes. Outline next steps—even if probabilistic—with explicit confidence language. When branching appears, summarize forks instead of collapsing into conversational fog.
+
+<CodeBlock client:load lang="text">
+Suggested next actions:
+1. Summarize deltas vs. staging schema  (risk: LOW)
+2. Apply migration in sandbox          (risk: MEDIUM / requires rollback token)
+3. Open PR touching runtime auth        (risk: HIGH / human reviewer mandatory)
+</CodeBlock>
+
+Let people reorder, drop, annotate. That choreography is accountability infrastructure.
+
+## Reversibility buys forgiveness
+
+Assume every automation line will regress something adorable. Undo stacks, transactional staging, ephemeral branches, drafts before send—anything that restores prior world states without archaeology keeps operators calm.
+
+Agents should never be the fastest path toward **irrecoverable embarrassment**.
+
+## Spend and attention budgets deserve UI
+
+Loops without ceilings burn money and temperament. Surfacing approximate token/tool cost, reminding folks when horizons stretch, enforcing maximum iterations before forced human checkpoint surfaces healthy friction.
+
+Seeing "paused after six steps awaiting approval" communicates respect for risk budgets.
+
+## Escalate loudly, apologize quietly
+
+Agents will refuse, stall, hallucinate gateways. Design visible paths to human escalation that feel like promotion of attention—not failure shaming—plus crisp receipts about what succeeded before blockage.
+
+Silent failure corrodes quicker than melodramatic error copy.
+
+---
+
+Looping previews help explain motion without heavyweight video platforms:
+
+<Video
+  src="/videos/placeholder.mp4"
+  alt="Muted loop illustrating agentic pacing"
+  caption="Silent looped clip — useful motion without shipping full video chrome"
+/>

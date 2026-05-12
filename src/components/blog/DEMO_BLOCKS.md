@@ -32,6 +32,9 @@ import MyWidget from "../../components/blog/demos/my-widget.tsx";
 </Demo>
 ```
 
+**CodeBlock dans le MDX :** ajouter  
+`import CodeBlock from "../../components/blog/CodeBlock.tsx";` puis `<CodeBlock client:load …>` (pas fourni dans le map global comme `Screenshot`).
+
 **Screenshots / vidéos :** le MDX utilise `<Screenshot>` ou `<Video>` sans import ; c’est `[...slug].astro` qui résout vers **`ScreenshotIsland.astro`** / **`VideoIsland.astro`**, wrappers avec **`client:load`** pour le lightbox.
 
-Keep demo widgets focused on content; **`Demo.tsx`** owns only the bordered wrapper.
+Keep demo widgets focused on content ; **`Demo.tsx`** ne fournit plus qu’un cadre bordé.

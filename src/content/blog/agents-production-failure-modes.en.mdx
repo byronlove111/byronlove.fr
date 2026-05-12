@@ -1,0 +1,48 @@
+---
+title: "Why autonomous coding agents fray in production"
+date: 2026-05-06
+description: "Non-determinism, drifting context, dangerous tool misuse, and missing guardrails — the boring failure modes you will not hear on hype slides."
+lang: en
+slug_base: agents-production-failure-modes
+tags: ["ai", "engineering", "reliability"]
+---
+
+Demos sparkle; production peels the varnish. Coding agents drift for the same brittle automation failures we learned with cron jobs except now, between two mistakes, your script politely narrates confidence.
+
+Below are fractures I insist on inspecting when we graduate from **impressive pilot** to **loop that customer success will actually see.**
+
+## The model loses track of why it opened the repo
+
+Attention windows are bounded. Retrieval differs slightly between attempts. Teams rename folders on Fridays. Suddenly the assistant that "knows the codebase" guesses which microservice terminates the webhook.
+
+Mitigations boil down to habit: narrower tasks per run, readable logs about which paths were consulted, deterministic test suites rather than vibes, wiping context whenever the ticket shifts.
+
+<Screenshot
+  src="https://images.unsplash.com/photo-1558494949-75ef04edf342?w=1200&q=80"
+  alt="Server racks and lights in a datacenter aisle"
+  caption="In prod, tedious observability beats a chatty narrator: logs, audit trails, and automated gates still matter."
+/>
+
+## Tools stay sharp knives with friendly labels
+
+Handing agents filesystem, shells, ticketing, deployments, billing, or Slack collapses abstraction layers humans already misunderstand. Humans mis-click; models misinterpret intent—but most of us stop when our shoulders tighten.
+
+Assume **every invocation can cascade**. Narrow blast radius before betting the freshest foundation model has become "effectively diligent."
+
+## Self-evaluation steals the evaluator's hat
+
+"No obvious issue" plus elegant Markdown earns nothing unless CI exercised the pinned container exactly as release train expects. Agents need **automatic judges whose incentives differ from the planner's.**
+
+Trust green pipelines—or staging facsimiles—as hard evidence. Prefer **tiny diffs** with explicit confirmations over eighty-file thrashes that resemble motion.
+
+## Org debt becomes agent debt overnight
+
+Agents inherit whoever authenticated the credentials. Rotate keys aggressively, downgrade privilege on throwaway identities, document service principals before unattended loops wield the powers you casually used on Friday.
+
+> If answering "who did what tomorrow" makes you itch, automate less tonight.
+
+## How deployments leave my desk quietly
+
+Sandboxed forks behind **feature flags**, mandatory human merge before user-visible impact, replay exercises for known regressions quarterly.
+
+Agentic tooling only pays off once the team acknowledges **autonomy without observability corrodes calmly**. Fight that entropy with safeguards designed like product—not like an optional appendix.

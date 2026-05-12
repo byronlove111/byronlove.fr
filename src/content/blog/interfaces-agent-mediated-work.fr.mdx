@@ -1,0 +1,53 @@
+---
+title: "Des interfaces lorsque les agents nous cohabitent"
+date: 2026-05-02
+description: "Quand le travail mélange humain et automatisation fragile, il faut montrer le plan de vol, rendre réversibles les effets risqués, budgétiser les boucles."
+lang: fr
+slug_base: interfaces-agent-mediated-work
+tags: ["design", "ai", "ux"]
+---
+
+import CodeBlock from "../../components/blog/CodeBlock.tsx";
+
+Une fois qu'un agent pénètre le flux quotidien, livrer uniquement les poids du modèle ne suffit plus. Celui qui opère doit **voir où en est une exécution partielle**, quels risques ou ratés automatiques peuvent encore survenir et quand mieux vaudrait tout arrêter.
+
+Le produit doit brièvement rappeler une tour de contrôle : on accepte l'automatisation tant qu'on voit encore le cap avant que quelqu'un reprenne la barre.
+
+## Le plan probabiliste doit être visible
+
+Une boîte noire impressionne en démo interne et épouvante celui qui tient prod. Rendez vos prochaines étapes explicites — même si elles bougent vite — avec une **grille de gravité lisible**.
+
+<CodeBlock client:load lang="text">
+Étapes possibles suivantes :
+1. Synthétiser l'écart schéma / staging        ( risque FAIBLE )
+2. Appliquer migration dans bac à sable        ( MOYEN / jeton rollback requis )
+3. Ouvrir PR touchant runtime auth               ( HAUT / relecteur humain obligatoire )
+</CodeBlock>
+
+Laissez reprioriser, commenter ou retirer une étape : ce dialogue devient un journal d'intentions vérifiable après incident.
+
+## Rendez tout ce qui compte réversible autant que possible
+
+Partez du principe que l'agent cassera vite quelque chose de précieux. Annulations nettes, branches jetables avant merge, brouillons mail, paiements retardés jusqu'à confirmation : ce sont les garde‑fous qui évitent l'alerte téléphonée à trois heures du matin.
+
+Une automatisation « brillante » qui efface définitivement la donnée client peut attendre jusqu'à avoir un filet sérieux.
+
+## Visualisez coûts & cycles
+
+Des boucles illimitées drainent budgets cloud et humeurs d'équipe. Rendez visibles grosso modo jetons/appels réseau, imposez un horizon max puis une pause forcée avec message clair (« en pause après six étapes ») : friction utile contre la surprise.
+
+## Rendez évident comment repasser la main aux humains
+
+Les blocages absurdes arriveront ; les chemins d'escalade doivent se sentir comme **gain de levier**, pas comme échec chiffré.
+
+Silence UX en cas d'échec = perte définitive de confiance après une seule nuit d'astreinte.
+
+---
+
+De courtes vidéos muettes en boucle — sans lecteur lourd type YouTube — peuvent encore montrer le rythme d'un agent :
+
+<Video
+  src="/videos/placeholder.mp4"
+  alt="Vidéo silencieuse en boucle"
+  caption="Boucle silencieuse : montrer un geste continu sans passer par une plate-forme vidéo"
+/>
