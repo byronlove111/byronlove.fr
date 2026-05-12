@@ -78,7 +78,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.125rem",
+            gap: 0,
             padding: "0.3rem 0.35rem",
             borderRadius: "5px",
             background: "none",
@@ -99,6 +99,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
               minWidth: "3.25rem",
               lineHeight: 1.45,
               verticalAlign: "middle",
+              marginLeft: "-0.3125rem",
             }}
           >
             <span
