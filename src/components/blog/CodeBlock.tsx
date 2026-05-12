@@ -15,6 +15,36 @@ const getTextContent = (node: React.ReactNode): string => {
   return "";
 };
 
+/** Readable source from the rendered pane (fixes Astro client:slot / await-children where React children are empty client-side). */
+function readFromCodePanel(panel: HTMLElement | null): string {
+  if (!panel) return "";
+  const root = panel.querySelector("pre.astro-code") ?? panel.querySelector("pre") ?? panel;
+  return root.innerText.replace(/\u00a0/g, " ").trim();
+}
+
+async function writeClipboard(text: string): Promise<boolean> {
+  if (!text) return false;
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-10000px";
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch {
+      return false;
+    }
+  }
+}
+
 const CopyIcon = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
     <rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.2" />
@@ -27,13 +57,17 @@ const shift = "0.28rem";
 export default function CodeBlock({ filename, lang, children }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const resetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => () => {
     if (resetRef.current) clearTimeout(resetRef.current);
   }, []);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(getTextContent(children).trim());
+    const raw = readFromCodePanel(panelRef.current) || getTextContent(children).trim();
+    const ok = await writeClipboard(raw);
+    if (!ok) return;
+
     setCopied(true);
     if (resetRef.current) clearTimeout(resetRef.current);
     resetRef.current = setTimeout(() => setCopied(false), 900);
@@ -152,14 +186,17 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
         </button>
       </div>
 
-      <div style={{
-        overflowX: "auto",
-        padding: "1.125rem 1.25rem",
-        fontSize: "0.8125rem",
-        lineHeight: "1.7",
-        fontFamily: "ui-monospace, 'SF Mono', 'Cascadia Code', monospace",
-        background: "#F5F4F0",
-      }}>
+      <div
+        ref={panelRef}
+        style={{
+          overflowX: "auto",
+          padding: "1.125rem 1.25rem",
+          fontSize: "0.8125rem",
+          lineHeight: "1.7",
+          fontFamily: "ui-monospace, 'SF Mono', 'Cascadia Code', monospace",
+          background: "#F5F4F0",
+        }}
+      >
         {children}
       </div>
     </div>
