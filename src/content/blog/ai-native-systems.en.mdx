@@ -1,0 +1,96 @@
+---
+title: "Your systems aren't ready for agents"
+date: 2026-05-12
+description: "Adding AI on top of old systems doesn't work. Here's what designing for agents actually looks like — and why it starts with unlearning REST."
+lang: en
+slug_base: ai-native-systems
+tags: [ai, architecture, agents, backend]
+---
+
+import CodeBlock from "../../components/blog/CodeBlock.tsx";
+
+Agencies run on 15 different tools. CRM here. Docs there. Tracking in Notion. Invoices somewhere else. Each system holds one slice of the truth. That was fine when humans connected the dots.
+
+Agents can't. Not efficiently.
+
+If your agent needs 8 API calls to understand who a client is, what they want, and what's already happened — your system is not ready for AI. It's AI-tolerant. There's a difference.
+
+## The pattern that's killing agent loops
+
+Most teams do this: take an existing backend, wrap an LLM around it, call it an agent. The agent hammers 6 endpoints, assembles a fragmented picture from half-matching schemas, then makes a decision on context it had to stitch together itself.
+
+Works in demos. In production, it's slow, expensive, and brittle. Each API call is a chance to miss something. Each round trip adds latency. When the agent hallucinates, you don't know which fragment of context caused it.
+
+The problem isn't the model. The problem is the environment you put it in.
+
+## What AI-native actually looks like
+
+One endpoint. One call. Everything the agent needs to operate on a client, a mission, a task — served in a single structured response.
+
+Not "here's the contact" and "here's the deal" and "here's the last campaign stats." One response: company, contacts, all active missions, last tasks, attached documents, available tools. The agent reads it once and acts.
+
+<CodeBlock lang="typescript" client:load>
+{`// Old way: agent stitches context from 8 endpoints
+const company    = await api.get('/companies/:id')
+const contacts   = await api.get('/companies/:id/contacts')
+const deals      = await api.get('/companies/:id/deals')
+const campaigns  = await api.get('/campaigns?company=:id')
+const tasks      = await api.get('/tasks?company=:id')
+const documents  = await api.get('/documents?company=:id')
+const invoices   = await api.get('/invoices?company=:id')
+const history    = await api.get('/activity?company=:id')
+// 8 calls, 8 chances to get incomplete data
+
+// AI-native: one context endpoint shaped for the agent
+const context = await api.get('/agent-context/mission/:id')
+// {
+//   company: { name, icp, industry, size },
+//   contacts: [...],
+//   mission: { brief, kpis, type },
+//   tasks: [...recent + pending],
+//   documents: [...],
+//   tools_available: ['emelia', 'github', 'slack']
+// }
+// One call. Full picture. Agent can start immediately.`}
+</CodeBlock>
+
+This changes how you design your backend. Instead of "what are my entities and what REST routes do they map to?", you ask: what does an agent need to act on this, and how do I give it that in one shot?
+
+## MCP, not just REST
+
+The next layer is how the agent accesses that context. REST works, but MCP — Model Context Protocol — is built for this. Instead of your agent calling endpoints, you expose an MCP server. The agent connects, requests what it needs, gets structured semantically-rich data back.
+
+Any agent — local, cloud, any model — can plug in without you building a custom integration each time. You write the protocol once. Every agent speaks it.
+
+You also stop thinking "do I expose this as a REST endpoint?" and start asking: do I expose this as an MCP tool, an MCP resource, or a Cloud Agent someone can trigger directly? Those are different things. Each one has a different cost structure, different granularity, different contract with the model.
+
+> If you're building a new backend in 2026 and your first instinct is still REST CRUD, pause and ask who's actually calling those endpoints.
+
+## S37 Portal
+
+We're building this at S37. We run an agency — GTM, design, dev missions for clients. Every client's context is spread across Attio, Notion, email threads, Google Drive.
+
+So we rebuilt from zero. One source of truth. When an agent starts a task, it calls one endpoint and gets the full picture: company, ICP, active campaigns, last 20 tasks, attached documents, stat history. It doesn't search. It receives.
+
+From there, it acts. GTM agents generate sequences and analyze Emelia stats. Dev agents clone repos, write the feature, run tests, open a PR. Design agents implement components, spin up the app, take a screenshot of the render before creating the PR. Each agent receives exactly the context it needs, in the format it expects.
+
+The human loop is thin: review, approve, send feedback. The agent iterates. Everything else runs without anyone behind a keyboard.
+
+## What to actually change today
+
+**1. Shape endpoints around agent tasks, not database entities.**
+Stop building `GET /companies/:id` + `GET /deals` + `GET /contacts`. Build `GET /agent-context/mission/:id`. The difference is who you're designing for.
+
+**2. Think MCP when you're building tooling agents will reuse.**
+Especially across missions, across clients. Write it once, expose it to every model.
+
+**3. Sandbox every run.**
+Isolated execution. Know exactly what the agent saw, what tools it called, what it changed. Monitoring isn't optional — it's how you catch the 10% of runs that go sideways before they hit prod.
+
+## The point
+
+The bottleneck isn't model intelligence anymore. Claude and GPT can execute most of what your team does. The bottleneck is the environment: fragmented context, no sandbox, no monitoring, 8 calls to answer a simple question about a client.
+
+Old systems were designed for humans navigating tabs. Agents don't navigate tabs. They need the full picture, fast, structured, in one place.
+
+Fix the environment. The models will handle the rest.

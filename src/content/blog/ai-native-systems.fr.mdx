@@ -1,0 +1,96 @@
+---
+title: "Tes systèmes ne sont pas prêts pour les agents"
+date: 2026-05-12
+description: "Coller de l'IA sur des systèmes existants ne marche pas. Ce que ça veut vraiment dire de concevoir pour les agents — et pourquoi ça commence par désapprendre le REST."
+lang: fr
+slug_base: ai-native-systems
+tags: [ai, architecture, agents, backend]
+---
+
+import CodeBlock from "../../components/blog/CodeBlock.tsx";
+
+Les agences tournent sur 15 outils différents. Le CRM ici. Les docs là. Le tracking dans Notion. Les factures quelque part ailleurs. Chaque système détient un fragment de la vérité. C'était acceptable quand un humain faisait la synthèse.
+
+Un agent ne peut pas. Pas efficacement.
+
+Si ton agent a besoin de 8 appels API pour comprendre qui est le client, ce qu'il veut, et ce qui s'est passé jusqu'ici — ton système n'est pas prêt pour l'IA. Il est AI-tolérant. C'est pas la même chose.
+
+## Le pattern qui tue les boucles agents
+
+La plupart des équipes font ça : prendre un backend existant, enrouler un LLM autour, appeler ça un agent. L'agent tape 6 endpoints, assemble un tableau fragmenté depuis des schémas qui se recoupent à moitié, puis prend une décision sur un contexte qu'il a dû reconstruire lui-même.
+
+Ça marche en démo. En production, c'est lent, cher, et cassant. Chaque appel API est une occasion de rater quelque chose. Chaque aller-retour réseau ajoute de la latence. Quand l'agent hallucine, tu sais pas quel fragment de contexte l'a causé.
+
+Le problème n'est pas le modèle. C'est l'environnement dans lequel tu le mets.
+
+## Ce que ça veut dire d'être AI-native
+
+Un endpoint. Un appel. Tout ce dont l'agent a besoin pour opérer sur un client, une mission, une tâche — servi dans une seule réponse structurée.
+
+Pas "voilà le contact" puis "voilà le deal" puis "voilà les stats de la dernière campagne." Une réponse : company, contacts, toutes les missions actives, les dernières tâches, les documents attachés, les outils disponibles. L'agent lit une fois et agit.
+
+<CodeBlock lang="typescript" client:load>
+{`// Ancienne façon : l'agent reconstruit le contexte depuis 8 endpoints
+const company    = await api.get('/companies/:id')
+const contacts   = await api.get('/companies/:id/contacts')
+const deals      = await api.get('/companies/:id/deals')
+const campaigns  = await api.get('/campaigns?company=:id')
+const tasks      = await api.get('/tasks?company=:id')
+const documents  = await api.get('/documents?company=:id')
+const invoices   = await api.get('/invoices?company=:id')
+const history    = await api.get('/activity?company=:id')
+// 8 appels, 8 occasions d'avoir un contexte incomplet
+
+// AI-native : un endpoint de contexte taillé pour l'agent
+const context = await api.get('/agent-context/mission/:id')
+// {
+//   company: { name, icp, industry, size },
+//   contacts: [...],
+//   mission: { brief, kpis, type },
+//   tasks: [...recent + pending],
+//   documents: [...],
+//   tools_available: ['emelia', 'github', 'slack']
+// }
+// Un appel. Image complète. L'agent peut démarrer immédiatement.`}
+</CodeBlock>
+
+Ça change la façon dont tu conçois ton backend. Au lieu de "quelles sont mes entités et à quels routes REST elles correspondent ?", tu te demandes : qu'est-ce qu'un agent a besoin pour agir sur ce contexte, et comment je lui donne ça en un seul coup ?
+
+## MCP, pas juste du REST
+
+La couche suivante, c'est comment l'agent accède à ce contexte. Le REST fonctionne, mais le MCP — Model Context Protocol — est fait pour ça. Au lieu que ton agent appelle des endpoints, tu exposes un serveur MCP. L'agent se connecte, demande ce dont il a besoin, reçoit des données structurées sémantiquement riches.
+
+N'importe quel agent — local, cloud, n'importe quel modèle — peut se brancher sans que tu doives construire une intégration sur mesure à chaque fois. Tu écris le protocole une fois. Tous les agents le parlent.
+
+Tu arrêtes aussi de te demander "est-ce que j'expose ça en REST ?" et tu commences à te demander : est-ce que j'expose ça comme un outil MCP, une ressource MCP, ou un Cloud Agent que quelqu'un peut déclencher directement ? Ce sont des choses différentes. Chacune a un coût différent, une granularité différente, un contrat différent avec le modèle.
+
+> Si tu construis un nouveau backend en 2026 et que ton premier réflexe est encore du CRUD REST, pause — et demande-toi qui appelle vraiment ces endpoints.
+
+## S37 Portal
+
+On construit ça chez S37. On est une agence — missions GTM, design, dev pour des clients. Le contexte de chaque client est éparpillé entre Attio, Notion, des fils d'emails, Google Drive.
+
+On a donc tout reconstruit from scratch. Une seule source de vérité. Quand un agent démarre une tâche, il appelle un endpoint et récupère l'image complète : company, ICP, campagnes actives, 20 dernières tâches, documents attachés, historique des stats. Il ne cherche pas. Il reçoit.
+
+Ensuite il agit. Les agents GTM génèrent des séquences et analysent les stats Emelia. Les agents dev clonent les repos, écrivent la feature, lancent les tests, ouvrent une PR. Les agents design implémentent les composants, lancent l'app, prennent un screenshot du rendu avant de créer la PR. Chaque agent reçoit exactement le contexte dont il a besoin, dans le format qu'il attend.
+
+La boucle humaine est mince : review, approbation, feedback. L'agent itère. Tout le reste tourne sans que personne soit derrière un clavier.
+
+## Ce qu'il faut changer concrètement
+
+**1. Façonne les endpoints autour des tâches agents, pas des entités de ta base.**
+Arrête de construire `GET /companies/:id` + `GET /deals` + `GET /contacts`. Construis `GET /agent-context/mission/:id`. La différence, c'est pour qui tu conçois.
+
+**2. Pense MCP quand tu construis des outils que les agents vont réutiliser.**
+Surtout entre missions, entre clients. Tu l'écris une fois, tu l'exposes à chaque modèle.
+
+**3. Sandbox chaque exécution.**
+Isolation totale. Tu sais exactement ce que l'agent a vu, quels outils il a appelés, ce qu'il a changé. Le monitoring n'est pas optionnel — c'est comme ça que tu catches les 10% de runs qui partent de travers avant qu'ils touchent la prod.
+
+## Ce qu'il faut retenir
+
+Le bottleneck n'est plus l'intelligence du modèle. Claude et GPT peuvent exécuter la majorité de ce que ton équipe fait. Le bottleneck, c'est l'environnement : contexte fragmenté, pas de sandbox, pas de monitoring, 8 appels pour répondre à une question simple sur un client.
+
+Les anciens systèmes étaient conçus pour des humains qui naviguent entre des onglets. Les agents ne naviguent pas entre des onglets. Ils ont besoin de l'image complète, vite, structurée, en un seul endroit.
+
+Corrige l'environnement. Les modèles feront le reste.
