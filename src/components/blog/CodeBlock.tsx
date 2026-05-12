@@ -75,8 +75,6 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
 
   const displayLabel = filename ?? lang;
   const labelTransition = "opacity 0.2s ease-out, transform 0.2s ease-out";
-  const chromeEase = "cubic-bezier(0.22, 1, 0.36, 1)";
-  const chromeDur = "0.24s";
 
   return (
     <div style={{
@@ -115,7 +113,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             display: "flex",
             alignItems: "center",
             flexShrink: 0,
-            gap: copied ? "0.22rem" : 0,
+            gap: "0.22rem",
             padding: "0.3rem 0 0.3rem 0.35rem",
             borderRadius: "5px",
             background: "none",
@@ -125,8 +123,6 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             fontFamily: "ui-monospace, 'SF Mono', monospace",
             fontSize: "0.625rem",
             letterSpacing: "0.06em",
-            transform: copied ? "translateX(-14px)" : "translateX(0)",
-            transition: `transform ${chromeDur} ${chromeEase}, gap ${chromeDur} ${chromeEase}`,
           }}
         >
           <CopyIcon />
@@ -135,14 +131,22 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
               position: "relative",
               overflow: "hidden",
               display: "inline-block",
-              /* Phantom width was locked to longest label ("copied") while idle — huge gap after "copy" */
-              width: copied ? "8.95ch" : "5ch",
-              height: "1.45em",
+              lineHeight: 1.45,
               verticalAlign: "middle",
-              marginLeft: copied ? 0 : "-0.3125rem",
-              transition: `margin-left ${chromeDur} ${chromeEase}, width ${chromeDur} ${chromeEase}`,
             }}
           >
+            {/* In-flow, invisible — width follows active label (never "copied-sized" while showing copy). */}
+            <span
+              aria-hidden
+              style={{
+                opacity: 0,
+                whiteSpace: "nowrap" as const,
+                userSelect: "none" as const,
+                pointerEvents: "none" as const,
+              }}
+            >
+              {copied ? "copied" : "copy"}
+            </span>
             <span
               style={{
                 position: "absolute",
