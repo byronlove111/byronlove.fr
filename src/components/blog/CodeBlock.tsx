@@ -52,8 +52,6 @@ const CopyIcon = () => (
   </svg>
 );
 
-const shift = "0.28rem";
-
 export default function CodeBlock({ filename, lang, children }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const resetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -74,7 +72,8 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
   };
 
   const displayLabel = filename ?? lang;
-  const labelTransition = "opacity 0.2s ease-out, transform 0.2s ease-out";
+  /** Opacity-only: avoids layout shift from transform + resizing mid-transition. */
+  const copyFade = "opacity 0.18s ease-out";
   const copyRowGap = "0.38rem";
 
   return (
@@ -114,6 +113,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             display: "flex",
             alignItems: "center",
             flexShrink: 0,
+            gap: copyRowGap,
             padding: "0.3rem 0 0.3rem 0.35rem",
             borderRadius: "5px",
             background: "none",
@@ -123,73 +123,42 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             fontFamily: "ui-monospace, 'SF Mono', monospace",
             fontSize: "0.625rem",
             letterSpacing: "0.06em",
+            lineHeight: 1.45,
           }}
         >
-          <span
-            style={{
-              position: "relative",
-              display: "inline-flex",
-              alignItems: "center",
-              lineHeight: 1.45,
-              verticalAlign: "middle",
-            }}
-          >
-            {/* In-flow, invisible — width = icon slot + gap + active word ("copy" ↔ "copied"). */}
+          <span style={{ display: "flex", flexShrink: 0, lineHeight: 0 }}>
+            <CopyIcon />
+          </span>
+          <span aria-hidden style={{ position: "relative", display: "inline-block", whiteSpace: "nowrap" as const }}>
             <span
-              aria-hidden
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: copyRowGap,
-                opacity: 0,
-                whiteSpace: "nowrap" as const,
+                visibility: "hidden" as const,
                 userSelect: "none" as const,
                 pointerEvents: "none" as const,
               }}
             >
-              <span style={{ width: 12, height: 12, flexShrink: 0 }} />
-              {copied ? "copied" : "copy"}
+              copied
             </span>
             <span
-              aria-hidden
               style={{
                 position: "absolute",
                 left: 0,
                 top: 0,
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                gap: copyRowGap,
-                whiteSpace: "nowrap" as const,
-                transition: labelTransition,
+                transition: copyFade,
                 opacity: copied ? 0 : 1,
-                transform: copied ? `translateY(-${shift})` : "translateY(0)",
               }}
             >
-              <span style={{ display: "flex", flexShrink: 0, lineHeight: 0 }}>
-                <CopyIcon />
-              </span>
               copy
             </span>
             <span
-              aria-hidden
               style={{
                 position: "absolute",
                 left: 0,
                 top: 0,
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                gap: copyRowGap,
-                whiteSpace: "nowrap" as const,
-                transition: labelTransition,
+                transition: copyFade,
                 opacity: copied ? 1 : 0,
-                transform: copied ? "translateY(0)" : `translateY(${shift})`,
               }}
             >
-              <span style={{ display: "flex", flexShrink: 0, lineHeight: 0 }}>
-                <CopyIcon />
-              </span>
               copied
             </span>
           </span>
