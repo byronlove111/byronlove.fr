@@ -10,8 +10,7 @@ const blog = defineCollection({
     slug_base: z.string(),
     tags: z.array(z.string()).optional().default([]),
     cover: z.string().optional(),
-    word_count: z.number().optional(),
-  }),
+    word_count: z.number().optional(),  }),
 });
 
 export const collections = { blog };

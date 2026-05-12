@@ -63,7 +63,7 @@ function formatDate(date: Date) {
         )}
         {groups.map((group) => {
           const primary = group.en ?? group.fr;
-          const { title, date, description, slug_base, word_count } = primary.data;
+          const { title, date, description, slug_base } = primary.data;
 
           return (
             <article style="padding: 2rem 0; border-top: 1px solid #E8E7E2;">
@@ -85,12 +85,6 @@ function formatDate(date: Date) {
                 </p>
               )}
               <div style="display: flex; align-items: center; gap: 0.75rem;">
-                {word_count && (
-                  <span style="font-family: ui-monospace, 'SF Mono', monospace; font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; color: #bbb;">
-                    {word_count.toLocaleString()} words
-                  </span>
-                )}
-                {word_count && (group.en || group.fr) && <span style="color: #ddd; font-size: 0.625rem;">·</span>}
                 {group.en && (
                   <a
                     href={`/blog/${slug_base}-en`}
