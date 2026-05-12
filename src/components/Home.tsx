@@ -119,14 +119,6 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
           <div style={{ display: "flex", flexDirection: "column" as const, gap: "2rem" }}>
             {[
               {
-                name: "OpenSource Together",
-                href: "https://opensource-together.com",
-                role: "Co-Founder",
-                period: "2025–Present",
-                desc: "Led a team of 10 people to build a platform connecting developers, designers and creatives.",
-                highlight: "500 sign ups at launch.",
-              },
-              {
                 name: "Cursor",
                 href: "https://cursor.sh",
                 role: "Ambassador",
@@ -141,6 +133,14 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 period: "2024–2025",
                 desc: "First founding engineer. Designed and rebuilt entire frontend, implemented full-stack features. Developed marketing solutions reaching",
                 highlight: "5,000+ users.",
+              },
+              {
+                name: "OpenSource Together",
+                href: "https://opensource-together.com",
+                role: "Co-Founder",
+                period: "2025–Present",
+                desc: "Led a team of 10 people to build a platform connecting developers, designers and creatives.",
+                highlight: "500 sign ups at launch.",
               },
               {
                 name: "École 42",
