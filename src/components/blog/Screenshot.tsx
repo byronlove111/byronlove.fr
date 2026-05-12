@@ -5,7 +5,6 @@ interface ScreenshotProps {
   src: string;
   alt?: string;
   caption?: string;
-  url?: string;
 }
 
 const TrafficLights = () => (
@@ -16,10 +15,8 @@ const TrafficLights = () => (
   </div>
 );
 
-export default function Screenshot({ src, alt = "", caption, url }: ScreenshotProps) {
+export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) {
   const [open, setOpen] = useState(false);
-
-  const displayUrl = url ?? (caption ? caption : src.split("/").pop() ?? "screenshot");
 
   return (
     <>
@@ -34,41 +31,14 @@ export default function Screenshot({ src, alt = "", caption, url }: ScreenshotPr
         }}>
           {/* Title bar */}
           <div style={{
-            display: "grid",
-            gridTemplateColumns: "44px 1fr 44px",
+            display: "flex",
             alignItems: "center",
             padding: "0 1rem",
             height: "40px",
             borderBottom: "1px solid #E0DED8",
+            background: "#EEEDEA",
           }}>
             <TrafficLights />
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <div style={{
-                padding: "0.2rem 1rem",
-                background: "#fff",
-                borderRadius: "4px",
-                border: "1px solid #D8D6CF",
-                width: "100%",
-                maxWidth: "240px",
-                textAlign: "center",
-                boxShadow: "inset 0 1px 2px rgba(0,0,0,0.04)",
-              }}>
-                <span style={{
-                  fontFamily: "ui-monospace, 'SF Mono', monospace",
-                  fontSize: "0.5625rem",
-                  letterSpacing: "0.03em",
-                  color: "#999",
-                  userSelect: "none" as const,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  display: "block",
-                }}>
-                  {displayUrl}
-                </span>
-              </div>
-            </div>
-            <div />
           </div>
 
           {/* Image */}

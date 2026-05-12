@@ -1,7 +1,6 @@
 interface DemoProps {
   children: React.ReactNode;
   label?: string;
-  url?: string;
 }
 
 const TrafficLights = () => (
@@ -12,7 +11,7 @@ const TrafficLights = () => (
   </div>
 );
 
-export default function Demo({ children, label = "Interactive demo", url }: DemoProps) {
+export default function Demo({ children, label = "Interactive demo" }: DemoProps) {
   return (
     <div style={{
       margin: "2rem 0",
@@ -24,45 +23,26 @@ export default function Demo({ children, label = "Interactive demo", url }: Demo
     }}>
       {/* macOS window chrome */}
       <div style={{
-        display: "grid",
-        gridTemplateColumns: "44px 1fr 44px",
+        display: "flex",
         alignItems: "center",
+        justifyContent: "space-between",
         padding: "0 1rem",
         height: "42px",
         background: "#EEEDEA",
         borderBottom: "1px solid #E0DED8",
       }}>
         <TrafficLights />
-
-        {/* Address bar — centered in its own column */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div style={{
-            padding: "0.25rem 1rem",
-            background: "#fff",
-            borderRadius: "5px",
-            border: "1px solid #D8D6CF",
-            width: "100%",
-            maxWidth: "260px",
-            textAlign: "center",
-            boxShadow: "inset 0 1px 2px rgba(0,0,0,0.04)",
-          }}>
-            <span style={{
-              fontFamily: "ui-monospace, 'SF Mono', monospace",
-              fontSize: "0.5875rem",
-              letterSpacing: "0.03em",
-              color: "#888",
-              userSelect: "none" as const,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              display: "block",
-            }}>
-              {url ?? label}
-            </span>
-          </div>
-        </div>
-
-        <div />
+        <span style={{
+          fontFamily: "ui-monospace, 'SF Mono', monospace",
+          fontSize: "0.5875rem",
+          letterSpacing: "0.07em",
+          textTransform: "uppercase" as const,
+          color: "#aaa",
+          userSelect: "none" as const,
+        }}>
+          {label}
+        </span>
+        <div style={{ width: "44px" }} />
       </div>
 
       {/* Content */}
