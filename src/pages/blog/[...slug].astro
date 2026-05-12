@@ -83,19 +83,30 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
       (function () {
         const nav = document.getElementById("article-nav");
         const spacer = document.getElementById("article-nav-spacer");
+        const headerEl = document.querySelector(".article-header");
         if (!nav || !spacer) return;
-        var THRESH = 12;
         function setSpacer() {
           spacer.style.height = nav.offsetHeight + "px";
         }
+        function updateNavState() {
+          if (!headerEl) {
+            nav.classList.remove("article-nav--scrolled");
+            return;
+          }
+          var navH = nav.offsetHeight;
+          var mastheadBottom = headerEl.getBoundingClientRect().bottom;
+          nav.classList.toggle("article-nav--scrolled", mastheadBottom <= navH + 6);
+        }
         function onScroll() {
-          var y = window.scrollY || document.documentElement.scrollTop;
-          nav.classList.toggle("article-nav--scrolled", y > THRESH);
+          updateNavState();
         }
         setSpacer();
-        onScroll();
+        updateNavState();
         window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", setSpacer);
+        window.addEventListener("resize", function () {
+          setSpacer();
+          updateNavState();
+        });
       })();
     </script>
   </body>
@@ -132,7 +143,7 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
     justify-content: space-between;
     max-width: 720px;
     margin: 0 auto;
-    padding-top: max(2rem, calc(env(safe-area-inset-top, 0px) + 0.75rem));
+    padding-top: max(1.25rem, calc(env(safe-area-inset-top, 0px) + 0.5rem));
     padding-inline: 1.5rem;
     padding-bottom: 1rem;
     gap: 1rem;
