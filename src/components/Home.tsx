@@ -5,7 +5,14 @@ const TEXT = "#1a1a1a";
 const MUTED = "#888";
 const FAINT = "#999";
 
-export default function Home() {
+interface Post {
+  title: string;
+  date: string;
+  description: string;
+  slug: string;
+}
+
+export default function Home({ posts = [] }: { posts?: Post[] }) {
   const calculateAge = () => {
     const birthDate = new Date(2002, 6, 7);
     const today = new Date();
@@ -34,6 +41,14 @@ export default function Home() {
     transition: "color 0.15s",
   };
 
+  function formatDate(iso: string) {
+    return new Date(iso).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
+
   return (
     <div style={{ minHeight: "100vh", backgroundColor: BG }}>
       <div style={{ maxWidth: "680px", margin: "0 auto", padding: "5rem 1.5rem 6rem" }}>
@@ -48,7 +63,6 @@ export default function Home() {
               { label: "mail", href: "mailto:111byronlove@gmail.com" },
               { label: "github", href: "https://github.com/byronlove111", external: true },
               { label: "x", href: "https://x.com/byronlove111", external: true },
-              { label: "blog", href: "/blog" },
             ].map((item, i, arr) => (
               <span key={item.label} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                 <a
@@ -161,6 +175,40 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* Writing */}
+        {posts.length > 0 && (
+          <section style={{ marginTop: "3.5rem" }}>
+            <div style={{ fontFamily: MONO, fontSize: "0.6875rem", letterSpacing: "0.08em", textTransform: "uppercase" as const, color: FAINT, marginBottom: "1.75rem" }}>
+              Writing
+            </div>
+            <div>
+              {posts.map((post) => (
+                <a
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  style={{ display: "block", padding: "1.5rem 0", borderTop: "1px solid #E8E7E2", textDecoration: "none" }}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                >
+                  <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "1rem", marginBottom: "0.375rem" }}>
+                    <span style={{ fontFamily: SERIF, fontSize: "1rem", fontWeight: 500, color: TEXT, lineHeight: 1.3 }}>
+                      {post.title}
+                    </span>
+                    <span style={{ fontFamily: MONO, fontSize: "0.625rem", letterSpacing: "0.06em", textTransform: "uppercase" as const, color: "#aaa", whiteSpace: "nowrap" as const, flexShrink: 0 }}>
+                      {formatDate(post.date)}
+                    </span>
+                  </div>
+                  {post.description && (
+                    <p style={{ fontFamily: SERIF, fontSize: "0.9375rem", color: "#666", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
+                      {post.description}
+                    </p>
+                  )}
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
 
       </div>
     </div>

@@ -1,6 +1,32 @@
 ---
 import Home from '../components/Home.tsx';
+import { getCollection } from 'astro:content';
 import '../styles/global.css';
+
+const allPosts = await getCollection("blog");
+
+const bySlug = allPosts.reduce((acc, post) => {
+  const base = post.data.slug_base;
+  if (!acc[base]) acc[base] = {};
+  acc[base][post.data.lang] = post;
+  return acc;
+}, {} as Record<string, Record<string, (typeof allPosts)[0]>>);
+
+const posts = Object.values(bySlug)
+  .sort((a, b) => {
+    const dateA = (a.en ?? a.fr).data.date;
+    const dateB = (b.en ?? b.fr).data.date;
+    return dateB.getTime() - dateA.getTime();
+  })
+  .map((group) => {
+    const primary = group.en ?? group.fr;
+    return {
+      title: primary.data.title,
+      date: primary.data.date.toISOString(),
+      description: primary.data.description,
+      slug: `${primary.data.slug_base}-${group.en ? "en" : "fr"}`,
+    };
+  });
 ---
 
 <html lang="en">
@@ -21,6 +47,6 @@ import '../styles/global.css';
 		<meta name="twitter:description" content="Software Engineer based in Paris, building products that matter. Co-Founder of OpenSource Together, Cursor Ambassador, and Founding Engineer at Châtaigne.ai." />
 	</head>
 	<body>
-		<Home client:load />
+		<Home client:load posts={posts} />
 	</body>
 </html>
