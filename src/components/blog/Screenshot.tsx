@@ -89,6 +89,26 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
   const lightboxImgMaxH = caption ? "min(74vh, 960px)" : "min(86vh, 1000px)";
   const lightboxImgMaxW = "min(96vw, 1440px)";
 
+  const thumbLabel = [alt, caption].filter(Boolean).join(" — ") || "Open enlarged screenshot";
+
+  const captionReveal = reducedMotion
+    ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        exit: { opacity: 0 },
+        transition: { duration: 0.22, delay: 0.1, ease: "easeOut" as const },
+      }
+    : {
+        initial: { opacity: 0, x: "-1.75rem", filter: "blur(12px)" },
+        animate: { opacity: 1, x: 0, filter: "blur(0px)" },
+        exit: { opacity: 0, x: "-0.75rem", filter: "blur(8px)" },
+        transition: {
+          delay: 0.16,
+          duration: 0.5,
+          ease: [0.22, 1, 0.36, 1] as const,
+        },
+      };
+
   return (
     <>
       <figure style={{ margin: "2rem 0" }}>
@@ -97,7 +117,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
           type="button"
           aria-haspopup="dialog"
           aria-expanded={open}
-          aria-label={alt || caption || "Open enlarged screenshot"}
+          aria-label={thumbLabel}
           onClick={() => setOpen(true)}
           style={{
             display: "flex",
@@ -130,19 +150,6 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
             </div>
           </div>
         </button>
-
-        {caption && (
-          <figcaption style={{
-            marginTop: "0.75rem",
-            textAlign: "center",
-            fontFamily: SERIF,
-            fontStyle: "italic" as const,
-            fontSize: "0.875rem",
-            color: "#666",
-          }}>
-            {caption}
-          </figcaption>
-        )}
       </figure>
 
       <AnimatePresence>
@@ -248,8 +255,12 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                 </div>
               </motion.div>
               {caption && (
-                <p
+                <motion.p
                   id={`caption-${reactId}`}
+                  initial={captionReveal.initial}
+                  animate={captionReveal.animate}
+                  exit={captionReveal.exit}
+                  transition={captionReveal.transition}
                   style={{
                     margin: 0,
                     maxWidth: "min(42rem, 90vw)",
@@ -259,10 +270,11 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                     fontSize: "0.9375rem",
                     lineHeight: 1.55,
                     color: "#444",
+                    paddingInline: "0.5rem",
                   }}
                 >
                   {caption}
-                </p>
+                </motion.p>
               )}
             </div>
           </motion.div>
