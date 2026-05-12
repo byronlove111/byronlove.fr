@@ -11,7 +11,6 @@ interface ScreenshotProps {
   caption?: string;
 }
 
-const MONO = "ui-monospace, 'SF Mono', 'Cascadia Code', monospace";
 const SERIF = "'Lora', Georgia, serif";
 
 const TrafficLights = () => (
@@ -21,6 +20,26 @@ const TrafficLights = () => (
     <div style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#28C840", border: "1px solid rgba(0,0,0,0.12)" }} />
   </div>
 );
+
+const WindowChromeBar = () => (
+  <div style={{
+    display: "flex",
+    alignItems: "center",
+    padding: "0 1rem",
+    height: "38px",
+    borderBottom: "1px solid #E0DED8",
+    background: "#EEEDEA",
+  }}>
+    <TrafficLights />
+  </div>
+);
+
+const frameShellStyle: React.CSSProperties = {
+  borderRadius: "8px",
+  border: "1px solid #E0DED8",
+  overflow: "hidden",
+  background: "#F5F4F0",
+};
 
 const layoutSpring = { type: "spring" as const, stiffness: 360, damping: 34 };
 
@@ -60,59 +79,51 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
         layout: layoutSpring,
       };
 
+  const lightboxImgMaxH = caption ? "min(62vh, 820px)" : "min(72vh, 860px)";
+
   return (
     <>
       <figure style={{ margin: "2rem 0" }}>
-        <div style={{
-          borderRadius: "8px",
-          border: "1px solid #E0DED8",
-          overflow: "hidden",
-          background: "#F5F4F0",
-        }}>
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            padding: "0 1rem",
-            height: "38px",
-            borderBottom: "1px solid #E0DED8",
-            background: "#EEEDEA",
-          }}>
-            <TrafficLights />
-          </div>
-
-          <button
-            ref={openerRef}
-            type="button"
-            aria-haspopup="dialog"
-            aria-expanded={open}
-            onClick={() => setOpen(true)}
-            style={{
-              display: "block",
-              width: "100%",
-              padding: 0,
-              margin: 0,
-              border: "none",
-              background: "#fff",
-              cursor: "pointer",
-              lineHeight: 0,
-            }}
+        <button
+          ref={openerRef}
+          type="button"
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          aria-label={alt || caption || "Open enlarged screenshot"}
+          onClick={() => setOpen(true)}
+          style={{
+            display: "block",
+            width: "100%",
+            padding: 0,
+            margin: 0,
+            border: "none",
+            background: "transparent",
+            cursor: "pointer",
+            textAlign: "left" as const,
+          }}
+        >
+          <motion.div
+            layoutId={layoutSyncId}
+            animate={{ opacity: open ? 0 : 1 }}
+            transition={thumbTransitions}
+            style={frameShellStyle}
           >
-            <motion.img
-              layoutId={layoutSyncId}
-              src={src}
-              alt={alt || caption || "Screenshot"}
-              animate={{ opacity: open ? 0 : 1 }}
-              transition={thumbTransitions}
-              style={{
-                display: "block",
-                width: "100%",
-                height: "auto",
-                verticalAlign: "top",
-                cursor: "pointer",
-              }}
-            />
-          </button>
-        </div>
+            <WindowChromeBar />
+            <div style={{ background: "#fff", lineHeight: 0 }}>
+              <img
+                src={src}
+                alt={alt || caption || "Screenshot"}
+                style={{
+                  display: "block",
+                  width: "100%",
+                  height: "auto",
+                  verticalAlign: "top",
+                  pointerEvents: "none",
+                }}
+              />
+            </div>
+          </motion.div>
+        </button>
 
         {caption && (
           <figcaption style={{
@@ -133,7 +144,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label={alt || caption || "Enlarged image"}
+            aria-label={alt || caption || "Enlarged screenshot"}
             aria-describedby={caption ? `caption-${reactId}` : undefined}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -177,14 +188,16 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                 background: "transparent",
                 border: "none",
                 cursor: "pointer",
-                fontFamily: MONO,
-                fontSize: "0.6875rem",
-                letterSpacing: "0.14em",
-                color: "#1a1a1a",
+                fontFamily: SERIF,
+                fontSize: "0.9375rem",
+                fontStyle: "italic" as const,
+                fontWeight: 400,
+                letterSpacing: "0.01em",
+                color: "#666",
                 padding: "0.5rem 0.25rem",
               }}
             >
-              EXIT
+              Exit
             </motion.button>
 
             <div
@@ -200,26 +213,41 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                 width: "100%",
               }}
             >
-              <motion.img
+              <motion.div
                 layoutId={layoutSyncId}
-                src={src}
-                alt=""
-                draggable={false}
                 transition={{
                   layout: reducedMotion ? { duration: 0.2 } : layoutSpring,
                 }}
                 style={{
-                  display: "block",
+                  ...frameShellStyle,
                   maxWidth: "min(92vw, 1040px)",
-                  maxHeight: caption ? "min(68vh, 880px)" : "min(78vh, 900px)",
-                  width: "auto",
-                  height: "auto",
-                  objectFit: "contain",
-                  borderRadius: "6px",
+                  width: "100%",
                   boxShadow: "0 28px 80px rgba(0,0,0,0.1)",
-                  background: "#fff",
                 }}
-              />
+              >
+                <WindowChromeBar />
+                <div style={{
+                  background: "#fff",
+                  lineHeight: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}>
+                  <img
+                    src={src}
+                    alt=""
+                    draggable={false}
+                    style={{
+                      display: "block",
+                      maxWidth: "100%",
+                      maxHeight: lightboxImgMaxH,
+                      width: "auto",
+                      height: "auto",
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
+              </motion.div>
               {caption && (
                 <p
                   id={`caption-${reactId}`}
