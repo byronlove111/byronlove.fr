@@ -52,14 +52,17 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
   </head>
   <body class="article-body">
-    <nav class="article-nav">
-      <a href="/blog" class="nav-back">← blog</a>
-      {otherPost && (
-        <a href={`/blog/${slug_base}-${otherLang}`} class="nav-lang">
-          {otherLang === "fr" ? "Lire en français" : "Read in english"}
-        </a>
-      )}
+    <nav id="article-nav" class="article-nav" aria-label={lang === "fr" ? "Navigation article" : "Article navigation"}>
+      <div class="article-nav-inner">
+        <a href="/blog" class="nav-back">← blog</a>
+        {otherPost && (
+          <a href={`/blog/${slug_base}-${otherLang}`} class="nav-lang">
+            {otherLang === "fr" ? "Lire en français" : "Read in english"}
+          </a>
+        )}
+      </div>
     </nav>
+    <div id="article-nav-spacer" class="article-nav-spacer" aria-hidden="true"></div>
 
     <main class="article-main">
       <header class="article-header">
@@ -75,6 +78,26 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
         <Content components={blogComponents} />
       </article>
     </main>
+
+    <script is:inline>
+      (function () {
+        const nav = document.getElementById("article-nav");
+        const spacer = document.getElementById("article-nav-spacer");
+        if (!nav || !spacer) return;
+        var THRESH = 12;
+        function setSpacer() {
+          spacer.style.height = nav.offsetHeight + "px";
+        }
+        function onScroll() {
+          var y = window.scrollY || document.documentElement.scrollTop;
+          nav.classList.toggle("article-nav--scrolled", y > THRESH);
+        }
+        setSpacer();
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", setSpacer);
+      })();
+    </script>
   </body>
 </html>
 
@@ -85,7 +108,25 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
     color: #1a1a1a;
   }
 
+  /* Fixed top bar: glass + border only after scroll (viewport-fixed, not document flow) */
   .article-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
+    transition:
+      background-color 0.22s ease,
+      border-color 0.22s ease,
+      -webkit-backdrop-filter 0.22s ease,
+      backdrop-filter 0.22s ease;
+  }
+
+  .article-nav-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -94,6 +135,26 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
     padding-top: max(2rem, calc(env(safe-area-inset-top, 0px) + 0.75rem));
     padding-inline: 1.5rem;
     padding-bottom: 1rem;
+    gap: 1rem;
+  }
+
+  .article-nav.article-nav--scrolled {
+    background-color: rgba(245, 245, 245, 0.72);
+    border-bottom-color: #E0DED8;
+    -webkit-backdrop-filter: blur(14px) saturate(1.05);
+    backdrop-filter: blur(14px) saturate(1.05);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .article-nav.article-nav--scrolled {
+      background-color: rgba(245, 245, 245, 0.94);
+    }
+  }
+
+  .article-nav-spacer {
+    flex-shrink: 0;
+    width: 100%;
+    min-height: 3.5rem;
   }
 
   .nav-back {
