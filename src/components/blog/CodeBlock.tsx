@@ -115,7 +115,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             display: "flex",
             alignItems: "center",
             gap: copied ? "0.22rem" : 0,
-            padding: "0.3rem 0.35rem",
+            padding: "0.3rem 0 0.3rem 0.35rem",
             borderRadius: "5px",
             background: "none",
             border: "none",
