@@ -4,6 +4,7 @@ import {
   AnimatePresence,
   useReducedMotion,
 } from "framer-motion";
+import { usePatch } from "@web-kits/audio/react";
 
 interface VideoProps {
   src: string;
@@ -54,13 +55,24 @@ export default function Video({ src, caption, alt = "" }: VideoProps) {
   const lightboxVideoRef = useRef<HTMLVideoElement>(null);
   const reactId = useId().replace(/:/g, "");
   const wasOpenRef = useRef(false);
+  const patch = usePatch("/patches/minimal.json");
+
+  const handleOpen = () => {
+    if (patch.ready) patch.play("toggle-on");
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    if (patch.ready) patch.play("toggle-off");
+    setOpen(false);
+  };
 
   useEffect(() => {
     if (!open) return;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") handleClose();
     };
     window.addEventListener("keydown", onKey);
     return () => {
@@ -122,7 +134,7 @@ export default function Video({ src, caption, alt = "" }: VideoProps) {
           aria-haspopup="dialog"
           aria-expanded={open}
           aria-label={thumbLabel}
-          onClick={() => setOpen(true)}
+          onClick={handleOpen}
           style={{
             display: "flex",
             justifyContent: "center",
@@ -168,7 +180,7 @@ export default function Video({ src, caption, alt = "" }: VideoProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: reducedMotion ? 0.12 : 0.22, ease: "easeOut" }}
-            onClick={() => setOpen(false)}
+            onClick={handleClose}
             style={{
               position: "fixed",
               inset: 0,
@@ -194,7 +206,7 @@ export default function Video({ src, caption, alt = "" }: VideoProps) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
               aria-label="Close"
-              onClick={() => setOpen(false)}
+              onClick={handleClose}
               style={{
                 position: "fixed",
                 top: "max(0.85rem, env(safe-area-inset-top))",

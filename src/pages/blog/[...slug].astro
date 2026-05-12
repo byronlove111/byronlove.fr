@@ -308,3 +308,20 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
     font-size: 0.875rem;
   }
 </style>
+
+<script>
+  import { defineSound, ensureReady } from "@web-kits/audio";
+
+  const keyPress = defineSound({
+    source: { type: "sine", frequency: 1100 },
+    envelope: { attack: 0, decay: 0.01, sustain: 0, release: 0.003 },
+    gain: 0.06,
+  });
+
+  document.querySelectorAll(".nav-back, .nav-lang").forEach((el) => {
+    el.addEventListener("click", async () => {
+      await ensureReady();
+      keyPress();
+    });
+  });
+</script>
