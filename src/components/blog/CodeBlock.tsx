@@ -45,13 +45,6 @@ async function writeClipboard(text: string): Promise<boolean> {
   }
 }
 
-const CopyIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-    <rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.2" />
-    <path d="M8 4V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-  </svg>
-);
-
 export default function CodeBlock({ filename, lang, children }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const resetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -72,9 +65,6 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
   };
 
   const displayLabel = filename ?? lang;
-  /** Opacity-only: avoids layout shift from transform + resizing mid-transition. */
-  const copyFade = "opacity 0.18s ease-out";
-  const copyRowGap = "0.38rem";
 
   return (
     <div style={{
@@ -110,58 +100,22 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
           onClick={handleCopy}
           title={copied ? "Copied" : "Copy code"}
           style={{
-            display: "flex",
-            alignItems: "center",
             flexShrink: 0,
-            gap: copyRowGap,
-            padding: "0.3rem 0 0.3rem 0.35rem",
+            margin: 0,
+            padding: 0,
             borderRadius: "5px",
             background: "none",
             border: "none",
-            color: "#999",
+            color: "#777",
             cursor: "pointer",
-            fontFamily: "ui-monospace, 'SF Mono', monospace",
-            fontSize: "0.625rem",
-            letterSpacing: "0.06em",
+            fontFamily: "ui-monospace, 'SF Mono', 'Cascadia Code', monospace",
+            fontSize: "0.6875rem",
+            letterSpacing: "0.02em",
             lineHeight: 1.45,
+            userSelect: "none" as const,
           }}
         >
-          <span style={{ display: "flex", flexShrink: 0, lineHeight: 0 }}>
-            <CopyIcon />
-          </span>
-          <span aria-hidden style={{ position: "relative", display: "inline-block", whiteSpace: "nowrap" as const }}>
-            <span
-              style={{
-                visibility: "hidden" as const,
-                userSelect: "none" as const,
-                pointerEvents: "none" as const,
-              }}
-            >
-              copied
-            </span>
-            <span
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                transition: copyFade,
-                opacity: copied ? 0 : 1,
-              }}
-            >
-              copy
-            </span>
-            <span
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                transition: copyFade,
-                opacity: copied ? 1 : 0,
-              }}
-            >
-              copied
-            </span>
-          </span>
+          {copied ? "copied" : "copy"}
         </button>
       </div>
 
