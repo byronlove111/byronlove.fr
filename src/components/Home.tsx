@@ -1,3 +1,5 @@
+import { usePatch } from "@web-kits/audio/react";
+
 const MONO = "ui-monospace, 'SF Mono', monospace";
 const SERIF = "'Lora', Georgia, serif";
 const BG = "#ffffff";
@@ -13,6 +15,8 @@ interface Post {
 }
 
 export default function Home({ posts = [] }: { posts?: Post[] }) {
+  const patch = usePatch("/patches/minimal.json");
+
   const calculateAge = () => {
     const birthDate = new Date(2002, 6, 7);
     const today = new Date();
@@ -191,6 +195,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   style={{ display: "block", padding: "1.5rem 0", borderBottom: "1px solid #E8E7E2", textDecoration: "none" }}
                   onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
                   onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                  onClick={() => { if (patch.ready) patch.play("key-press"); }}
                 >
                   <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "1rem", marginBottom: "0.375rem" }}>
                     <span style={{ fontFamily: SERIF, fontSize: "1rem", fontWeight: 500, color: TEXT, lineHeight: 1.3 }}>
