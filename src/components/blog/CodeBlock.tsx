@@ -17,7 +17,7 @@ const getTextContent = (node: React.ReactNode): string => {
 
 const CheckIcon = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-    <path d="M2 6l3 3 5-5" stroke="#4ade80" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M2 6l3 3 5-5" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -44,10 +44,9 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
     <div style={{
       margin: "1.75rem 0",
       borderRadius: "8px",
-      border: "1px solid #1e1e1e",
+      border: "1px solid #E0DED8",
       overflow: "hidden",
-      background: "#0a0a0a",
-      boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.08)",
+      background: "#F5F4F0",
     }}>
       <div style={{
         display: "flex",
@@ -55,13 +54,13 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
         justifyContent: "space-between",
         padding: "0 1rem",
         height: "38px",
-        background: "#111",
-        borderBottom: "1px solid #1e1e1e",
+        background: "#EEEDEA",
+        borderBottom: "1px solid #E0DED8",
       }}>
         <span style={{
           fontFamily: "ui-monospace, 'SF Mono', 'Cascadia Code', monospace",
           fontSize: "0.6875rem",
-          color: displayLabel ? "#888" : "transparent",
+          color: displayLabel ? "#777" : "transparent",
           letterSpacing: "0.02em",
           userSelect: "none" as const,
         }}>
@@ -79,10 +78,10 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             gap: "0.3rem",
             padding: "0.25rem 0.5rem",
             borderRadius: "4px",
-            background: hoverCopy ? "#1e1e1e" : "transparent",
+            background: hoverCopy ? "#E0DED8" : "transparent",
             border: "1px solid",
-            borderColor: hoverCopy ? "#333" : "transparent",
-            color: copied ? "#4ade80" : "#666",
+            borderColor: hoverCopy ? "#D4D2CC" : "transparent",
+            color: copied ? "#10b981" : "#999",
             cursor: "pointer",
             transition: "all 0.15s",
             fontFamily: "ui-monospace, 'SF Mono', monospace",
@@ -101,6 +100,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
         fontSize: "0.8125rem",
         lineHeight: "1.7",
         fontFamily: "ui-monospace, 'SF Mono', 'Cascadia Code', monospace",
+        background: "#F5F4F0",
       }}>
         {children}
       </div>

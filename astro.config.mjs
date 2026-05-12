@@ -7,4 +7,10 @@ import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
   integrations: [react(), tailwind(), mdx()],
+  markdown: {
+    shikiConfig: {
+      theme: "min-light",
+      wrap: false,
+    },
+  },
 });
