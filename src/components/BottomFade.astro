@@ -1,1 +1,19 @@
 <div class="bottom-fade" aria-hidden="true"></div>
+
+<script>
+  import { defineSound, ensureReady } from "@web-kits/audio";
+
+  const keyPress = defineSound({
+    source: { type: "sine", frequency: 1100 },
+    envelope: { attack: 0, decay: 0.01, sustain: 0, release: 0.003 },
+    gain: 0.06,
+  });
+
+  document.addEventListener("click", async (e) => {
+    const target = e.target as HTMLElement;
+    const link = target.closest("a[href]");
+    if (!link) return;
+    await ensureReady();
+    keyPress();
+  });
+</script>
