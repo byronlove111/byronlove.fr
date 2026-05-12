@@ -86,6 +86,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
       };
 
   const lightboxImgMaxH = caption ? "min(62vh, 820px)" : "min(72vh, 860px)";
+  const lightboxImgMaxW = "min(92vw, 1040px)";
 
   return (
     <>
@@ -98,30 +99,33 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
           aria-label={alt || caption || "Open enlarged screenshot"}
           onClick={() => setOpen(true)}
           style={{
-            display: "block",
+            display: "flex",
+            justifyContent: "center",
             width: "100%",
             padding: 0,
             margin: 0,
             border: "none",
             background: "transparent",
             cursor: "pointer",
-            textAlign: "left" as const,
           }}
         >
-          <div style={frameShellStyle}>
-            <WindowChromeBar />
-            <div style={{ background: "#fff", lineHeight: 0 }}>
-              <img
-                src={src}
-                alt={alt || caption || "Screenshot"}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  height: "auto",
-                  verticalAlign: "top",
-                  pointerEvents: "none",
-                }}
-              />
+          <div style={{ width: "fit-content", maxWidth: "100%" }}>
+            <div style={frameShellStyle}>
+              <WindowChromeBar />
+              <div style={{ background: "#fff", lineHeight: 0 }}>
+                <img
+                  src={src}
+                  alt={alt || caption || "Screenshot"}
+                  style={{
+                    display: "block",
+                    maxWidth: "100%",
+                    width: "auto",
+                    height: "auto",
+                    verticalAlign: "top",
+                    pointerEvents: "none",
+                  }}
+                />
+              </div>
             </div>
           </div>
         </button>
@@ -218,32 +222,26 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
                 transition={lightboxRevealTransit}
                 style={{
                   ...frameShellStyle,
-                  maxWidth: "min(92vw, 1040px)",
-                  width: "100%",
+                  width: "fit-content",
+                  maxWidth: lightboxImgMaxW,
                   boxShadow: "0 28px 80px rgba(0,0,0,0.1)",
                   cursor: "default",
                   transformOrigin: "center center",
                 }}
               >
                 <WindowChromeBar />
-                <div style={{
-                  background: "#fff",
-                  lineHeight: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}>
+                <div style={{ background: "#fff", lineHeight: 0 }}>
                   <img
                     src={src}
                     alt=""
                     draggable={false}
                     style={{
                       display: "block",
-                      maxWidth: "100%",
+                      maxWidth: lightboxImgMaxW,
                       maxHeight: lightboxImgMaxH,
                       width: "auto",
                       height: "auto",
-                      objectFit: "contain",
+                      verticalAlign: "top",
                     }}
                   />
                 </div>
