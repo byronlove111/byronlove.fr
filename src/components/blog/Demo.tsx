@@ -1,6 +1,5 @@
 interface DemoProps {
   children: React.ReactNode;
-  label?: string;
 }
 
 const TrafficLights = () => (
@@ -11,7 +10,7 @@ const TrafficLights = () => (
   </div>
 );
 
-export default function Demo({ children, label = "Interactive demo" }: DemoProps) {
+export default function Demo({ children }: DemoProps) {
   return (
     <div style={{
       margin: "2rem 0",
@@ -25,24 +24,12 @@ export default function Demo({ children, label = "Interactive demo" }: DemoProps
       <div style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
         padding: "0 1rem",
         height: "42px",
         background: "#EEEDEA",
         borderBottom: "1px solid #E0DED8",
       }}>
         <TrafficLights />
-        <span style={{
-          fontFamily: "ui-monospace, 'SF Mono', monospace",
-          fontSize: "0.5875rem",
-          letterSpacing: "0.07em",
-          textTransform: "uppercase" as const,
-          color: "#aaa",
-          userSelect: "none" as const,
-        }}>
-          {label}
-        </span>
-        <div style={{ width: "44px" }} />
       </div>
 
       {/* Content */}
