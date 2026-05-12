@@ -84,29 +84,56 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
         const nav = document.getElementById("article-nav");
         const spacer = document.getElementById("article-nav-spacer");
         const headerEl = document.querySelector(".article-header");
+        const proseEl = document.querySelector(".prose-blog");
         if (!nav || !spacer) return;
+
         function setSpacer() {
           spacer.style.height = nav.offsetHeight + "px";
         }
+
+        function scrollMaxY() {
+          const el = document.documentElement;
+          return Math.max(0, el.scrollHeight - window.innerHeight);
+        }
+
         function updateNavState() {
-          if (!headerEl) {
-            nav.classList.remove("article-nav--scrolled");
-            return;
-          }
           var navH = nav.offsetHeight;
-          var mastheadBottom = headerEl.getBoundingClientRect().bottom;
-          nav.classList.toggle("article-nav--scrolled", mastheadBottom <= navH + 6);
+          var margin = 8;
+          var y = window.scrollY || document.documentElement.scrollTop || 0;
+          var maxY = scrollMaxY();
+          /* Short pages never bring the masthead bottom under the nav; still show glass at scroll end */
+          var atBottom = maxY > 40 && y >= maxY - 4;
+
+          var lineTop;
+          if (proseEl) {
+            lineTop = proseEl.getBoundingClientRect().top;
+          } else if (headerEl) {
+            lineTop = headerEl.getBoundingClientRect().bottom;
+          } else {
+            lineTop = Infinity;
+          }
+
+          var crossedIntoBody = lineTop <= navH + margin;
+          nav.classList.toggle("article-nav--scrolled", crossedIntoBody || atBottom);
         }
-        function onScroll() {
-          updateNavState();
-        }
-        setSpacer();
-        updateNavState();
-        window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", function () {
+
+        function sync() {
           setSpacer();
           updateNavState();
+        }
+
+        sync();
+        requestAnimationFrame(function () {
+          sync();
+          requestAnimationFrame(sync);
         });
+
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(sync).catch(sync);
+        }
+
+        window.addEventListener("scroll", updateNavState, { passive: true });
+        window.addEventListener("resize", sync);
       })();
     </script>
   </body>
