@@ -1,0 +1,133 @@
+---
+title: "Component showcase"
+date: 2026-05-12
+description: "A tour of every building block available in these articles — code, callouts, demos, screenshots, and more."
+lang: en
+slug_base: component-showcase
+tags: ["mdx", "design", "components"]
+---
+
+import TypographyExplorer from "../../components/blog/demos/components-showcase-typo.tsx";
+
+Every article on this blog is an MDX file. That means I can embed React components directly in the prose — not as an afterthought, but as a first-class part of the writing. Here's a tour of everything available.
+
+---
+
+## CodeBlock
+
+For code snippets. Dark background, filename header, copy button with a checkmark animation.
+
+<CodeBlock filename="src/pages/blog/[...slug].astro" lang="astro">
+```astro
+---
+const { slug } = Astro.params;
+const post = await getEntry("blog", slug);
+const { Content } = await post.render();
+---
+
+<article>
+  <h1>{post.data.title}</h1>
+  <Content />
+</article>
+```
+</CodeBlock>
+
+The filename prop is optional — leave it out for ephemeral snippets. The `lang` prop sets the label in the header when there's no filename.
+
+<CodeBlock lang="bash">
+```bash
+npm run build
+git push origin main
+```
+</CodeBlock>
+
+---
+
+## Callout
+
+Four types, each with a left-border accent and an inline icon.
+
+<Callout type="info">
+  The `info` callout is for neutral context — something the reader might not know but doesn't need to act on.
+</Callout>
+
+<Callout type="tip">
+  The `tip` callout is for actionable advice. Use it when you want the reader to do something differently.
+</Callout>
+
+<Callout type="warning">
+  The `warning` callout is for consequences. Use it when something could go wrong if the reader doesn't pay attention.
+</Callout>
+
+<Callout type="error">
+  The `error` callout is for known failure modes. Use it to document something that *will* break in certain conditions.
+</Callout>
+
+You can also pass a custom `title` prop to override the default label:
+
+<Callout type="tip" title="Worth remembering">
+  Custom titles let you be more specific than generic labels like "Tip" or "Note".
+</Callout>
+
+---
+
+## Demo
+
+An interactive island inside a macOS window frame. Anything with `useState` lives here — just add `client:load` to the inner component.
+
+<Demo label="Typography explorer" url="byronlove.fr/demo">
+  <TypographyExplorer client:load />
+</Demo>
+
+The `url` prop fills the address bar. The dotted grid background is intentional — it signals "this is interactive, not a static screenshot".
+
+---
+
+## Screenshot
+
+A browser frame around an image, with optional caption and zoom on click.
+
+<Screenshot
+  src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80"
+  alt="Code editor with a dark theme"
+  caption="A typical build session"
+  url="byronlove.fr"
+/>
+
+Click the image — it opens a full-screen modal with a blur backdrop. The `url` prop fills the address bar, just like `Demo`.
+
+---
+
+## Video
+
+For short screen recordings — no controls, loops silently. Useful for demonstrating interactions that are hard to capture in a still.
+
+```mdx
+<Video src="/videos/my-recording.mp4" caption="The interaction in action" />
+```
+
+---
+
+## Native Markdown
+
+Everything you'd expect: **bold**, *italic*, `inline code`, and links.
+
+> Blockquotes for emphasis. Use sparingly — if everything is emphasized, nothing is.
+
+Ordered lists for sequences:
+
+1. Read the conversation history
+2. Ask five questions
+3. Generate the article
+
+Unordered lists for collections:
+
+- MDX for rich content
+- Astro content collections for schema and routing
+- Framer Motion for animations
+
+Horizontal rules (`---`) create breathing room between major sections.
+
+---
+
+That's the full toolkit. Each component is designed to disappear — the chrome serves the content, not the other way around.

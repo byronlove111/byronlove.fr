@@ -1,0 +1,133 @@
+---
+title: "Showcase des composants"
+date: 2026-05-12
+description: "Un tour de tous les blocs disponibles dans ces articles — code, callouts, démos, screenshots, et plus."
+lang: fr
+slug_base: component-showcase
+tags: ["mdx", "design", "composants"]
+---
+
+import TypographyExplorer from "../../components/blog/demos/components-showcase-typo.tsx";
+
+Chaque article sur ce blog est un fichier MDX. Ça veut dire que je peux embarquer des composants React directement dans la prose — pas en option, mais comme une partie intégrante de l'écriture. Voici un tour complet de tout ce qui est disponible.
+
+---
+
+## CodeBlock
+
+Pour les extraits de code. Fond noir, header avec le nom de fichier, bouton copier avec animation checkmark.
+
+<CodeBlock filename="src/pages/blog/[...slug].astro" lang="astro">
+```astro
+---
+const { slug } = Astro.params;
+const post = await getEntry("blog", slug);
+const { Content } = await post.render();
+---
+
+<article>
+  <h1>{post.data.title}</h1>
+  <Content />
+</article>
+```
+</CodeBlock>
+
+La prop `filename` est optionnelle — on peut l'omettre pour les snippets éphémères. La prop `lang` affiche un label dans le header quand il n'y a pas de nom de fichier.
+
+<CodeBlock lang="bash">
+```bash
+npm run build
+git push origin main
+```
+</CodeBlock>
+
+---
+
+## Callout
+
+Quatre types, chacun avec une bordure gauche accentuée et une icône inline.
+
+<Callout type="info">
+  Le callout `info` sert au contexte neutre — quelque chose que le lecteur ne sait peut-être pas mais sur lequel il n'a pas besoin d'agir.
+</Callout>
+
+<Callout type="tip">
+  Le callout `tip` sert aux conseils actionnables. À utiliser quand tu veux que le lecteur fasse quelque chose différemment.
+</Callout>
+
+<Callout type="warning">
+  Le callout `warning` sert aux conséquences. À utiliser quand quelque chose peut mal tourner si le lecteur ne fait pas attention.
+</Callout>
+
+<Callout type="error">
+  Le callout `error` sert aux modes d'échec connus. À utiliser pour documenter quelque chose qui *va* casser dans certaines conditions.
+</Callout>
+
+On peut aussi passer une prop `title` pour personnaliser le label :
+
+<Callout type="tip" title="À retenir">
+  Les titres personnalisés permettent d'être plus précis que les labels génériques comme "Tip" ou "Note".
+</Callout>
+
+---
+
+## Demo
+
+Un îlot interactif dans un cadre macOS. Tout ce qui utilise `useState` vit ici — il suffit d'ajouter `client:load` sur le composant interne.
+
+<Demo label="Typography explorer" url="byronlove.fr/demo">
+  <TypographyExplorer client:load />
+</Demo>
+
+La prop `url` remplit la barre d'adresse. Le fond en grille pointillée est intentionnel — il signale que c'est interactif, pas un screenshot statique.
+
+---
+
+## Screenshot
+
+Un cadre browser autour d'une image, avec caption optionnelle et zoom au clic.
+
+<Screenshot
+  src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80"
+  alt="Éditeur de code avec un thème sombre"
+  caption="Une session de build typique"
+  url="byronlove.fr"
+/>
+
+Clique sur l'image — elle s'ouvre en plein écran avec un fond flouté. La prop `url` remplit la barre d'adresse, comme pour `Demo`.
+
+---
+
+## Video
+
+Pour les courtes captures d'écran — pas de contrôles, loop silencieux. Utile pour démontrer des interactions difficiles à capturer en image fixe.
+
+```mdx
+<Video src="/videos/ma-video.mp4" caption="L'interaction en action" />
+```
+
+---
+
+## Markdown natif
+
+Tout ce qu'on attend : **gras**, *italique*, `code inline`, et liens.
+
+> Les blockquotes pour l'emphase. À utiliser avec parcimonie — si tout est mis en valeur, rien ne l'est.
+
+Listes ordonnées pour les séquences :
+
+1. Lire l'historique de conversation
+2. Poser cinq questions
+3. Générer l'article
+
+Listes non ordonnées pour les collections :
+
+- MDX pour le contenu riche
+- Astro content collections pour le schéma et le routage
+- Framer Motion pour les animations
+
+Les règles horizontales (`---`) créent de l'espace entre les grandes sections.
+
+---
+
+Voilà la boîte à outils complète. Chaque composant est conçu pour s'effacer — le chrome sert le contenu, pas l'inverse.
