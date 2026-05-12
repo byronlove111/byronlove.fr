@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 
 interface CodeBlockProps {
   filename?: string;
@@ -53,6 +54,8 @@ const CopyIcon = () => (
 );
 
 const shift = "0.28rem";
+
+const layoutSpring = { type: "spring" as const, stiffness: 420, damping: 34, mass: 0.75 };
 
 export default function CodeBlock({ filename, lang, children }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
@@ -125,8 +128,22 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             letterSpacing: "0.06em",
           }}
         >
-          <CopyIcon />
-          <span
+          <motion.span
+            layout="position"
+            transition={layoutSpring}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+              lineHeight: 0,
+            }}
+          >
+            <CopyIcon />
+          </motion.span>
+          <motion.span
+            layout="size"
+            transition={layoutSpring}
             style={{
               position: "relative",
               overflow: "hidden",
@@ -175,7 +192,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             >
               copied
             </span>
-          </span>
+          </motion.span>
         </button>
       </div>
 
