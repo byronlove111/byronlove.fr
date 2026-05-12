@@ -45,6 +45,9 @@ const posts = Object.values(bySlug)
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:title" content="Byron Love - Software Engineer" />
 		<meta name="twitter:description" content="Software Engineer based in Paris, building products that matter. Co-Founder of OpenSource Together, Cursor Ambassador, and Founding Engineer at Châtaigne.ai." />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
 	</head>
 	<body>
 		<Home client:load posts={posts} />
