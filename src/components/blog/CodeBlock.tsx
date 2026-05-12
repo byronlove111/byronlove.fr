@@ -121,6 +121,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             aria-hidden
             style={{
               display: "inline-grid",
+              justifyItems: "end",
               whiteSpace: "nowrap" as const,
             }}
           >
@@ -128,6 +129,8 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
               style={{
                 gridRow: 1,
                 gridColumn: 1,
+                justifySelf: "end",
+                transformOrigin: "100% 50%",
                 transition: labelMotion,
                 opacity: copied ? 0 : 1,
                 transform: copied ? `translateY(-${shift})` : "translateY(0)",
@@ -139,6 +142,8 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
               style={{
                 gridRow: 1,
                 gridColumn: 1,
+                justifySelf: "end",
+                transformOrigin: "100% 50%",
                 transition: labelMotion,
                 opacity: copied ? 1 : 0,
                 transform: copied ? "translateY(0)" : `translateY(${shift})`,
