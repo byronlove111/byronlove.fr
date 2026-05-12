@@ -177,10 +177,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
               aria-label="Close"
-              onClick={(e) => {
-                e.stopPropagation();
-                setOpen(false);
-              }}
+              onClick={() => setOpen(false)}
               style={{
                 position: "fixed",
                 top: "max(0.85rem, env(safe-area-inset-top))",
@@ -202,7 +199,6 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
             </motion.button>
 
             <div
-              onClick={(e) => e.stopPropagation()}
               style={{
                 flex: 1,
                 display: "flex",
