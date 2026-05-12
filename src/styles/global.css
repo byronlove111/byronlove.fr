@@ -20,6 +20,21 @@ body {
   color: #1a1a1a;
 }
 
+.bottom-fade {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black);
+  mask-image: linear-gradient(to bottom, transparent, black);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  pointer-events: none;
+  z-index: 9998;
+}
+
 /* Force Shiki-generated blocks to use transparent bg so CodeBlock styles win */
 .prose-blog pre,
 .prose-blog pre > code,

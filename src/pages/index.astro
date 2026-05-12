@@ -2,6 +2,7 @@
 import Home from '../components/Home.tsx';
 import { getCollection } from 'astro:content';
 import '../styles/global.css';
+import BottomFade from '../components/BottomFade.astro';
 
 const allPosts = await getCollection("blog");
 
@@ -51,5 +52,6 @@ const posts = Object.values(bySlug)
 	</head>
 	<body>
 		<Home client:load posts={posts} />
+		<BottomFade />
 	</body>
 </html>

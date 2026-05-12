@@ -5,6 +5,7 @@ import VideoIsland from "../../components/blog/VideoIsland.astro";
 import AnimatedSection from "../../components/blog/AnimatedSection";
 import Demo from "../../components/blog/Demo";
 import "../../styles/global.css";
+import BottomFade from "../../components/BottomFade.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -79,7 +80,7 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
         <Content components={blogComponents} />
       </article>
     </main>
-
+    <BottomFade />
   </body>
 </html>
 
