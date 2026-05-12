@@ -19,19 +19,17 @@ Tous les builders que je connais ont un cimetière de trucs qu'ils voulaient doc
 
 L'insight que j'ai eu : et si l'article était généré *pendant* la session de build, pendant que le contexte est encore chargé ?
 
-<Callout type="tip">
-  Le meilleur moment pour écrire sur ce qu'on vient de builder, c'est juste après. Le deuxième meilleur moment, c'est jamais.
-</Callout>
+> Le meilleur moment pour écrire sur ce qu'on vient de builder, c'est juste après. Le deuxième meilleur moment, c'est jamais.
 
 ## Comment ça marche
 
 Tout ça c'est un skill Cursor — un fichier markdown qui dit à l'IA exactement comment se comporter quand il est déclenché. Tu écris `write-article` dans n'importe quel chat, il lit l'historique de la conversation pour comprendre ce que tu as build, te pose cinq questions, puis écrit deux fichiers MDX : un en anglais, un en français.
 
-<Demo label="Le workflow">
+<Demo>
   <WorkflowSteps client:load />
 </Demo>
 
-Le skill sait quand injecter les bons composants — `<CodeBlock>` pour les snippets, `<Callout>` pour les insights, `<Demo>` pour les parties interactives — en fonction de ce que tu lui dis pendant le Q&A.
+Le skill sait quand injecter les bons composants — `<CodeBlock>` pour les snippets, `<Demo>` pour les parties interactives — en fonction de ce que tu lui dis pendant le Q&A.
 
 ## La stack MDX
 
@@ -44,14 +42,13 @@ title: "Ce que j'ai buildé cette semaine"
 date: 2026-05-12
 lang: fr
 slug_base: ce-que-jai-build
-word_count: 540
 ---
 
 import MaDemo from "../../components/blog/demos/ma-demo.tsx";
 
 Contenu de l'article...
 
-<Demo label="Voir en live">
+<Demo>
   <MaDemo client:load />
 </Demo>
 ```
@@ -63,9 +60,7 @@ Le bilingue c'était non-négociable. Je travaille et je pense dans les deux lan
 
 Le premier vrai article que j'ai publié avec ce système m'a pris douze minutes — depuis le déclenchement du skill jusqu'à ce que ce soit live sur mon domaine. Ça inclut répondre aux questions, relire l'output, et push sur GitHub.
 
-<Callout type="info">
-  Le skill lit l'historique de la conversation, pas git. Il fonctionne même si tu n'as pas encore committé.
-</Callout>
+> Le skill lit l'historique de la conversation, pas git. Il fonctionne même si tu n'as pas encore committé.
 
 La qualité m'a surpris. Il écrit dans ma voix — phrases courtes, pas de filler, honnête sur les trade-offs — parce qu'il se calibre sur le contenu existant du site avant de générer quoi que ce soit.
 

@@ -19,19 +19,17 @@ Every builder I know has a graveyard of things they meant to write about. Not be
 
 The insight I had: what if the article was generated *during* the build session, while the context is still loaded?
 
-<Callout type="tip">
-  The best time to write about what you built is right after you built it. The second best time is never.
-</Callout>
+> The best time to write about what you built is right after you built it. The second best time is never.
 
 ## How it works
 
 The whole thing is a Cursor skill — a markdown file that tells the AI exactly how to behave when triggered. You type `write-article` in any chat, it reads the conversation history to understand what you built, asks you five questions, then writes two MDX files: one in English, one in French.
 
-<Demo label="The workflow">
+<Demo>
   <WorkflowSteps client:load />
 </Demo>
 
-The skill knows to inject the right components — `<CodeBlock>` for snippets, `<Callout>` for insights, `<Demo>` for interactive bits — based on what you tell it during the Q&A.
+The skill knows to inject the right components — `<CodeBlock>` for snippets, `<Demo>` for interactive bits — based on what you tell it during the Q&A.
 
 ## The MDX stack
 
@@ -44,14 +42,13 @@ title: "What I built this week"
 date: 2026-05-12
 lang: en
 slug_base: what-i-built
-word_count: 540
 ---
 
 import MyDemo from "../../components/blog/demos/my-demo.tsx";
 
 Article content here...
 
-<Demo label="See it live">
+<Demo>
   <MyDemo client:load />
 </Demo>
 ```
@@ -63,9 +60,7 @@ The bilingual part was non-negotiable. I work and think in both languages, and i
 
 The first real article I published with this took me twelve minutes from triggering the skill to having it live on my domain. That included answering the questions, reviewing the output, and pushing to GitHub.
 
-<Callout type="info">
-  The skill reads the conversation history, not git. So it works even if you haven't committed yet.
-</Callout>
+> The skill reads the conversation history, not git. So it works even if you haven't committed yet.
 
 The quality surprised me. It writes in my voice — short sentences, no filler, honest about trade-offs — because it calibrates against the existing content on the site before generating anything.
 

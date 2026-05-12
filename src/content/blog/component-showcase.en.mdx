@@ -1,7 +1,7 @@
 ---
 title: "Component showcase"
 date: 2026-05-12
-description: "A tour of every building block available in these articles — code, callouts, demos, screenshots, and more."
+description: "A tour of every building block available in these articles — code, demos, screenshots, and more."
 lang: en
 slug_base: component-showcase
 tags: ["mdx", "design", "components"]
@@ -43,43 +43,15 @@ git push origin main
 
 ---
 
-## Callout
-
-Four types, each with a left-border accent and an inline icon.
-
-<Callout type="info">
-  The `info` callout is for neutral context — something the reader might not know but doesn't need to act on.
-</Callout>
-
-<Callout type="tip">
-  The `tip` callout is for actionable advice. Use it when you want the reader to do something differently.
-</Callout>
-
-<Callout type="warning">
-  The `warning` callout is for consequences. Use it when something could go wrong if the reader doesn't pay attention.
-</Callout>
-
-<Callout type="error">
-  The `error` callout is for known failure modes. Use it to document something that *will* break in certain conditions.
-</Callout>
-
-You can also pass a custom `title` prop to override the default label:
-
-<Callout type="tip" title="Worth remembering">
-  Custom titles let you be more specific than generic labels like "Tip" or "Note".
-</Callout>
-
----
-
 ## Demo
 
 An interactive island inside a macOS window frame. Anything with `useState` lives here — just add `client:load` to the inner component.
 
-<Demo label="Typography explorer" url="byronlove.fr/demo">
+<Demo>
   <TypographyExplorer client:load />
 </Demo>
 
-The `url` prop fills the address bar. The dotted grid background is intentional — it signals "this is interactive, not a static screenshot".
+The dotted grid background is intentional — it signals "this is interactive, not a static screenshot".
 
 ---
 
@@ -91,10 +63,9 @@ A browser frame around an image, with optional caption and zoom on click.
   src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80"
   alt="Code editor with a dark theme"
   caption="A typical build session"
-  url="byronlove.fr"
 />
 
-Click the image — it opens a full-screen modal with a blur backdrop. The `url` prop fills the address bar, just like `Demo`.
+Click the image — it opens a full-screen modal with a blur backdrop.
 
 ---
 

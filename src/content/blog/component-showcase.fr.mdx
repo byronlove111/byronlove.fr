@@ -1,7 +1,7 @@
 ---
 title: "Showcase des composants"
 date: 2026-05-12
-description: "Un tour de tous les blocs disponibles dans ces articles — code, callouts, démos, screenshots, et plus."
+description: "Un tour de tous les blocs disponibles dans ces articles — code, démos, screenshots, et plus."
 lang: fr
 slug_base: component-showcase
 tags: ["mdx", "design", "composants"]
@@ -43,43 +43,15 @@ git push origin main
 
 ---
 
-## Callout
-
-Quatre types, chacun avec une bordure gauche accentuée et une icône inline.
-
-<Callout type="info">
-  Le callout `info` sert au contexte neutre — quelque chose que le lecteur ne sait peut-être pas mais sur lequel il n'a pas besoin d'agir.
-</Callout>
-
-<Callout type="tip">
-  Le callout `tip` sert aux conseils actionnables. À utiliser quand tu veux que le lecteur fasse quelque chose différemment.
-</Callout>
-
-<Callout type="warning">
-  Le callout `warning` sert aux conséquences. À utiliser quand quelque chose peut mal tourner si le lecteur ne fait pas attention.
-</Callout>
-
-<Callout type="error">
-  Le callout `error` sert aux modes d'échec connus. À utiliser pour documenter quelque chose qui *va* casser dans certaines conditions.
-</Callout>
-
-On peut aussi passer une prop `title` pour personnaliser le label :
-
-<Callout type="tip" title="À retenir">
-  Les titres personnalisés permettent d'être plus précis que les labels génériques comme "Tip" ou "Note".
-</Callout>
-
----
-
 ## Demo
 
 Un îlot interactif dans un cadre macOS. Tout ce qui utilise `useState` vit ici — il suffit d'ajouter `client:load` sur le composant interne.
 
-<Demo label="Typography explorer" url="byronlove.fr/demo">
+<Demo>
   <TypographyExplorer client:load />
 </Demo>
 
-La prop `url` remplit la barre d'adresse. Le fond en grille pointillée est intentionnel — il signale que c'est interactif, pas un screenshot statique.
+Le fond en grille pointillée est intentionnel — il signale que c'est interactif, pas un screenshot statique.
 
 ---
 
@@ -91,10 +63,9 @@ Un cadre browser autour d'une image, avec caption optionnelle et zoom au clic.
   src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80"
   alt="Éditeur de code avec un thème sombre"
   caption="Une session de build typique"
-  url="byronlove.fr"
 />
 
-Clique sur l'image — elle s'ouvre en plein écran avec un fond flouté. La prop `url` remplit la barre d'adresse, comme pour `Demo`.
+Clique sur l'image — elle s'ouvre en plein écran avec un fond flouté.
 
 ---
 
