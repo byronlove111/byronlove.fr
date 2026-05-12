@@ -1,3 +1,6 @@
+/**
+ * Blog “device” frame for interactive demos. Tokens and usage: see DEMO_BLOCKS.md alongside this file.
+ */
 interface DemoProps {
   children: React.ReactNode;
 }
@@ -13,35 +16,29 @@ const TrafficLights = () => (
 export default function Demo({ children }: DemoProps) {
   return (
     <div style={{
-      margin: "2rem 0",
-      borderRadius: "10px",
+      margin: "1.75rem 0",
+      borderRadius: "8px",
       border: "1px solid #E0DED8",
       overflow: "hidden",
-      background: "#fff",
-      boxShadow: "0 1px 2px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06)",
+      background: "#F5F4F0",
     }}>
-      {/* macOS window chrome */}
       <div style={{
         display: "flex",
         alignItems: "center",
         padding: "0 1rem",
-        height: "42px",
+        height: "38px",
         background: "#EEEDEA",
         borderBottom: "1px solid #E0DED8",
+        borderBottomLeftRadius: "6px",
+        borderBottomRightRadius: "6px",
       }}>
         <TrafficLights />
       </div>
 
-      {/* Content */}
       <div style={{
-        padding: "2.5rem 2rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "180px",
-        background: "#FAFAF7",
-        backgroundImage: "radial-gradient(circle, #E0DED8 1px, transparent 1px)",
-        backgroundSize: "20px 20px",
+        padding: "1.25rem 1.25rem 1.5rem",
+        minHeight: "160px",
+        background: "#F5F4F0",
       }}>
         {children}
       </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const SERIF = "'Lora', Georgia, serif";
-const MONO = "ui-monospace, 'SF Mono', monospace";
+const MONO = "ui-monospace, 'SF Mono', 'Cascadia Code', monospace";
 
 const FONTS = [
   { label: "Lora (serif)", value: SERIF, specimen: "The quick brown fox" },
@@ -19,40 +19,58 @@ const SIZES = [
   { label: "2xl", px: 30 },
 ];
 
+const EDGE = "#E0DED8";
+const META = "#777";
+const LABEL = {
+  fontFamily: MONO,
+  fontSize: "0.6875rem",
+  letterSpacing: "0.02em",
+  color: META,
+  userSelect: "none" as const,
+  marginBottom: "0.5rem",
+  display: "block" as const,
+};
+
 export default function TypographyExplorer() {
   const [font, setFont] = useState(0);
   const [size, setSize] = useState(2);
 
   const btnBase: React.CSSProperties = {
-    padding: "0.25rem 0.6rem",
-    borderRadius: "4px",
-    border: "1px solid #E0DED8",
-    background: "none",
+    padding: "0.35rem 0.65rem",
+    borderRadius: "5px",
+    border: `1px solid ${EDGE}`,
     cursor: "pointer",
     fontFamily: MONO,
     fontSize: "0.625rem",
-    letterSpacing: "0.04em",
-    transition: "all 0.12s",
+    letterSpacing: "0.02em",
+    transition: "background 0.12s ease, border-color 0.12s ease, color 0.12s ease",
+  };
+
+  const btnIdle: React.CSSProperties = {
+    ...btnBase,
+    background: "#fff",
+    borderColor: EDGE,
+    color: META,
+  };
+
+  const btnActive: React.CSSProperties = {
+    ...btnBase,
+    background: "#EEEDEA",
+    borderColor: EDGE,
+    color: "#444",
   };
 
   return (
-    <div style={{ width: "100%", fontFamily: MONO }}>
-      {/* Font selector */}
-      <div style={{ marginBottom: "1rem" }}>
-        <div style={{ fontSize: "0.5625rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#aaa", marginBottom: "0.5rem" }}>
-          Font family
-        </div>
-        <div style={{ display: "flex", gap: "0.375rem", flexWrap: "wrap" as const }}>
+    <div style={{ width: "100%", boxSizing: "border-box" as const }}>
+      <div style={{ marginBottom: "1.125rem" }}>
+        <span style={LABEL}>Font family</span>
+        <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" as const }}>
           {FONTS.map((f, i) => (
             <button
               key={f.label}
+              type="button"
               onClick={() => setFont(i)}
-              style={{
-                ...btnBase,
-                background: font === i ? "#1a1a1a" : "none",
-                color: font === i ? "#fff" : "#666",
-                borderColor: font === i ? "#1a1a1a" : "#E0DED8",
-              }}
+              style={font === i ? btnActive : btnIdle}
             >
               {f.label}
             </button>
@@ -60,22 +78,15 @@ export default function TypographyExplorer() {
         </div>
       </div>
 
-      {/* Size selector */}
-      <div style={{ marginBottom: "1.25rem" }}>
-        <div style={{ fontSize: "0.5625rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#aaa", marginBottom: "0.5rem" }}>
-          Font size
-        </div>
-        <div style={{ display: "flex", gap: "0.375rem" }}>
+      <div style={{ marginBottom: "1.125rem" }}>
+        <span style={LABEL}>Font size</span>
+        <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" as const }}>
           {SIZES.map((s, i) => (
             <button
               key={s.label}
+              type="button"
               onClick={() => setSize(i)}
-              style={{
-                ...btnBase,
-                background: size === i ? "#1a1a1a" : "none",
-                color: size === i ? "#fff" : "#666",
-                borderColor: size === i ? "#1a1a1a" : "#E0DED8",
-              }}
+              style={size === i ? btnActive : btnIdle}
             >
               {s.label}
             </button>
@@ -83,32 +94,44 @@ export default function TypographyExplorer() {
         </div>
       </div>
 
-      {/* Preview */}
-      <div style={{
-        padding: "1.5rem",
-        background: "#fff",
-        border: "1px solid #E0DED8",
-        borderRadius: "6px",
-        minHeight: "80px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        transition: "all 0.15s",
-      }}>
-        <span style={{
-          fontFamily: FONTS[font].value,
-          fontSize: `${SIZES[size].px}px`,
-          color: "#1a1a1a",
-          lineHeight: 1.4,
-          transition: "all 0.2s",
-          textAlign: "center",
-        }}>
+      <div
+        style={{
+          padding: "1.125rem 1.25rem",
+          background: "#fff",
+          border: `1px solid ${EDGE}`,
+          borderRadius: "8px",
+          minHeight: "5.25rem",
+          display: "flex",
+          alignItems: "center",
+          boxSizing: "border-box" as const,
+        }}
+      >
+        <p
+          style={{
+            margin: 0,
+            width: "100%",
+            fontFamily: FONTS[font].value,
+            fontSize: `${SIZES[size].px}px`,
+            color: "#1a1a1a",
+            lineHeight: 1.55,
+            transition: "font-size 0.2s ease, font-family 0.2s ease",
+            wordBreak: "break-word" as const,
+          }}
+        >
           {FONTS[font].specimen}
-        </span>
+        </p>
       </div>
 
-      <div style={{ marginTop: "0.5rem", display: "flex", justifyContent: "flex-end" }}>
-        <span style={{ fontSize: "0.5625rem", color: "#bbb", letterSpacing: "0.04em" }}>
+      <div
+        style={{
+          marginTop: "0.75rem",
+          paddingTop: "0.75rem",
+          borderTop: `1px solid ${EDGE}`,
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <span style={{ fontFamily: MONO, fontSize: "0.6875rem", color: META, letterSpacing: "0.02em" }}>
           {FONTS[font].value.split(",")[0].replace(/'/g, "")} · {SIZES[size].px}px
         </span>
       </div>
