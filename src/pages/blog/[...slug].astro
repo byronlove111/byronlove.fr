@@ -91,7 +91,9 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
     justify-content: space-between;
     max-width: 720px;
     margin: 0 auto;
-    padding: 2rem 1.5rem 0;
+    padding-top: max(2rem, calc(env(safe-area-inset-top, 0px) + 0.75rem));
+    padding-inline: 1.5rem;
+    padding-bottom: 1.75rem;
   }
 
   .nav-back {
@@ -121,7 +123,8 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
   .article-main {
     max-width: 720px;
     margin: 0 auto;
-    padding: 3rem 1.5rem 6rem;
+    /* Generous inset under nav + title block (editorial masthead rhythm) */
+    padding: clamp(4rem, 14vmin, 7.5rem) 1.5rem 6rem;
   }
 
   .article-header {
