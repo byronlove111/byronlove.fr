@@ -80,6 +80,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   <a href={item.href} style={{ ...linkStyle, color: TEXT }}
                     onMouseEnter={e => (e.currentTarget.style.opacity = "0.5")}
                     onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                    onClick={() => { if (patch.ready) patch.play("key-press"); }}
                   >
                     {item.label}
                   </a>
