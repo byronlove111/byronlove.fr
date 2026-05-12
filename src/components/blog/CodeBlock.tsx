@@ -75,6 +75,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
 
   const displayLabel = filename ?? lang;
   const labelTransition = "opacity 0.2s ease-out, transform 0.2s ease-out";
+  const copyRowGap = "0.38rem";
 
   return (
     <div style={{
@@ -113,7 +114,6 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
             display: "flex",
             alignItems: "center",
             flexShrink: 0,
-            gap: "0.38rem",
             padding: "0.3rem 0 0.3rem 0.35rem",
             borderRadius: "5px",
             background: "none",
@@ -128,92 +128,68 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
           <span
             style={{
               position: "relative",
-              width: 12,
-              height: 12,
-              flexShrink: 0,
               display: "inline-flex",
               alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <span
-              style={{
-                position: "absolute",
-                inset: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: labelTransition,
-                opacity: copied ? 0 : 1,
-                transform: copied ? `translateY(-${shift})` : "translateY(0)",
-              }}
-              aria-hidden
-            >
-              <CopyIcon />
-            </span>
-            <span
-              style={{
-                position: "absolute",
-                inset: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: labelTransition,
-                opacity: copied ? 1 : 0,
-                transform: copied ? "translateY(0)" : `translateY(${shift})`,
-              }}
-              aria-hidden
-            >
-              <CopyIcon />
-            </span>
-          </span>
-          <span
-            style={{
-              position: "relative",
-              overflow: "hidden",
-              display: "inline-block",
               lineHeight: 1.45,
               verticalAlign: "middle",
             }}
           >
-            {/* In-flow, invisible — width follows active label (never "copied-sized" while showing copy). */}
+            {/* In-flow, invisible — width = icon slot + gap + active word ("copy" ↔ "copied"). */}
             <span
               aria-hidden
               style={{
+                display: "flex",
+                alignItems: "center",
+                gap: copyRowGap,
                 opacity: 0,
                 whiteSpace: "nowrap" as const,
                 userSelect: "none" as const,
                 pointerEvents: "none" as const,
               }}
             >
+              <span style={{ width: 12, height: 12, flexShrink: 0 }} />
               {copied ? "copied" : "copy"}
             </span>
             <span
+              aria-hidden
               style={{
                 position: "absolute",
                 left: 0,
                 top: 0,
-                lineHeight: 1.45,
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                gap: copyRowGap,
                 whiteSpace: "nowrap" as const,
                 transition: labelTransition,
                 opacity: copied ? 0 : 1,
                 transform: copied ? `translateY(-${shift})` : "translateY(0)",
               }}
             >
+              <span style={{ display: "flex", flexShrink: 0, lineHeight: 0 }}>
+                <CopyIcon />
+              </span>
               copy
             </span>
             <span
+              aria-hidden
               style={{
                 position: "absolute",
                 left: 0,
                 top: 0,
-                lineHeight: 1.45,
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                gap: copyRowGap,
                 whiteSpace: "nowrap" as const,
                 transition: labelTransition,
                 opacity: copied ? 1 : 0,
                 transform: copied ? "translateY(0)" : `translateY(${shift})`,
               }}
             >
+              <span style={{ display: "flex", flexShrink: 0, lineHeight: 0 }}>
+                <CopyIcon />
+              </span>
               copied
             </span>
           </span>
