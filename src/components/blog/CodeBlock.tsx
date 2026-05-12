@@ -26,7 +26,6 @@ const shift = "0.28rem";
 
 export default function CodeBlock({ filename, lang, children }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
-  const [hoverCopy, setHoverCopy] = useState(false);
   const resetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => () => {
@@ -75,18 +74,15 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
           aria-live="polite"
           aria-label={copied ? "Copied" : "Copy code"}
           onClick={handleCopy}
-          onMouseEnter={() => setHoverCopy(true)}
-          onMouseLeave={() => setHoverCopy(false)}
           title={copied ? "Copied" : "Copy code"}
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.35rem",
-            padding: "0.3rem 0.55rem",
+            gap: "0.125rem",
+            padding: "0.3rem 0.35rem",
             borderRadius: "5px",
-            background: hoverCopy ? "#E0DED8" : "transparent",
-            border: "1px solid",
-            borderColor: hoverCopy ? "#D4D2CC" : "transparent",
+            background: "none",
+            border: "none",
             color: "#999",
             cursor: "pointer",
             fontFamily: "ui-monospace, 'SF Mono', monospace",
