@@ -87,9 +87,9 @@ Without this, debugging is archaeology. Something went wrong in production — w
 
 The other reason to sandbox: it makes iteration cheap. You can re-run an agent on the same frozen context, change a prompt, see what changes. You can replay failure cases. You can test a new model on historical tasks before promoting it. None of that is possible if every run mutates live state.
 
-## S37 Portal — what building AI-native actually looks like
+## What building AI-native actually looks like
 
-We're building this from scratch at S37. We're an agency — GTM, design, dev missions for real clients. Every client's context was spread across Attio, Notion, email threads, Google Drive, and whoever remembered the last conversation.
+We're building this from scratch at our agency — GTM, design, dev missions for real clients. Every client's context was spread across Attio, Notion, email threads, Google Drive, and whoever remembered the last conversation.
 
 So we rebuilt around a single principle: one source of truth, structured for agents from day one.
 
@@ -101,31 +101,31 @@ The second is the agent infrastructure. Each agent run starts with one API call 
 
 The third is the interface — a dashboard for the team, a client portal for clients. Same data, two views.
 
-**GTM missions (Alexis)**
+**GTM missions**
 
-Alexis creates a task with a brief, picks the model, clicks Run. The agent receives the full campaign context: Emelia stats for the last 3 months, ICP definition, previous sequences that performed, company background. It doesn't ask for any of it. It was in the context.
+Our growth lead creates a task with a brief, picks the model, clicks Run. The agent receives the full campaign context: outbound stats for the last 3 months, ICP definition, previous sequences that performed, company background. It doesn't ask for any of it. It was in the context.
 
-From there, it analyzes what's converting, identifies drop-off points, generates a recommendation with a proposed next sequence. Alexis reviews, adjusts if needed, approves. The iteration that used to take half a day takes twenty minutes — not because the AI is smarter, but because it had the full picture from the start.
+From there, it analyzes what's converting, identifies drop-off points, generates a recommendation with a proposed next sequence. The lead reviews, adjusts if needed, approves. The iteration that used to take half a day takes twenty minutes — not because the AI is smarter, but because it had the full picture from the start.
 
-For a complete mission, an orchestrator agent takes over. It reads all tasks, identifies dependencies, launches what can run in parallel. ICP analysis, sequence generation, list qualification, Emelia launch — in a few minutes, without anyone behind a keyboard.
+For a complete mission, an orchestrator agent takes over. It reads all tasks, identifies dependencies, launches what can run in parallel. ICP analysis, sequence generation, list qualification, campaign launch — in a few minutes, without anyone behind a keyboard.
 
-**Design missions (Zinedine)**
+**Design missions**
 
-Zinedine works in code. His agent receives the brief, clones the repo, implements the component respecting the design system, spins up the project, takes screenshots of the rendered output, then opens a PR with the screenshots attached.
+Our designer works in code. His agent receives the brief, clones the repo, implements the component respecting the design system, spins up the project, takes screenshots of the rendered output, then opens a PR with the screenshots attached.
 
-Zinedine sees the visual result without checking out the branch. He reviews directly in Portal, approves, or sends feedback. The agent iterates. The whole loop happens in Portal — no switching between GitHub, Figma, and a local dev environment.
+He sees the visual result without checking out the branch. He reviews directly in the portal, approves, or sends feedback. The agent iterates. The whole loop happens in one place — no switching between GitHub, Figma, and a local dev environment.
 
-**Dev missions (Byron)**
+**Dev missions**
 
-Same loop for dev. Agent gets the context, clones the client's repo, implements the feature, runs the tests, opens a PR. Byron reviews the diff and test results in Portal. Wants changes? He sends feedback in Portal. The agent re-runs.
+Same loop for dev. Agent gets the context, clones the client's repo, implements the feature, runs the tests, opens a PR. The dev reviews the diff and test results in the portal. Wants changes? He sends feedback. The agent re-runs.
 
 The human work becomes: define the intent clearly, review the output, decide. The execution is delegated.
 
 **The client portal**
 
-Every client has access to their own space at portal.s37.studio. They see their active missions, tasks Alexis has chosen to expose, their documents, their invoices. They can upload files, sign contracts, download reports.
+Every client has access to their own space. They see their active missions, exposed tasks, their documents, their invoices. They can upload files, sign contracts, download reports.
 
-And they can ask questions to an agent that has access to their data — scoped to their company only. "Where are my campaigns this month?" The agent queries the database, returns stats, compares against objectives. Without Alexis having sent a single message.
+And they can ask questions to an agent that has access to their data — scoped to their company only. "Where are my campaigns this month?" The agent queries the database, returns stats, compares against objectives. Without anyone from the team having sent a single message.
 
 The impression of having a dedicated account manager available 24/7. The reality: one agent, scoped context, no extra work from the team.
 
@@ -133,11 +133,11 @@ The impression of having a dedicated account manager available 24/7. The reality
 
 Once the infrastructure works, the roadmap opens up.
 
-**Proactive monitoring.** An agent runs in the background every hour, checks Emelia stats across all active missions, detects performance drops, automatically creates a task "investigate campaign underperformance" and pings Alexis. No one has to remember to check. The system surfaces what needs attention.
+**Proactive monitoring.** An agent runs in the background every hour, checks outbound stats across all active missions, detects performance drops, automatically creates a task "investigate campaign underperformance" and pings the lead. No one has to remember to check. The system surfaces what needs attention.
 
-**Cross-mission memory.** The agent knows that for Copwell, the ICP that converts best is IT directors in Île-de-France at 200-500 person companies. It reuses that automatically for new lists without Alexis having to say it again. Context accumulates across missions instead of starting from zero each time.
+**Cross-mission memory.** The agent knows that for a given client, the ICP that converts best is IT directors in a specific region at mid-size companies. It reuses that automatically for new lists without anyone having to say it again. Context accumulates across missions instead of starting from zero each time.
 
-**Mission planning.** Alexis creates the company, attaches the call transcript and ICP brief. An agent reads everything, proposes a full mission plan: tasks, KPI targets, suggested Emelia sequences, timeline. Alexis validates and adjusts, and agents start executing. From onboarding to execution in one session.
+**Mission planning.** Someone creates the company, attaches the call transcript and ICP brief. An agent reads everything, proposes a full mission plan: tasks, KPI targets, suggested sequences, timeline. The team validates and adjusts, and agents start executing. From onboarding to execution in one session.
 
 None of this is science fiction. Every piece is technically tractable today. What blocks most teams isn't model capability — it's that their systems weren't built to give agents the context and tools they need to act.
 

@@ -87,9 +87,9 @@ Sans ça, débugger c'est de l'archéologie. Quelque chose a mal tourné en prod
 
 L'autre raison de sandboxer : ça rend l'itération peu coûteuse. Tu peux relancer un agent sur le même contexte gelé, changer un prompt, voir ce qui change. Tu peux rejouer des cas d'échec. Tu peux tester un nouveau modèle sur des tâches historiques avant de le promouvoir en prod. Rien de tout ça n'est possible si chaque run mute de l'état en direct.
 
-## S37 Portal — ce que ça veut dire concrètement de construire AI-native
+## Ce que ça veut dire concrètement de construire AI-native
 
-On construit ça from scratch chez S37. On est une agence — missions GTM, design, dev pour des clients réels. Le contexte de chaque client était éparpillé entre Attio, Notion, des fils d'emails, Google Drive, et la mémoire de qui avait participé au dernier call.
+On construit ça from scratch dans notre agence — missions GTM, design, dev pour des clients réels. Le contexte de chaque client était éparpillé entre Attio, Notion, des fils d'emails, Google Drive, et la mémoire de qui avait participé au dernier call.
 
 Donc on a tout reconstruit autour d'un seul principe : une source de vérité unique, structurée pour les agents dès le premier jour.
 
@@ -101,31 +101,31 @@ La deuxième : l'infrastructure d'agents. Chaque run démarre avec un appel API 
 
 La troisième : l'interface — un dashboard pour l'équipe, un portail client pour les clients. Mêmes données, deux vues.
 
-**Missions GTM — Alexis**
+**Missions GTM**
 
-Alexis crée une tâche avec un brief, choisit le modèle, clique Run. L'agent reçoit le contexte complet de la campagne : stats Emelia des 3 derniers mois, définition de l'ICP, séquences précédentes qui ont performé, background de la company. Il ne demande rien. C'était dans le contexte.
+Notre responsable croissance crée une tâche avec un brief, choisit le modèle, clique Run. L'agent reçoit le contexte complet de la campagne : stats outbound des 3 derniers mois, définition de l'ICP, séquences précédentes qui ont performé, background de la company. Il ne demande rien. C'était dans le contexte.
 
-Il analyse ce qui convertit, identifie les points de friction, génère une recommandation avec la séquence suivante proposée. Alexis review, ajuste si nécessaire, approuve. L'itération qui prenait une demi-journée prend vingt minutes — pas parce que l'IA est plus intelligente, mais parce qu'elle avait l'image complète dès le départ.
+Il analyse ce qui convertit, identifie les points de friction, génère une recommandation avec la séquence suivante proposée. Il review, ajuste si nécessaire, approuve. L'itération qui prenait une demi-journée prend vingt minutes — pas parce que l'IA est plus intelligente, mais parce qu'elle avait l'image complète dès le départ.
 
-Pour une mission complète, un agent orchestrateur prend le relais. Il lit toutes les tâches, identifie les dépendances, lance en parallèle ce qui peut l'être. Analyse ICP, génération de séquence, qualification de la base, lancement Emelia — en quelques minutes, sans que personne soit derrière son clavier.
+Pour une mission complète, un agent orchestrateur prend le relais. Il lit toutes les tâches, identifie les dépendances, lance en parallèle ce qui peut l'être. Analyse ICP, génération de séquence, qualification de la base, lancement campagne — en quelques minutes, sans que personne soit derrière son clavier.
 
-**Missions Design — Zinedine**
+**Missions Design**
 
-Zinedine travaille en code. Son agent reçoit le brief, clone le repo, implémente le composant en respectant le design system, lance le projet, prend des screenshots du rendu, et ouvre une PR avec les screenshots attachés.
+Notre designer travaille en code. Son agent reçoit le brief, clone le repo, implémente le composant en respectant le design system, lance le projet, prend des screenshots du rendu, et ouvre une PR avec les screenshots attachés.
 
-Zinedine voit le résultat visuel sans avoir à checkout la branche. Il review directement dans Portal, approuve, ou envoie du feedback. L'agent itère. Toute la boucle se passe dans Portal — sans switcher entre GitHub, Figma, et un environnement de dev local.
+Il voit le résultat visuel sans avoir à checkout la branche. Il review directement dans le portail, approuve, ou envoie du feedback. L'agent itère. Toute la boucle se passe au même endroit — sans switcher entre GitHub, Figma, et un environnement de dev local.
 
-**Missions Dev — Byron**
+**Missions Dev**
 
-Même boucle pour le dev. L'agent reçoit le contexte, clone le repo du client, implémente la feature, fait tourner les tests, ouvre une PR. Byron review le diff et les résultats de tests dans Portal. Veut des modifications ? Il envoie du feedback dans Portal. L'agent re-run.
+Même boucle pour le dev. L'agent reçoit le contexte, clone le repo du client, implémente la feature, fait tourner les tests, ouvre une PR. Le dev review le diff et les résultats de tests dans le portail. Veut des modifications ? Il envoie du feedback. L'agent re-run.
 
 Le travail humain devient : définir l'intention clairement, review l'output, décider. L'exécution est déléguée.
 
 **Le portail client**
 
-Chaque client a accès à son espace sur portal.s37.studio. Il voit ses missions actives, les tâches qu'Alexis a choisi d'exposer, ses documents, ses factures. Il peut uploader des fichiers, signer son contrat, télécharger ses rapports.
+Chaque client a accès à son espace. Il voit ses missions actives, les tâches exposées, ses documents, ses factures. Il peut uploader des fichiers, signer son contrat, télécharger ses rapports.
 
-Et il peut poser des questions à un agent qui a accès à ses données — cloisonnées à sa company seulement. "Où en sont mes campagnes ce mois-ci ?" L'agent interroge la base, retourne les stats, compare aux objectifs. Sans qu'Alexis ait envoyé un seul message.
+Et il peut poser des questions à un agent qui a accès à ses données — cloisonnées à sa company seulement. "Où en sont mes campagnes ce mois-ci ?" L'agent interroge la base, retourne les stats, compare aux objectifs. Sans que personne dans l'équipe ait envoyé un seul message.
 
 L'impression d'avoir un account manager dédié disponible 24/7. La réalité : un agent, un contexte scopé, aucun travail supplémentaire pour l'équipe.
 
@@ -133,11 +133,11 @@ L'impression d'avoir un account manager dédié disponible 24/7. La réalité : 
 
 Une fois l'infrastructure en place, la roadmap s'ouvre.
 
-**Monitoring proactif.** Un agent tourne en fond toutes les heures, vérifie les stats Emelia de toutes les missions actives, détecte les baisses de performance, crée automatiquement une tâche "investiguer la campagne en sous-performance" et prévient Alexis. Personne n'a à se souvenir de vérifier. Le système remonte ce qui a besoin d'attention.
+**Monitoring proactif.** Un agent tourne en fond toutes les heures, vérifie les stats de toutes les missions actives, détecte les baisses de performance, crée automatiquement une tâche "investiguer la campagne en sous-performance" et prévient le responsable. Personne n'a à se souvenir de vérifier. Le système remonte ce qui a besoin d'attention.
 
-**Mémoire cross-missions.** L'agent sait que pour Copwell, l'ICP qui convertit le mieux ce sont les DSI en Île-de-France dans des boîtes de 200-500 personnes. Il réutilise ça automatiquement pour les nouvelles bases sans qu'Alexis ait à le redire. Le contexte s'accumule entre les missions au lieu de repartir de zéro à chaque fois.
+**Mémoire cross-missions.** L'agent sait que pour un client donné, l'ICP qui convertit le mieux ce sont les DSI dans une région particulière dans des boîtes de taille intermédiaire. Il réutilise ça automatiquement pour les nouvelles bases sans qu'on ait à le redire. Le contexte s'accumule entre les missions au lieu de repartir de zéro à chaque fois.
 
-**Planification de mission.** Alexis crée la company, attache le transcript du call et le brief ICP. Un agent lit tout, propose un plan de mission complet : tâches, KPIs cibles, séquences Emelia suggérées, timeline. Alexis valide et ajuste, les agents commencent à exécuter. De l'onboarding à l'exécution en une session.
+**Planification de mission.** On crée la company, on attache le transcript du call et le brief ICP. Un agent lit tout, propose un plan de mission complet : tâches, KPIs cibles, séquences suggérées, timeline. L'équipe valide et ajuste, les agents commencent à exécuter. De l'onboarding à l'exécution en une session.
 
 Rien de tout ça n'est de la science-fiction. Chaque pièce est techniquement faisable aujourd'hui. Ce qui bloque la plupart des équipes, ce n'est pas la capacité des modèles — c'est que leurs systèmes n'ont pas été conçus pour donner aux agents le contexte et les outils dont ils ont besoin pour agir.
 
