@@ -32,7 +32,8 @@ Un endpoint. Un appel. Tout ce dont l'agent a besoin pour opérer sur un client,
 Pas "voilà le contact" puis "voilà le deal" puis "voilà les stats de la dernière campagne." Une réponse : company, contacts, toutes les missions actives, les dernières tâches, les documents attachés, les outils disponibles. L'agent lit une fois et agit.
 
 <CodeBlock lang="typescript" client:load>
-{`// Ancienne façon : l'agent reconstruit le contexte depuis 8 endpoints
+```typescript
+// Ancienne façon : l'agent reconstruit le contexte depuis 8 endpoints
 const company    = await api.get('/companies/:id')
 const contacts   = await api.get('/companies/:id/contacts')
 const deals      = await api.get('/companies/:id/deals')
@@ -53,7 +54,8 @@ const context = await api.get('/agent-context/mission/:id')
 //   documents: [...],
 //   tools_available: ['emelia', 'github', 'slack']
 // }
-// Un appel. Image complète. L'agent peut démarrer immédiatement.`}
+// Un appel. Image complète. L'agent peut démarrer immédiatement.
+```
 </CodeBlock>
 
 Ça change la façon dont tu conçois ton backend. Au lieu de "quelles sont mes entités et à quels routes REST elles correspondent ?", tu te demandes : qu'est-ce qu'un agent a besoin pour agir sur ce contexte, et comment je lui donne ça en un seul coup ?

@@ -32,7 +32,8 @@ One endpoint. One call. Everything the agent needs to operate on a client, a mis
 Not "here's the contact" and "here's the deal" and "here's the last campaign stats." One response: company, contacts, all active missions, last tasks, attached documents, available tools. The agent reads it once and acts.
 
 <CodeBlock lang="typescript" client:load>
-{`// Old way: agent stitches context from 8 endpoints
+```typescript
+// Old way: agent stitches context from 8 endpoints
 const company    = await api.get('/companies/:id')
 const contacts   = await api.get('/companies/:id/contacts')
 const deals      = await api.get('/companies/:id/deals')
@@ -53,7 +54,8 @@ const context = await api.get('/agent-context/mission/:id')
 //   documents: [...],
 //   tools_available: ['emelia', 'github', 'slack']
 // }
-// One call. Full picture. Agent can start immediately.`}
+// One call. Full picture. Agent can start immediately.
+```
 </CodeBlock>
 
 This changes how you design your backend. Instead of "what are my entities and what REST routes do they map to?", you ask: what does an agent need to act on this, and how do I give it that in one shot?
