@@ -1,0 +1,17 @@
+---
+/**
+ * Same pattern as ScreenshotIsland: MDX maps to this Astro wrapper so the inner React
+ * lightbox hydrates with `client:load`.
+ */
+import Video from "./Video.tsx";
+
+interface Props {
+  src: string;
+  caption?: string;
+  alt?: string;
+}
+
+const { src, caption, alt } = Astro.props;
+---
+
+<Video client:load src={src} caption={caption} alt={alt} />

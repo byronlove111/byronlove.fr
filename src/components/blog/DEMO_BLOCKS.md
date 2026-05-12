@@ -34,6 +34,6 @@ import MyWidget from "../../components/blog/demos/my-widget.tsx";
 </Demo>
 ```
 
-**Screenshots :** le MDX utilise `<Screenshot>` sans import ; c’est `[...slug].astro` qui résout le composant vers **`ScreenshotIsland.astro`**, qui enveloppe le `.tsx` avec **`client:load`** pour que le lightbox fonctionne.
+**Screenshots / vidéos :** le MDX utilise `<Screenshot>` ou `<Video>` sans import ; c’est `[...slug].astro` qui résout vers **`ScreenshotIsland.astro`** / **`VideoIsland.astro`**, wrappers avec **`client:load`** pour le lightbox.
 
 Keep demo components focused; shared chrome lives in **`Demo.tsx`**, not in every widget.

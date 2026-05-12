@@ -1,9 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 import ScreenshotIsland from "../../components/blog/ScreenshotIsland.astro";
+import VideoIsland from "../../components/blog/VideoIsland.astro";
 import AnimatedSection from "../../components/blog/AnimatedSection";
 import Demo from "../../components/blog/Demo";
-import Video from "../../components/blog/Video";
 import "../../styles/global.css";
 
 export async function getStaticPaths() {
@@ -33,7 +33,7 @@ function formatDate(date: Date) {
   });
 }
 
-const blogComponents = { Screenshot: ScreenshotIsland, AnimatedSection, Demo, Video };
+const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, AnimatedSection, Demo };
 ---
 
 <html lang={lang}>
