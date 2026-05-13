@@ -60,7 +60,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
           </h1>
 
           {/* Bio */}
-          <div style={{ display: "flex", flexDirection: "column" as const, gap: "1.25rem", marginBottom: "1.75rem" }}>
+          <div style={{ display: "flex", flexDirection: "column" as const, gap: "0.5rem", marginBottom: "1.75rem" }}>
             <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: TEXT, margin: 0 }}>
               I'm a Cursor ambassador and engineer based in Paris, building full-stack products and AI-native infrastructure from 0 → 1.
             </p>
