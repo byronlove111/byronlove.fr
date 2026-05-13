@@ -192,14 +192,14 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                         boxShadow: "0 4px 24px rgba(0,0,0,0.10)",
                         padding: 0,
                         overflow: "hidden",
-                        width: "260px",
+                        width: "200px",
                         zIndex: 9999,
                       }}
                     >
                       <img
                         src={job.image}
                         alt={job.name}
-                        style={{ width: "260px", height: "160px", objectFit: "cover", display: "block" }}
+                        style={{ width: "200px", height: "120px", objectFit: "cover", display: "block" }}
                       />
                     </TooltipContent>
                   </Tooltip>

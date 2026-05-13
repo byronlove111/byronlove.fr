@@ -37,7 +37,7 @@ body {
 }
 
 @keyframes tooltip-in {
-  from { opacity: 0; transform: scale(0.96) translateY(4px); }
+  from { opacity: 0; transform: scale(0.93) translateY(6px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 @keyframes tooltip-out {
@@ -50,11 +50,11 @@ body {
 [data-radix-tooltip-content][data-state="instant-open"],
 [data-radix-popper-content-wrapper] > div[data-state="delayed-open"],
 [data-radix-popper-content-wrapper] > div[data-state="instant-open"] {
-  animation: tooltip-in 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: tooltip-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 [data-radix-tooltip-content][data-state="closed"],
 [data-radix-popper-content-wrapper] > div[data-state="closed"] {
-  animation: tooltip-out 0.12s ease-in forwards;
+  animation: tooltip-out 0.18s ease-in forwards;
 }
 
 /* Force Shiki-generated blocks to use transparent bg so CodeBlock styles win */
