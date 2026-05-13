@@ -144,7 +144,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 href: "https://opensource-together.com",
                 role: "Co-Founder",
                 period: "2025–Present",
-                desc: "Non-profit platform making open source accessible to developers. Co-founded and led a team of engineers, designers, and ML contributors. Built in public —",
+                desc: "Non-profit platform making open source accessible to developers. Co-founded and led a team of engineers, designers, and ML contributors —",
                 highlight: "1k followers on Twitter and 1k signups at launch.",
               },
               {
