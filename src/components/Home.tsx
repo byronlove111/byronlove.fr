@@ -136,7 +136,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 href: "https://chataigne.ai",
                 role: "Founding Engineer",
                 period: "2024–2025",
-                desc: "Seed-stage AI food-tech startup — restaurants take orders through natural language on WhatsApp. First founding engineer on a 3-person team. Rebuilt the frontend from scratch, cut load times from 20s to 3s, shipped a WhatsApp campaign tool and a lucky wheel used by",
+                desc: "Seed-stage AI food-tech startup — restaurants take orders through natural language on WhatsApp. First founding engineer on a 3-person team. Rebuilt the frontend from scratch and shipped full-stack features used by",
                 highlight: "3,500 people in 3 days.",
               },
               {
