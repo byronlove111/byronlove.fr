@@ -138,7 +138,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 role: "Founding Engineer",
                 period: "2024–2025",
                 tagline: "Seed-stage AI food-tech startup — restaurants take orders through natural language on WhatsApp.",
-                detail: "First founding engineer. Led the frontend architecture, shipped full-stack features, and built standalone products end-to-end — reaching",
+                detail: "First founding engineer. Owned the entire frontend, shipped full-stack features, and built standalone products end-to-end — reaching",
                 highlight: "10,000+ users.",
               },
               {
