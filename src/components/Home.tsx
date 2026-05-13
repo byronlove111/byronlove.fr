@@ -1,4 +1,7 @@
-import { playKeyPress } from "../lib/sound";
+import { defineSound, ensureReady } from "@web-kits/audio";
+
+const kp = defineSound({ source: { type: "sine" as const, frequency: 1100 }, envelope: { attack: 0, decay: 0.01, sustain: 0, release: 0.003 }, gain: 0.06 });
+const playKP = async () => { await ensureReady(); kp(); };
 
 const MONO = "ui-monospace, 'SF Mono', monospace";
 const SERIF = "'Lora', Georgia, serif";
@@ -78,7 +81,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   <a href={item.href} style={{ ...linkStyle, color: TEXT }}
                     onMouseEnter={e => (e.currentTarget.style.opacity = "0.5")}
                     onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                    onClick={playKeyPress}
+                    onClick={playKP}
                   >
                     {item.label}
                   </a>
@@ -102,7 +105,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   style={monoLinkStyle}
                   onMouseEnter={e => (e.currentTarget.style.color = TEXT)}
                   onMouseLeave={e => (e.currentTarget.style.color = MUTED)}
-                  onClick={playKeyPress}
+                  onClick={playKP}
                 >
                   {item.label}
                 </a>
@@ -164,7 +167,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                     style={{ fontFamily: SERIF, fontSize: "1rem", fontWeight: 500, color: TEXT, textDecoration: "underline", textUnderlineOffset: "2px" }}
                     onMouseEnter={e => (e.currentTarget.style.opacity = "0.6")}
                     onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                    onClick={playKeyPress}
+                    onClick={playKP}
                   >
                     {job.name}
                   </a>
@@ -196,7 +199,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   style={{ display: "block", padding: "1.5rem 0", borderBottom: "1px solid #E8E7E2", textDecoration: "none" }}
                   onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
                   onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                  onClick={playKeyPress}
+                  onClick={playKP}
                 >
                   <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "1rem", marginBottom: "0.375rem" }}>
                     <span style={{ fontFamily: SERIF, fontSize: "1rem", fontWeight: 500, color: TEXT, lineHeight: 1.3 }}>
