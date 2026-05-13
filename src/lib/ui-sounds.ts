@@ -4,8 +4,8 @@ const patch = definePatch({
   name: "ui-sounds",
   sounds: {
     tap: {
-      source: { type: "sine", frequency: 1200 },
-      envelope: { attack: 0, decay: 0.012, sustain: 0, release: 0.004 },
+      source: { type: "sine", frequency: 1100 },
+      envelope: { attack: 0, decay: 0.01, sustain: 0, release: 0.003 },
       gain: 0.18,
     },
     "key-press": {
@@ -20,14 +20,16 @@ const patch = definePatch({
       ],
     },
     "page-enter": {
-      source: { type: "sine", frequency: { start: 700, end: 900 } },
-      envelope: { attack: 0.003, decay: 0.04, sustain: 0, release: 0.015 },
-      gain: 0.05,
+      layers: [
+        { source: { type: "sine", frequency: 880  }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, gain: 0.08 },
+        { source: { type: "sine", frequency: 1320 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, delay: 0.03, gain: 0.07 },
+      ],
     },
     "page-exit": {
-      source: { type: "sine", frequency: { start: 900, end: 700 } },
-      envelope: { attack: 0, decay: 0.04, sustain: 0, release: 0.015 },
-      gain: 0.04,
+      layers: [
+        { source: { type: "sine", frequency: 1320 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, gain: 0.08 },
+        { source: { type: "sine", frequency: 880  }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, delay: 0.03, gain: 0.07 },
+      ],
     },
   },
 });
