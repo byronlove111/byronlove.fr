@@ -53,9 +53,8 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
 
   const [tooltip, setTooltip] = useState<{ image: string; x: number; y: number } | null>(null);
   const tooltipOffset = { x: 16, y: -16 };
-
   const handleMouseMove = useCallback((e: React.MouseEvent, image: string) => {
-    setTooltip({ image, x: e.clientX + tooltipOffset.x, y: e.clientY + tooltipOffset.y });
+    setTooltip({ image, x: e.clientX - 100, y: e.clientY - 136 });
   }, []);
 
   const handleMouseLeave = useCallback(() => setTooltip(null), []);
@@ -247,15 +246,15 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
     <AnimatePresence>
       {tooltip && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.94, y: 6 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 4 }}
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.96 }}
           transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
           style={{
             position: "fixed",
             left: tooltip.x,
             top: tooltip.y,
-            transform: "translateY(-100%)",
+            transformOrigin: "bottom center",
             zIndex: 9999,
             pointerEvents: "none",
             background: "#fff",
