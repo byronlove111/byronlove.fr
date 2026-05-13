@@ -129,7 +129,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 role: "Ambassador",
                 period: "2025–Present",
                 tagline: "AI-native code editor, used by millions of engineers worldwide.",
-                detail: "Ambassador for France — organized 4 events of 100+ people, teaching AI-driven development workflows.",
+                detail: "First ambassador for France. Organized 4 events of 100+ people, teaching AI-driven development workflows.",
                 highlight: null,
               },
               {
