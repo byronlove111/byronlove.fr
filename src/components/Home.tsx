@@ -1,3 +1,4 @@
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
 import { playSound } from "../lib/ui-sounds";
 
 const MONO = "ui-monospace, 'SF Mono', monospace";
@@ -50,6 +51,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
   }
 
   return (
+    <TooltipProvider delayDuration={300}>
     <div style={{ minHeight: "100vh", backgroundColor: BG }}>
       <div style={{ maxWidth: "680px", margin: "0 auto", padding: "5rem 1.5rem 6rem" }}>
 
@@ -131,6 +133,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 tagline: "AI-native code editor, used by millions of engineers worldwide.",
                 detail: "First ambassador for France. Organized 4 events of 100+ people, teaching AI-driven development workflows.",
                 highlight: null,
+                image: "/companies/cursor.png",
               },
               {
                 name: "Châtaigne.ai",
@@ -140,6 +143,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 tagline: "Seed-stage AI food-tech startup. Restaurants take orders through natural language on WhatsApp.",
                 detail: "First founding engineer. Owned the entire frontend, shipped full-stack features, and built standalone products end-to-end, reaching",
                 highlight: "10,000+ users.",
+                image: "/companies/chataigne.png",
               },
               {
                 name: "OpenSource Together",
@@ -149,6 +153,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 tagline: "Non-profit platform making open source accessible to developers.",
                 detail: "Co-founded and led a team of engineers, designers, and ML contributors.",
                 highlight: "1k followers on Twitter and 1k signups at launch.",
+                image: "/companies/ost.png",
               },
               {
                 name: "42 School",
@@ -158,21 +163,46 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 tagline: "Peer-to-peer computer science school.",
                 detail: "Top of entrance competition. Member of 42entrepreneurs.",
                 highlight: null,
+                image: "/companies/42.png",
               },
             ].map((job) => (
               <div key={job.name}>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "1rem", marginBottom: "0.375rem" }}>
-                  <a
-                    href={job.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ fontFamily: SERIF, fontSize: "1rem", fontWeight: 500, color: TEXT, textDecoration: "underline", textUnderlineOffset: "2px" }}
-                    onMouseEnter={e => (e.currentTarget.style.opacity = "0.6")}
-                    onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                    onClick={() => playSound("tap")}
-                  >
-                    {job.name}
-                  </a>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <a
+                        href={job.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ fontFamily: SERIF, fontSize: "1rem", fontWeight: 500, color: TEXT, textDecoration: "underline", textUnderlineOffset: "2px" }}
+                        onMouseEnter={e => (e.currentTarget.style.opacity = "0.6")}
+                        onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                        onClick={() => playSound("tap")}
+                      >
+                        {job.name}
+                      </a>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      side="top"
+                      sideOffset={8}
+                      style={{
+                        background: "#fff",
+                        border: "1px solid #E8E6E0",
+                        borderRadius: "8px",
+                        boxShadow: "0 4px 24px rgba(0,0,0,0.10)",
+                        padding: 0,
+                        overflow: "hidden",
+                        width: "260px",
+                        zIndex: 9999,
+                      }}
+                    >
+                      <img
+                        src={job.image}
+                        alt={job.name}
+                        style={{ width: "260px", height: "160px", objectFit: "cover", display: "block" }}
+                      />
+                    </TooltipContent>
+                  </Tooltip>
                   {" "}
                   <span style={{ fontFamily: SERIF, fontSize: "0.875rem", color: MUTED, whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                     {job.role} · {job.period}
@@ -226,5 +256,6 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
 
       </div>
     </div>
+    </TooltipProvider>
   );
 }

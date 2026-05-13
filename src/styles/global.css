@@ -36,6 +36,21 @@ body {
   z-index: 9998;
 }
 
+@keyframes tooltip-in {
+  from { opacity: 0; transform: scale(0.96) translateY(4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes tooltip-out {
+  from { opacity: 1; transform: scale(1) translateY(0); }
+  to   { opacity: 0; transform: scale(0.96) translateY(4px); }
+}
+[data-radix-tooltip-content][data-state="delayed-open"] {
+  animation: tooltip-in 0.15s ease-out;
+}
+[data-radix-tooltip-content][data-state="closed"] {
+  animation: tooltip-out 0.1s ease-in;
+}
+
 /* Force Shiki-generated blocks to use transparent bg so CodeBlock styles win */
 .prose-blog pre,
 .prose-blog pre > code,
