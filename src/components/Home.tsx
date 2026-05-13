@@ -137,8 +137,8 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 href: "https://chataigne.ai",
                 role: "Founding Engineer",
                 period: "2024–2025",
-                tagline: "Seed-stage AI food-tech startup — restaurants take orders through natural language on WhatsApp.",
-                detail: "First founding engineer. Owned the entire frontend, shipped full-stack features, and built standalone products end-to-end — reaching",
+                tagline: "Seed-stage AI food-tech startup. Restaurants take orders through natural language on WhatsApp.",
+                detail: "First founding engineer. Owned the entire frontend, shipped full-stack features, and built standalone products end-to-end, reaching",
                 highlight: "10,000+ users.",
               },
               {
@@ -147,7 +147,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 role: "Co-Founder",
                 period: "2025–Present",
                 tagline: "Non-profit platform making open source accessible to developers.",
-                detail: "Co-founded and led a team of engineers, designers, and ML contributors —",
+                detail: "Co-founded and led a team of engineers, designers, and ML contributors.",
                 highlight: "1k followers on Twitter and 1k signups at launch.",
               },
               {
