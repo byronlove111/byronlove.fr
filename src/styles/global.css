@@ -44,11 +44,17 @@ body {
   from { opacity: 1; transform: scale(1) translateY(0); }
   to   { opacity: 0; transform: scale(0.96) translateY(4px); }
 }
-[data-radix-tooltip-content][data-state="delayed-open"] {
-  animation: tooltip-in 0.15s ease-out;
+
+/* Target both the Radix attribute and the popper wrapper for reliability */
+[data-radix-tooltip-content][data-state="delayed-open"],
+[data-radix-tooltip-content][data-state="instant-open"],
+[data-radix-popper-content-wrapper] > div[data-state="delayed-open"],
+[data-radix-popper-content-wrapper] > div[data-state="instant-open"] {
+  animation: tooltip-in 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-[data-radix-tooltip-content][data-state="closed"] {
-  animation: tooltip-out 0.1s ease-in;
+[data-radix-tooltip-content][data-state="closed"],
+[data-radix-popper-content-wrapper] > div[data-state="closed"] {
+  animation: tooltip-out 0.12s ease-in forwards;
 }
 
 /* Force Shiki-generated blocks to use transparent bg so CodeBlock styles win */
