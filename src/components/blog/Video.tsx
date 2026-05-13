@@ -1,15 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { defineSound, ensureReady } from "@web-kits/audio";
-
-const toggleOn = defineSound({ layers: [
-  { source: { type: "sine" as const, frequency: 880 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, gain: 0.08 },
-  { source: { type: "sine" as const, frequency: 1320 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, delay: 0.03, gain: 0.07 },
-]});
-const toggleOff = defineSound({ layers: [
-  { source: { type: "sine" as const, frequency: 1320 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, gain: 0.08 },
-  { source: { type: "sine" as const, frequency: 880 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, delay: 0.03, gain: 0.07 },
-]});
+import { playSound } from "../../lib/ui-sounds";
 
 interface VideoProps {
   src: string;
@@ -61,8 +52,8 @@ export default function Video({ src, caption, alt = "" }: VideoProps) {
   const reactId = useId().replace(/:/g, "");
   const wasOpenRef = useRef(false);
 
-  const handleOpen = async () => { await ensureReady(); toggleOn(); setOpen(true); };
-  const handleClose = async () => { await ensureReady(); toggleOff(); setOpen(false); };
+  const handleOpen = () => { playSound("page-enter"); setOpen(true); };
+  const handleClose = () => { playSound("page-exit"); setOpen(false); };
 
   useEffect(() => {
     if (!open) return;

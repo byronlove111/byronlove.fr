@@ -1,10 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { defineSound, ensureReady } from "@web-kits/audio";
-
-const copySound = defineSound({ layers: [
-  { source: { type: "sine" as const, frequency: 1000 }, envelope: { attack: 0, decay: 0.012, sustain: 0, release: 0.004 }, gain: 0.08 },
-  { source: { type: "sine" as const, frequency: 1200 }, envelope: { attack: 0, decay: 0.012, sustain: 0, release: 0.004 }, delay: 0.035, gain: 0.07 },
-]});
+import { playSound } from "../../lib/ui-sounds";
 
 interface CodeBlockProps {
   filename?: string;
@@ -64,7 +59,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
     const raw = readFromCodePanel(panelRef.current) || getTextContent(children).trim();
     const ok = await writeClipboard(raw);
     if (!ok) return;
-    ensureReady().then(() => copySound());
+    playSound("copy");
     setCopied(true);
     if (resetRef.current) clearTimeout(resetRef.current);
     resetRef.current = setTimeout(() => setCopied(false), 900);

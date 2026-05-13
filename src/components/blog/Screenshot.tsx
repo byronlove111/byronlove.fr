@@ -1,15 +1,6 @@
-import { defineSound, ensureReady } from "@web-kits/audio";
 import { useEffect, useId, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-
-const toggleOn = defineSound({ layers: [
-  { source: { type: "sine" as const, frequency: 880 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, gain: 0.08 },
-  { source: { type: "sine" as const, frequency: 1320 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, delay: 0.03, gain: 0.07 },
-]});
-const toggleOff = defineSound({ layers: [
-  { source: { type: "sine" as const, frequency: 1320 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, gain: 0.08 },
-  { source: { type: "sine" as const, frequency: 880 }, envelope: { attack: 0, decay: 0.02, sustain: 0, release: 0.006 }, delay: 0.03, gain: 0.07 },
-]});
+import { playSound } from "../../lib/ui-sounds";
 
 interface ScreenshotProps {
   src: string;
@@ -53,7 +44,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") { ensureReady().then(() => toggleOff()); setOpen(false); }
+      if (e.key === "Escape") { playSound("page-exit"); setOpen(false); }
     };
     window.addEventListener("keydown", onKey);
     return () => {
@@ -91,7 +82,7 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
           aria-haspopup="dialog"
           aria-expanded={open}
           aria-label={thumbLabel}
-          onClick={async () => { await ensureReady(); toggleOn(); setOpen(true); }}
+          onClick={() => { playSound("page-enter"); setOpen(true); }}
           style={{ display: "flex", justifyContent: "center", width: "100%", padding: 0, margin: 0, border: "none", background: "transparent", cursor: "pointer" }}
         >
           <div style={{ width: "fit-content", maxWidth: "100%" }}>
@@ -110,13 +101,13 @@ export default function Screenshot({ src, alt = "", caption }: ScreenshotProps) 
             aria-describedby={caption ? `caption-${reactId}` : undefined}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: reducedMotion ? 0.12 : 0.22, ease: "easeOut" }}
-            onClick={async () => { await ensureReady(); toggleOff(); setOpen(false); }}
+            onClick={() => { playSound("page-exit"); setOpen(false); }}
             style={{ position: "fixed", inset: 0, zIndex: 9999, display: "flex", flexDirection: "column", alignItems: "stretch", justifyContent: "center", background: "rgba(245, 245, 245, 0.68)", backdropFilter: "blur(78px) saturate(1.04)", WebkitBackdropFilter: "blur(78px) saturate(1.04)", cursor: "default", paddingTop: "3.25rem", paddingBottom: "2rem", paddingLeft: "max(0.75rem, env(safe-area-inset-left))", paddingRight: "max(0.75rem, env(safe-area-inset-right))" }}
           >
             <motion.button
               type="button" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }} aria-label="Close"
-              onClick={async (e) => { e.stopPropagation(); await ensureReady(); toggleOff(); setOpen(false); }}
+              onClick={(e) => { e.stopPropagation(); playSound("page-exit"); setOpen(false); }}
               style={{ position: "fixed", top: "max(0.85rem, env(safe-area-inset-top))", right: "max(1rem, env(safe-area-inset-right))", zIndex: 10002, background: "transparent", border: "none", cursor: "pointer", fontFamily: SERIF, fontSize: "0.9375rem", fontStyle: "italic" as const, fontWeight: 400, letterSpacing: "0.01em", color: "#666", padding: "0.5rem 0.25rem" }}
             >
               Exit
