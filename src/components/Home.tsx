@@ -1,4 +1,5 @@
-import { Tooltip, TooltipArrow, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
+import { useState, useRef, useCallback } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { playSound } from "../lib/ui-sounds";
 
 const MONO = "ui-monospace, 'SF Mono', monospace";
@@ -50,8 +51,17 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
     });
   }
 
+  const [tooltip, setTooltip] = useState<{ image: string; x: number; y: number } | null>(null);
+  const tooltipOffset = { x: 16, y: -16 };
+
+  const handleMouseMove = useCallback((e: React.MouseEvent, image: string) => {
+    setTooltip({ image, x: e.clientX + tooltipOffset.x, y: e.clientY + tooltipOffset.y });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => setTooltip(null), []);
+
   return (
-    <TooltipProvider delayDuration={300}>
+    <>
     <div style={{ minHeight: "100vh", backgroundColor: BG }}>
       <div style={{ maxWidth: "680px", margin: "0 auto", padding: "5rem 1.5rem 6rem" }}>
 
@@ -168,44 +178,18 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
             ].map((job) => (
               <div key={job.name}>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "1rem", marginBottom: "0.375rem" }}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <a
+                  <a
                         href={job.href}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ fontFamily: SERIF, fontSize: "1rem", fontWeight: 500, color: TEXT, textDecoration: "underline", textUnderlineOffset: "2px" }}
-                        onMouseEnter={e => (e.currentTarget.style.opacity = "0.6")}
-                        onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                        onMouseEnter={e => { e.currentTarget.style.opacity = "0.6"; }}
+                        onMouseMove={e => handleMouseMove(e, job.image)}
+                        onMouseLeave={e => { e.currentTarget.style.opacity = "1"; handleMouseLeave(); }}
                         onClick={() => playSound("tap")}
                       >
                         {job.name}
                       </a>
-                    </TooltipTrigger>
-                    <TooltipContent
-                      side="top"
-                      sideOffset={8}
-                      style={{
-                        background: "#fff",
-                        border: "1px solid #E8E6E0",
-                        borderRadius: "8px",
-                        boxShadow: "0 4px 24px rgba(0,0,0,0.10)",
-                        padding: 0,
-                        overflow: "visible",
-                        width: "200px",
-                        zIndex: 9999,
-                      }}
-                    >
-                      <div style={{ borderRadius: "8px", overflow: "hidden" }}>
-                        <img
-                          src={job.image}
-                          alt={job.name}
-                          style={{ width: "200px", height: "120px", objectFit: "cover", display: "block" }}
-                        />
-                      </div>
-                      <TooltipArrow style={{ fill: "#E8E6E0" }} width={12} height={6} />
-                    </TooltipContent>
-                  </Tooltip>
                   {" "}
                   <span style={{ fontFamily: SERIF, fontSize: "0.875rem", color: MUTED, whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                     {job.role} · {job.period}
@@ -259,6 +243,37 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
 
       </div>
     </div>
-    </TooltipProvider>
+
+    <AnimatePresence>
+      {tooltip && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.94, y: 6 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 4 }}
+          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            position: "fixed",
+            left: tooltip.x,
+            top: tooltip.y,
+            transform: "translateY(-100%)",
+            zIndex: 9999,
+            pointerEvents: "none",
+            background: "#fff",
+            border: "1px solid #E8E6E0",
+            borderRadius: "8px",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.10)",
+            overflow: "hidden",
+            width: "200px",
+          }}
+        >
+          <img
+            src={tooltip.image}
+            alt=""
+            style={{ width: "200px", height: "120px", objectFit: "cover", display: "block" }}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   );
 }
