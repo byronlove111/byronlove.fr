@@ -191,16 +191,18 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                         borderRadius: "8px",
                         boxShadow: "0 4px 24px rgba(0,0,0,0.10)",
                         padding: 0,
-                        overflow: "hidden",
+                        overflow: "visible",
                         width: "200px",
                         zIndex: 9999,
                       }}
                     >
-                      <img
-                        src={job.image}
-                        alt={job.name}
-                        style={{ width: "200px", height: "120px", objectFit: "cover", display: "block" }}
-                      />
+                      <div style={{ borderRadius: "8px", overflow: "hidden" }}>
+                        <img
+                          src={job.image}
+                          alt={job.name}
+                          style={{ width: "200px", height: "120px", objectFit: "cover", display: "block" }}
+                        />
+                      </div>
                       <TooltipArrow style={{ fill: "#E8E6E0" }} width={12} height={6} />
                     </TooltipContent>
                   </Tooltip>
