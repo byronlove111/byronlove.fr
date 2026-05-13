@@ -174,7 +174,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                     {job.name}
                   </a>
                   {" "}
-                  <span style={{ fontFamily: SERIF, fontSize: "0.875rem", color: MUTED }}>
+                  <span style={{ fontFamily: SERIF, fontSize: "0.875rem", color: MUTED, whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                     {job.role} · {job.period}
                   </span>
                 </div>
