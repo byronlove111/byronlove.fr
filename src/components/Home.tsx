@@ -1,4 +1,4 @@
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
+import { Tooltip, TooltipArrow, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
 import { playSound } from "../lib/ui-sounds";
 
 const MONO = "ui-monospace, 'SF Mono', monospace";
@@ -201,6 +201,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                         alt={job.name}
                         style={{ width: "200px", height: "120px", objectFit: "cover", display: "block" }}
                       />
+                      <TooltipArrow style={{ fill: "#E8E6E0" }} width={12} height={6} />
                     </TooltipContent>
                   </Tooltip>
                   {" "}
