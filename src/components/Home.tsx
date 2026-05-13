@@ -96,7 +96,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
             {[
               { label: "mail", href: "mailto:111byronlove@gmail.com" },
               { label: "github", href: "https://github.com/byronlove111", external: true },
-              { label: "x", href: "https://x.com/byronlove111", external: true },
+              { label: "x", href: "https://x.com/intent/follow?screen_name=byronlove111", external: true },
             ].map((item, i, arr) => (
               <span key={item.label} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                 <a
