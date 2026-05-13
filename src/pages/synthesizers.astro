@@ -32,14 +32,16 @@ const items = [
         Gear I own
       </p>
 
-      <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem;">
+      <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column;">
         {items.map(item => (
-          <li style="border-top: 1px solid #E8E7E2; padding-top: 0.75rem;">
+          <li style="border-top: 1px solid #E8E7E2;">
             <a
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              style="font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a1a1a; text-decoration: underline; text-underline-offset: 2px;"
+              style="display: block; padding: 0.75rem 0; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a1a1a; line-height: 1.5; text-decoration: none; transition: opacity 0.15s;"
+              onmouseover="this.style.opacity='0.5'"
+              onmouseout="this.style.opacity='1'"
             >
               {item.label}
             </a>
