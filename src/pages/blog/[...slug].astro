@@ -81,10 +81,9 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
     </main>
     <BottomFade />
     <script>
-      import { defineSound, ensureReady } from "@web-kits/audio";
-      const kp = defineSound({ source: { type: "sine", frequency: 1100 }, envelope: { attack: 0, decay: 0.01, sustain: 0, release: 0.003 }, gain: 0.06 });
+      import { playKeyPress } from "../../lib/sound";
       document.querySelectorAll(".nav-back, .nav-lang").forEach((el) => {
-        el.addEventListener("click", async () => { await ensureReady(); kp(); });
+        el.addEventListener("click", () => playKeyPress());
       });
     </script>
   </body>

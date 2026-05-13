@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { playCopy } from "../../lib/sound";
 
 interface CodeBlockProps {
   filename?: string;
@@ -59,16 +60,7 @@ export default function CodeBlock({ filename, lang, children }: CodeBlockProps) 
     const ok = await writeClipboard(raw);
     if (!ok) return;
 
-    try {
-      const { defineSound, ensureReady } = await import("@web-kits/audio");
-      const copySound = defineSound({ layers: [
-        { source: { type: "sine", frequency: 1000 }, envelope: { attack: 0, decay: 0.012, sustain: 0, release: 0.004 }, gain: 0.08 },
-        { source: { type: "sine", frequency: 1200 }, envelope: { attack: 0, decay: 0.012, sustain: 0, release: 0.004 }, delay: 0.035, gain: 0.07 },
-      ] } as Parameters<typeof defineSound>[0]);
-      await ensureReady();
-      copySound();
-    } catch {}
-
+    playCopy();
     setCopied(true);
     if (resetRef.current) clearTimeout(resetRef.current);
     resetRef.current = setTimeout(() => setCopied(false), 900);
