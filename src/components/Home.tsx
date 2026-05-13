@@ -136,7 +136,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 href: "https://chataigne.ai",
                 role: "Founding Engineer",
                 period: "2024–2025",
-                desc: "Seed-stage AI food-tech startup — lets restaurants take orders through natural language on WhatsApp. First founding engineer on a 3-person team. Rebuilt the entire frontend from scratch, cut load times from 20s to under 3s. Shipped a WhatsApp marketing campaign tool used by 10+ restaurants and a standalone lucky wheel product used by",
+                desc: "Seed-stage AI food-tech startup — restaurants take orders through natural language on WhatsApp. First founding engineer on a 3-person team. Rebuilt the frontend from scratch, cut load times from 20s to 3s, shipped a WhatsApp campaign tool and a lucky wheel used by",
                 highlight: "3,500 people in 3 days.",
               },
               {
@@ -144,7 +144,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 href: "https://opensource-together.com",
                 role: "Co-Founder",
                 period: "2025–Present",
-                desc: "Non-profit platform making open source accessible to junior developers. Co-founded and led a team of 10 volunteers. Built in public —",
+                desc: "Non-profit platform making open source accessible to developers. Co-founded and led a team of 10 volunteers. Built in public —",
                 highlight: "1k followers on Twitter and 1k signups at launch.",
               },
               {
