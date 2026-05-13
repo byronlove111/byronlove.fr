@@ -67,7 +67,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
             <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: TEXT, margin: 0 }}>
               I care about systems that agents and humans actually want to use. Available for long-term commitments and one-off projects.
             </p>
-            <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: TEXT, margin: 0 }}>
+            <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: TEXT, margin: 0, marginTop: "1.75rem" }}>
               Interests:{" "}
               {[
                 { label: "synthesizers", href: "/synthesizers" },
