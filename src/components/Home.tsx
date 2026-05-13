@@ -62,7 +62,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
           {/* Bio */}
           <div style={{ display: "flex", flexDirection: "column" as const, gap: "0.5rem", marginBottom: "1.75rem" }}>
             <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: TEXT, margin: 0 }}>
-              I'm a Cursor ambassador and engineer based in Paris, building full-stack products and AI-native infrastructure from 0 → 1.
+              I'm an engineer based in Paris, building full-stack products and AI-native infrastructure from 0 → 1.
             </p>
             <p style={{ fontFamily: SERIF, fontSize: "1rem", lineHeight: 1.8, color: TEXT, margin: 0 }}>
               I care about systems that agents and humans actually want to use. Available for long-term commitments and one-off projects.
