@@ -151,7 +151,7 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 highlight: "1k followers on Twitter and 1k signups at launch.",
               },
               {
-                name: "École 42",
+                name: "42 School",
                 href: "https://42.fr",
                 role: "Student",
                 period: "2024–Present",
