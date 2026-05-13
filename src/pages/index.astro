@@ -3,6 +3,7 @@ import Home from '../components/Home.tsx';
 import { getCollection } from 'astro:content';
 import '../styles/global.css';
 import BottomFade from '../components/BottomFade.astro';
+import SmoothScroll from '../components/SmoothScroll.astro';
 
 const allPosts = await getCollection("blog");
 
@@ -53,5 +54,6 @@ const posts = Object.values(bySlug)
 	<body>
 		<Home client:load posts={posts} />
 		<BottomFade />
+		<SmoothScroll />
 	</body>
 </html>

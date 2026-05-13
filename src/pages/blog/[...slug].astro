@@ -6,6 +6,7 @@ import AnimatedSection from "../../components/blog/AnimatedSection";
 import Demo from "../../components/blog/Demo";
 import "../../styles/global.css";
 import BottomFade from "../../components/BottomFade.astro";
+import SmoothScroll from "../../components/SmoothScroll.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -80,6 +81,7 @@ const blogComponents = { Screenshot: ScreenshotIsland, Video: VideoIsland, Anima
       </article>
     </main>
     <BottomFade />
+		<SmoothScroll />
     <script>
       import { playSound } from "../../lib/ui-sounds";
       document.querySelectorAll(".nav-back, .nav-lang").forEach((el) => {
