@@ -1,6 +1,6 @@
 import { defineSound, ensureReady } from "@web-kits/audio";
 
-const kp = defineSound({ source: { type: "sine" as const, frequency: 1100 }, envelope: { attack: 0, decay: 0.01, sustain: 0, release: 0.003 }, gain: 0.06 });
+const kp = defineSound({ source: { type: "sine" as const, frequency: 1100 }, envelope: { attack: 0, decay: 0.01, sustain: 0, release: 0.003 }, gain: 0.18 });
 const playKP = async () => { await ensureReady(); kp(); };
 
 const MONO = "ui-monospace, 'SF Mono', monospace";
