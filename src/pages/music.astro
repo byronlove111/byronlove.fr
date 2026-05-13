@@ -3,13 +3,13 @@ import '../styles/global.css';
 import BottomFade from '../components/BottomFade.astro';
 
 const albums = [
-  "You can't kill me — 070 Shake",
-  "My Beautiful Dark Twisted Fantasy — Kanye West",
-  "The Dark Side of the Moon — Pink Floyd",
-  "Random Access Memories — Daft Punk",
-  "Dangerous — Michael Jackson",
-  "Rodeo — Travis Scott",
-  "Man on the Moon — Kid Cudi",
+  { label: "You can't kill me — 070 Shake", url: "https://www.youtube.com/watch?v=qEfYSU689mw" },
+  { label: "My Beautiful Dark Twisted Fantasy — Kanye West", url: "https://www.youtube.com/watch?v=ofaRvNOV4SI" },
+  { label: "The Dark Side of the Moon — Pink Floyd", url: "https://www.youtube.com/watch?v=QFdkM40KOhE" },
+  { label: "Random Access Memories — Daft Punk", url: "https://www.youtube.com/watch?v=RRMbhEdmhYw" },
+  { label: "Dangerous — Michael Jackson", url: "https://www.youtube.com/watch?v=Q_AgZUUfGsY" },
+  { label: "Rodeo — Travis Scott", url: "https://www.youtube.com/watch?v=cLx87ceoNT8" },
+  { label: "Man on the Moon — Kid Cudi", url: "https://www.youtube.com/watch?v=72yNKTFw9UM" },
 ];
 ---
 
@@ -41,8 +41,17 @@ const albums = [
 
       <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column;">
         {albums.map(album => (
-          <li style="border-top: 1px solid #E8E7E2; padding: 0.75rem 0; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a1a1a; line-height: 1.5;">
-            {album}
+          <li style="border-top: 1px solid #E8E7E2;">
+            <a
+              href={album.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style="display: block; padding: 0.75rem 0; font-family: 'Lora', Georgia, serif; font-size: 1rem; color: #1a1a1a; line-height: 1.5; text-decoration: none; transition: opacity 0.15s;"
+              onmouseover="this.style.opacity='0.5'"
+              onmouseout="this.style.opacity='1'"
+            >
+              {album.label}
+            </a>
           </li>
         ))}
       </ul>
