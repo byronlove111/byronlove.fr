@@ -128,7 +128,8 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 href: "https://cursor.sh",
                 role: "Ambassador",
                 period: "2025–Present",
-                desc: "AI-native code editor, used by millions of engineers worldwide. Ambassador for France — organized 4 events of 100+ people, teaching AI-driven development workflows. Work closely with the Cursor team on documentation and content.",
+                tagline: "AI-native code editor, used by millions of engineers worldwide.",
+                detail: "Ambassador for France — organized 4 events of 100+ people, teaching AI-driven development workflows. Work closely with the Cursor team on documentation and content.",
                 highlight: null,
               },
               {
@@ -136,7 +137,8 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 href: "https://chataigne.ai",
                 role: "Founding Engineer",
                 period: "2024–2025",
-                desc: "Seed-stage AI food-tech startup — restaurants take orders through natural language on WhatsApp. First founding engineer on a 3-person team. Owned the entire product surface — interfaces, APIs, and standalone tools — shipped to",
+                tagline: "Seed-stage AI food-tech startup — restaurants take orders through natural language on WhatsApp.",
+                detail: "First founding engineer on a 3-person team. Owned the entire product surface — interfaces, APIs, and standalone tools — shipped to",
                 highlight: "10,000+ users.",
               },
               {
@@ -144,7 +146,8 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 href: "https://opensource-together.com",
                 role: "Co-Founder",
                 period: "2025–Present",
-                desc: "Non-profit platform making open source accessible to developers. Co-founded and led a team of engineers, designers, and ML contributors —",
+                tagline: "Non-profit platform making open source accessible to developers.",
+                detail: "Co-founded and led a team of engineers, designers, and ML contributors —",
                 highlight: "1k followers on Twitter and 1k signups at launch.",
               },
               {
@@ -152,7 +155,8 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                 href: "https://42.fr",
                 role: "Student",
                 period: "2024–Present",
-                desc: "Peer-to-peer computer science school. Top of entrance competition. Member of 42entrepreneurs.",
+                tagline: "Peer-to-peer computer science school.",
+                detail: "Top of entrance competition. Member of 42entrepreneurs.",
                 highlight: null,
               },
             ].map((job) => (
@@ -175,7 +179,9 @@ export default function Home({ posts = [] }: { posts?: Post[] }) {
                   </span>
                 </div>
                 <p style={{ fontFamily: SERIF, fontSize: "0.9375rem", lineHeight: 1.75, color: TEXT, margin: 0 }}>
-                  {job.desc}{" "}
+                  {job.tagline}
+                  <br />
+                  {job.detail}{" "}
                   {job.highlight && <span style={{ color: TEXT, fontWeight: 500 }}>{job.highlight}</span>}
                 </p>
               </div>
